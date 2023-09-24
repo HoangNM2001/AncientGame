@@ -2,12 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pancake;
+using Pancake.Scriptable;
 using UnityEngine;
 
 public class CharacterAnimController : GameComponent
 {
+    [Header("BASE")]
     private Animator animator;
     private string animationName;
+
+    [Header("EVENT")]
+    [SerializeField] private ScriptableEventNoParam dropSeedEvent;
+    [SerializeField] private ScriptableEventNoParam waterFarmEvent;
 
     public string AnimationName => animationName;
     public float Speed
@@ -40,5 +46,15 @@ public class CharacterAnimController : GameComponent
         {
             animator.CrossFade(animationName, 0.1f, layer);
         }
+    }
+
+    public void TriggerSeedFarm()
+    {
+        dropSeedEvent.Raise();
+    }
+
+    public void TriggerWaterFarm()
+    {
+        waterFarmEvent.Raise();
     }
 }

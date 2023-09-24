@@ -33,8 +33,8 @@ public class FarmAction : GameComponent, ICharacterAction
         characterAnimController = characterController.CharacterAnimController;
 
         actionAnimName = characterActionType.ToString();
-        
-        farmTool.UpdateTool(1);
+
+        farmTool.gameObject.SetActive(false);
     }
 
     public void Activate()
@@ -47,6 +47,8 @@ public class FarmAction : GameComponent, ICharacterAction
             characterAnimController.Speed = characterController.CharacterStat.workingSpeed;
         }
         
+        farmTool.gameObject.SetActive(true);
+        farmTool.UpdateTool(1);
         PlayAnimation();
     }
 
@@ -60,6 +62,7 @@ public class FarmAction : GameComponent, ICharacterAction
             characterAnimController.Speed = 1;
         }
         
+        farmTool.gameObject.SetActive(false);
         StopAnimation();
     }
 
