@@ -33,7 +33,7 @@ public class FarmAction : GameComponent, ICharacterAction
         characterAnimController = characterController.CharacterAnimController;
 
         actionAnimName = characterActionType.ToString();
-        
+
         farmTool.UpdateTool(1);
     }
 
@@ -46,7 +46,7 @@ public class FarmAction : GameComponent, ICharacterAction
         {
             characterAnimController.Speed = characterController.CharacterStat.workingSpeed;
         }
-        
+
         PlayAnimation();
     }
 
@@ -59,7 +59,7 @@ public class FarmAction : GameComponent, ICharacterAction
         {
             characterAnimController.Speed = 1;
         }
-        
+
         StopAnimation();
     }
 
