@@ -10,10 +10,10 @@ public class CharacterController : GameComponent
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
     [SerializeField] private CharacterStat characterStat;
     [SerializeField] private CharacterAnimController characterAnimController;
-    [SerializeField] private CharacterActionList characterActionList;
     
     private NavmeshController navmeshController;
     private CharacterHandleInput characterHandleInput;
+    private float currentMoveSpeed;
 
     public CharacterStat CharacterStat => characterStat;
     public CharacterAnimController CharacterAnimController => characterAnimController;
@@ -34,16 +34,31 @@ public class CharacterController : GameComponent
         getCharacterEvent.OnRaised -= getCharacterEvent_OnRaised;
     }
 
+    private void Start() 
+    {
+        currentMoveSpeed = characterStat.moveSpeed;    
+    }
+
     protected override void Tick()
     {
         characterHandleInput.GetInput();
-        MoveByDirection(characterHandleInput.MoveDir.normalized, characterStat.moveSpeed, Time.deltaTime);
+        MoveByDirection(characterHandleInput.MoveDir.normalized, currentMoveSpeed, Time.deltaTime);
     }
 
     public void MoveByDirection(Vector3 direction, float moveSpeed, float deltaTime)
     {
         navmeshController.MoveByDirection(direction, moveSpeed, characterStat.rotateSpeed, deltaTime);
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
+    }
+
+    public void ChangeToWorkingMoveSpeed()
+    {
+        currentMoveSpeed = characterStat.workingMoveSpeed;
+    }
+
+    public void ResetBackToMoveSpeed()
+    {
+        currentMoveSpeed = characterStat.moveSpeed;
     }
 
     private GameObject getCharacterEvent_OnRaised()

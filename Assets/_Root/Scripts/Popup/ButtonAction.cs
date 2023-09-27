@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class ButtonAction : GameComponent
 {
-    [SerializeField] private CharacterActionType characterActionType;
+    [SerializeField] private EnumPack.CharacterActionType characterActionType;
     [SerializeField] private ScriptableEventInt startActionEvent;
     
     private UIButton actionButton;

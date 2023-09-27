@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class FarmAction : GameComponent, ICharacterAction
 {
-    [SerializeField] private CharacterActionType characterActionType;
+    [SerializeField] private EnumPack.CharacterActionType characterActionType;
     [SerializeField] private FarmTool farmTool;
 
     [Header("EVENT")] [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
@@ -19,7 +19,7 @@ public class FarmAction : GameComponent, ICharacterAction
     private CharacterController characterController;
     private CharacterAnimController characterAnimController;
 
-    public CharacterActionType CharacterActionType => characterActionType;
+    public EnumPack.CharacterActionType CharacterActionType => characterActionType;
     public bool Activated => activated;
 
     private void Awake()
@@ -34,7 +34,7 @@ public class FarmAction : GameComponent, ICharacterAction
 
         actionAnimName = characterActionType.ToString();
 
-        farmTool.UpdateTool(1);
+        farmTool.Initialize(characterActionType);
     }
 
     public void Activate()
@@ -46,7 +46,8 @@ public class FarmAction : GameComponent, ICharacterAction
         {
             characterAnimController.Speed = characterController.CharacterStat.workingSpeed;
         }
-
+        
+        farmTool.Activate(1);
         PlayAnimation();
     }
 
@@ -59,7 +60,8 @@ public class FarmAction : GameComponent, ICharacterAction
         {
             characterAnimController.Speed = 1;
         }
-
+        
+        farmTool.Deactivate();
         StopAnimation();
     }
 

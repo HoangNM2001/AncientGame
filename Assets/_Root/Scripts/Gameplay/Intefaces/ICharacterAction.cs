@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface ICharacterAction
 {
-    CharacterActionType CharacterActionType { get; }
+    EnumPack.CharacterActionType CharacterActionType { get; }
     bool Activated { get; }
     void Activate();
     void Deactivate();

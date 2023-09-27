@@ -44,7 +44,7 @@ public class CharacterActionList : GameComponent
         }
         
         currentCharacterAction =
-            characterActionList.FirstOrDefault(a => a.CharacterActionType == (CharacterActionType)actionTypeInt);
+            characterActionList.FirstOrDefault(a => a.CharacterActionType == (EnumPack.CharacterActionType)actionTypeInt);
         
         if (currentCharacterAction is { Activated: false })
         {

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
+  m_Name: ChiliResource
+  m_EditorClassIdentifier: 
+  resourceId: chili_resource
+  resourceType: 14
+  resourceIcon: {fileID: 21300000, guid: 850d9f345062c4947be1ebe66c8b28fe, type: 3}
+  smallTree: {fileID: 8959326954554026201, guid: a34f75b1d662c3249a207bda5b94843d, type: 3}
+  bigTree: {fileID: 1100853835214613773, guid: 007c3da20e3ccb94b972f9a57b2b762f, type: 3}
+  treeColor: {r: 0.8490566, g: 0.03604484, b: 0.03604484, a: 0}
+  flyModelPool: {fileID: 11400000, guid: 0a8d9edfee1ba044ea341771987ab329, type: 2}
