@@ -11,6 +11,7 @@ public class ButtonAction : GameComponent
 {
     [SerializeField] private EnumPack.CharacterActionType characterActionType;
     [SerializeField] private ScriptableEventInt startActionEvent;
+    [SerializeField] private ScriptableEventNoParam popupCloseEvent;
     
     private UIButton actionButton;
 
@@ -27,5 +28,6 @@ public class ButtonAction : GameComponent
     private void StartAction()
     {
         startActionEvent.Raise((int)characterActionType);
+        popupCloseEvent.Raise();
     }
 }

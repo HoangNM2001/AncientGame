@@ -84,13 +84,13 @@ public class FarmTool : GameComponent
 
     private void OnTriggerEnter(Collider other)
     {
-        var tempField = CachedCollider.GetField(other);
-        if (tempField) fieldList.Add(tempField);
+        var field = CacheCollider.GetField(other);
+        if (field) fieldList.Add(field);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        var tempField = CachedCollider.GetField(other);
-        if (tempField) fieldList.Remove(tempField);
+        var field = CacheCollider.GetField(other);
+        if (field) fieldList.Remove(field);
     }
 }

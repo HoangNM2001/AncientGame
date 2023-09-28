@@ -30,6 +30,8 @@ public class Field : GameComponent
     private const float HarvestDuration = 5.0f;
     private const int MaxFlyModel = 4;
 
+    public EnumPack.FieldState FieldState => fieldState;
+
     private void Awake()
     {
         fieldMaterialBlock = new MaterialPropertyBlock();
