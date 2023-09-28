@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Pancake.Scriptable;
 using Pancake.UI;
 using UnityEditor;
 using UnityEngine;
@@ -18,5 +19,10 @@ public class HPopupFarmAction : UIPopup
         seedButton.SetActive(fieldStateList.Contains((int)EnumPack.FieldState.Seedale));
         waterButton.SetActive(fieldStateList.Contains((int)EnumPack.FieldState.Waterable));
         harvestButton.SetActive(fieldStateList.Contains((int)EnumPack.FieldState.Harvestable));
+    }
+
+    protected override bool EnableTrackBackButton()
+    {
+        return false;
     }
 }
