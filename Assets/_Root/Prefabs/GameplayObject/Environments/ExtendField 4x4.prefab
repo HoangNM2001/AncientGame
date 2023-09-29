@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4171017353619173348}
   - component: {fileID: 6506459000811757196}
-  m_Layer: 0
+  - component: {fileID: 8135798174714097286}
+  m_Layer: 8
   m_Name: ExtendField 4x4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fieldID: extend_field 4x4
+  fieldStateList: {fileID: 11400000, guid: f183e1a369e07e0438debf71bea482cd, type: 2}
   fieldList:
   - {fileID: 3504757830635025115}
   - {fileID: 3706591517807721764}
@@ -78,7 +80,33 @@ MonoBehaviour:
   - {fileID: 2763462831888284604}
   - {fileID: 7069833690686261206}
   - {fileID: 2455190229525728467}
-  resourceConfigList: []
+  resourceConfigList:
+  - {fileID: 11400000, guid: 1fd41024a2972f74f9be3bdb18f45493, type: 2}
+  - {fileID: 11400000, guid: 570244483dd2a7d4cb1dc97b13926ab1, type: 2}
+  - {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
+  - {fileID: 11400000, guid: 62e48a472f4b2094883ca660b7d01649, type: 2}
+  resourceConfig: {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
+--- !u!65 &8135798174714097286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8557332900666568495}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 1, z: 6}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &657534939165332858
 PrefabInstance:
   m_ObjectHideFlags: 0

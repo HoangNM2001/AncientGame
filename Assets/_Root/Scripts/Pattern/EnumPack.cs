@@ -49,6 +49,7 @@ public class EnumPack
         Radish,
         Sugarcane,
         Potato,
-        Meat
+        Meat,
+        None
     }
 }

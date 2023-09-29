@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1751e730309a83b43a64a191d0bc537c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqueId: c5593ff2-4f1e-44a2-95c0-cafd92df5fbe
   fieldRenderer: {fileID: 2131566640691398610}
   soilColor: {r: 0.7647059, g: 0.69411767, b: 0.50980395, a: 0}
   seededColor: {r: 0.65882355, g: 0.5411765, b: 0.24705882, a: 0}
   wateredColor: {r: 0.5294118, g: 0.34509805, b: 0.05882353, a: 0}
   leavesParticlePool: {fileID: 11400000, guid: 2e7997dc706ed51448b583e0b8df7c90, type: 2}
-  resourceConfig: {fileID: 11400000, guid: 62e48a472f4b2094883ca660b7d01649, type: 2}
 --- !u!135 &8804489006909381113
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

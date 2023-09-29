@@ -9,9 +9,9 @@ using UnityEngine;
 
 public class ButtonAction : GameComponent
 {
-    [SerializeField] private EnumPack.CharacterActionType characterActionType;
-    [SerializeField] private ScriptableEventInt startActionEvent;
-    [SerializeField] private ScriptableEventNoParam popupCloseEvent;
+    [SerializeField] protected EnumPack.CharacterActionType characterActionType;
+    [SerializeField] protected ScriptableEventInt startActionEvent;
+    [SerializeField] protected ScriptableEventNoParam popupCloseEvent;
     
     private UIButton actionButton;
 
@@ -22,10 +22,15 @@ public class ButtonAction : GameComponent
 
     private void Start()
     {
+        Initialize();
+    }
+
+    protected virtual void Initialize()
+    {
         actionButton.onClick.AddListener(StartAction);
     }
 
-    private void StartAction()
+    protected virtual void StartAction()
     {
         startActionEvent.Raise((int)characterActionType);
         popupCloseEvent.Raise();

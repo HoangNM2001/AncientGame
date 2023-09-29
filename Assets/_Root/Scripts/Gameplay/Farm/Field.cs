@@ -10,16 +10,14 @@ using Random = UnityEngine.Random;
 
 public class Field : GameComponent
 {
+    [SerializeField, UniqueID] private string uniqueId;
     [SerializeField] private MeshRenderer fieldRenderer;
     [SerializeField] private Color soilColor;
     [SerializeField] private Color seededColor;
     [SerializeField] private Color wateredColor;
     [SerializeField] private GameObjectPool leavesParticlePool;
-
-    [Header("TEST")] 
-    [SerializeField] private ResourceConfig resourceConfig;
     
-    private EnumPack.FieldState fieldState;
+    private ResourceConfig resourceConfig;
     private MaterialPropertyBlock fieldMaterialBlock;
     private GameObject smallTree;
     private GameObject bigTree;
@@ -30,7 +28,11 @@ public class Field : GameComponent
     private const float HarvestDuration = 5.0f;
     private const int MaxFlyModel = 4;
 
-    public EnumPack.FieldState FieldState => fieldState;
+    public EnumPack.FieldState FieldState
+    {
+        get => Data.Load(uniqueId, EnumPack.FieldState.Seedale);
+        private set => Data.Save(uniqueId, value);
+    }
 
     private void Awake()
     {
@@ -38,13 +40,9 @@ public class Field : GameComponent
         fieldRenderer.GetPropertyBlock(fieldMaterialBlock);
     }
 
-    private void Start()
+    public void Initialize(ResourceConfig newResource)
     {
-        Initialize();
-    }
-
-    private void Initialize()
-    {
+        resourceConfig = newResource;
         smallTree = Instantiate(resourceConfig.smallTree, transform);
         bigTree = Instantiate(resourceConfig.bigTree, transform);
         flyModelPool = resourceConfig.flyModelPool;
@@ -54,8 +52,22 @@ public class Field : GameComponent
         smallTree.SetActive(false);
         bigTree.SetActive(false);
         
-        // Data.Save("id_field", ResourceType);
-        
+        InitFieldState();
+    }
+
+    private void InitFieldState()
+    {
+        switch (FieldState)
+        {
+            case EnumPack.FieldState.Seedale:
+                break;
+            case EnumPack.FieldState.Waterable:
+                SetSeededState();
+                break;
+            case EnumPack.FieldState.Harvestable:
+                SetWateredState();
+                break;
+        }
     }
 
     public void DoFarming(EnumPack.CharacterActionType actionType)
@@ -78,8 +90,8 @@ public class Field : GameComponent
 
     private void DoSeed()
     {
-        if (fieldState != EnumPack.FieldState.Seedale) return;
-        fieldState = EnumPack.FieldState.Waterable;
+        if (FieldState != EnumPack.FieldState.Seedale) return;
+        FieldState = EnumPack.FieldState.Waterable;
         
         smallTree.SetActive(true);
         smallTree.transform.localScale = Vector3.zero;
@@ -89,8 +101,8 @@ public class Field : GameComponent
 
     private void DoWater()
     {
-        if (fieldState != EnumPack.FieldState.Waterable) return;
-        fieldState = EnumPack.FieldState.Harvestable;
+        if (FieldState != EnumPack.FieldState.Waterable) return;
+        FieldState = EnumPack.FieldState.Harvestable;
         
         smallTree.SetActive(false);
         bigTree.SetActive(true);
@@ -101,8 +113,8 @@ public class Field : GameComponent
 
     private void DoHarvest()
     {
-        if (fieldState != EnumPack.FieldState.Harvestable) return;
-        fieldState = EnumPack.FieldState.Seedale;
+        if (FieldState != EnumPack.FieldState.Harvestable) return;
+        FieldState = EnumPack.FieldState.Seedale;
         
         bigTree.SetActive(false);
 
@@ -125,6 +137,22 @@ public class Field : GameComponent
         }
     }
 
+    private void SetSeededState()
+    {
+        smallTree.gameObject.SetActive(true);
+        bigTree.gameObject.SetActive(false);
+        fieldMaterialBlock.SetColor(ShaderColor, seededColor);
+        fieldRenderer.SetPropertyBlock(fieldMaterialBlock);
+    }
+
+    private void SetWateredState()
+    {
+        smallTree.gameObject.SetActive(false);
+        bigTree.gameObject.SetActive(true);
+        fieldMaterialBlock.SetColor(ShaderColor, wateredColor);
+        fieldRenderer.SetPropertyBlock(fieldMaterialBlock);
+    }
+    
     private void ChangeFieldColor(Color fromColor, Color toColor, float duration)
     {
         DOTween.Kill(fieldRenderer);
@@ -134,4 +162,13 @@ public class Field : GameComponent
             fieldRenderer.SetPropertyBlock(fieldMaterialBlock);
         }, 1.0f, duration).SetTarget(fieldRenderer);
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Reset Unique Id")]
+    public void ResetUniqueID()
+    {
+        Guid guid = Guid.NewGuid();
+        uniqueId = guid.ToString();
+    }
+#endif
 }

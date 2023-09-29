@@ -1,8 +1,10 @@
 #if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Pancake;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class FieldGenerator : MonoBehaviour
@@ -45,6 +47,14 @@ public class FieldGeneratorEditor : Editor
         fieldGenerator.transform.RemoveAllChildren();
         GameObject extendField = new GameObject("ExtendField " + rowNum + "x" + columnNum);
         extendField.transform.SetParent(fieldGenerator.transform);
+        extendField.layer = LayerMask.NameToLayer("Interact");
+
+        ExtendField extendFieldScript = extendField.AddComponent<ExtendField>();
+
+        BoxCollider boxCollider = extendField.AddComponent<BoxCollider>();
+        boxCollider.size = new Vector3(1.6f * columnNum, 1.0f, 1.6f * rowNum);
+        boxCollider.center = new Vector3(0.0f, 0.5f, 0.0f);
+        boxCollider.isTrigger = true;
 
         GameObject tempField = (GameObject)PrefabUtility.InstantiatePrefab(fieldPrefab, extendField.transform);
 
@@ -65,6 +75,8 @@ public class FieldGeneratorEditor : Editor
                 newField.name = "Field " + row + "x" + column;
                 newField.transform.localPosition = new Vector3(startPos.x + fieldSizeX * column, startPos.y,
                     startPos.z + fieldSizeY * row);
+                
+                newField.GetComponent<Field>().ResetUniqueID();
             }
         }
     }

@@ -10,22 +10,73 @@ using UnityEngine;
 
 public class ExtendField : GameComponent
 {
-    [SerializeField, ID] private string fieldID;
+    [SerializeField, UniqueID] private string uniqueId;
     [SerializeField] private ScriptableListInt fieldStateList;
     [SerializeField] private List<Field> fieldList = new List<Field>();
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
 
-    private EnumPack.ResourceType resourceType;
+    [SerializeField] private ResourceConfig resourceConfig;
 
-    public void CalculateExtendFieldState()
+    private Dictionary<EnumPack.ResourceType, ResourceConfig> resourceConfigDict =
+        new Dictionary<EnumPack.ResourceType, ResourceConfig>();
+
+    private EnumPack.ResourceType ResourceType
+    {
+        get => Data.Load(uniqueId, EnumPack.ResourceType.None);
+        set => Data.Save(uniqueId, value);
+    }
+
+    private void Awake()
+    {
+        foreach (var resource in resourceConfigList)
+        {
+            resourceConfigDict.Add(resource.resourceType, resource);
+        }
+    }
+
+    private void Start()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        foreach (var field in fieldList)
+        {
+            field.Initialize(resourceConfig);
+        }
+    }
+
+    private void CalculateExtendFieldState()
     {
         fieldStateList.Reset();
 
         foreach (var field in fieldList)
         {
-            CheckFieldState(field, EnumPack.FieldState.Seedale);
-            CheckFieldState(field, EnumPack.FieldState.Waterable);
-            CheckFieldState(field, EnumPack.FieldState.Harvestable);
+            // CheckFieldState(field, EnumPack.FieldState.Seedale);
+            // CheckFieldState(field, EnumPack.FieldState.Waterable);
+            // CheckFieldState(field, EnumPack.FieldState.Harvestable);
+            
+            if (field.FieldState == EnumPack.FieldState.Seedale &&
+                !fieldStateList.Contains((int)EnumPack.FieldState.Seedale))
+            {
+                fieldStateList.Add((int)EnumPack.FieldState.Seedale);
+                continue;
+            }
+            
+            if (field.FieldState == EnumPack.FieldState.Waterable &&
+                !fieldStateList.Contains((int)EnumPack.FieldState.Waterable))
+            {
+                fieldStateList.Add((int)EnumPack.FieldState.Waterable);
+                continue;
+            }
+            
+            if (field.FieldState == EnumPack.FieldState.Harvestable &&
+                !fieldStateList.Contains((int)EnumPack.FieldState.Harvestable))
+            {
+                fieldStateList.Add((int)EnumPack.FieldState.Harvestable);
+                continue;
+            }
         }
     }
 
@@ -40,28 +91,54 @@ public class ExtendField : GameComponent
     private void OnTriggerEnter(Collider other)
     {
         CalculateExtendFieldState();
-        CharacterHandleTrigger characterHandleTrigger = other.GetComponent<CharacterHandleTrigger>();
+        CharacterHandleTrigger characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
         if (characterHandleTrigger) characterHandleTrigger.TriggerActionFarm();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        CharacterHandleTrigger characterHandleTrigger = other.GetComponent<CharacterHandleTrigger>();
+        CharacterHandleTrigger characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
         if (characterHandleTrigger) characterHandleTrigger.ExitTriggerActionFarm();
     }
 
 #if UNITY_EDITOR
-    [ContextMenu("Reset Id")]
-    public void ResetId()
+    [ContextMenu("Reset Unique ID")]
+    public void ResetUniqueID()
     {
-        fieldID = IDAttributeDrawer.ToSnakeCase(name);
+        Guid guid = Guid.NewGuid();
+        uniqueId = guid.ToString();
+    }
+    
+    [ContextMenu("Setup Extend Field")]
+    public void SetupExtendField()
+    {
+        GetFields();
+        GetResources();
+    }
+
+    [ContextMenu("Get Fields")]
+    public void GetFields()
+    {
+        fieldList = GetComponentsInChildren<Field>().ToList();
         EditorUtility.SetDirty(this);
     }
 
-    [ContextMenu("Get Children")]
-    public void GetChildren()
+    [ContextMenu("Get Resources")]
+    public void GetResources()
     {
-        fieldList = GetComponentsInChildren<Field>().ToList();
+        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources";
+
+        var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
+
+        var resourceConfigs = new ResourceConfig[resourcePaths.Length];
+
+        for (var i = 0; i < resourcePaths.Length; i++)
+        {
+            var assetPath = AssetDatabase.GUIDToAssetPath(resourcePaths[i]);
+            resourceConfigs[i] = AssetDatabase.LoadAssetAtPath<ResourceConfig>(assetPath);
+        }
+
+        resourceConfigList = resourceConfigs.ToList();
         EditorUtility.SetDirty(this);
     }
 #endif

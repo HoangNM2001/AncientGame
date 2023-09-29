@@ -6,6 +6,8 @@ public static class CacheCollider
 {
     private static Dictionary<Collider, Field> fieldColliderDictionary = new Dictionary<Collider, Field>();
     private static Dictionary<Collider, ExtendField> extendFieldDictionary = new Dictionary<Collider, ExtendField>();
+    private static Dictionary<Collider, CharacterHandleTrigger> handleTriggerDictionary =
+        new Dictionary<Collider, CharacterHandleTrigger>();
 
     public static Field GetField(Collider collider)
     {
@@ -21,5 +23,13 @@ public static class CacheCollider
 
         extendFieldDictionary.Add(collider, collider.GetComponent<ExtendField>());
         return extendFieldDictionary[collider];
+    }
+
+    public static CharacterHandleTrigger GetCharacterHandleTrigger(Collider collider)
+    {
+        if (handleTriggerDictionary.TryGetValue(collider, out CharacterHandleTrigger characterHandleTrigger)) return characterHandleTrigger;
+        
+        handleTriggerDictionary.Add(collider, collider.GetComponent<CharacterHandleTrigger>());
+        return handleTriggerDictionary[collider];
     }
 }
