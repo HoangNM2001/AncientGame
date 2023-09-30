@@ -14,15 +14,15 @@ public class ExtendField : GameComponent
     [SerializeField] private ScriptableListInt fieldStateList;
     [SerializeField] private List<Field> fieldList = new List<Field>();
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
-
-    [SerializeField] private ResourceConfig resourceConfig;
-
+    
+    private ResourceConfig resourceConfig;
     private Dictionary<EnumPack.ResourceType, ResourceConfig> resourceConfigDict =
         new Dictionary<EnumPack.ResourceType, ResourceConfig>();
 
-    private EnumPack.ResourceType ResourceType
+    public EnumPack.ResourceType ResourceType
     {
         get => Data.Load(uniqueId, EnumPack.ResourceType.None);
+
         set => Data.Save(uniqueId, value);
     }
 
@@ -36,11 +36,16 @@ public class ExtendField : GameComponent
 
     private void Start()
     {
-        Initialize();
+        if (ResourceType != EnumPack.ResourceType.None)
+        {
+            Initialize();
+        }
     }
 
-    private void Initialize()
+    public void Initialize()
     {
+        resourceConfig = resourceConfigDict[ResourceType];
+
         foreach (var field in fieldList)
         {
             field.Initialize(resourceConfig);
@@ -53,24 +58,20 @@ public class ExtendField : GameComponent
 
         foreach (var field in fieldList)
         {
-            // CheckFieldState(field, EnumPack.FieldState.Seedale);
-            // CheckFieldState(field, EnumPack.FieldState.Waterable);
-            // CheckFieldState(field, EnumPack.FieldState.Harvestable);
-            
             if (field.FieldState == EnumPack.FieldState.Seedale &&
                 !fieldStateList.Contains((int)EnumPack.FieldState.Seedale))
             {
                 fieldStateList.Add((int)EnumPack.FieldState.Seedale);
                 continue;
             }
-            
+
             if (field.FieldState == EnumPack.FieldState.Waterable &&
                 !fieldStateList.Contains((int)EnumPack.FieldState.Waterable))
             {
                 fieldStateList.Add((int)EnumPack.FieldState.Waterable);
                 continue;
             }
-            
+
             if (field.FieldState == EnumPack.FieldState.Harvestable &&
                 !fieldStateList.Contains((int)EnumPack.FieldState.Harvestable))
             {
@@ -80,19 +81,11 @@ public class ExtendField : GameComponent
         }
     }
 
-    private void CheckFieldState(Field field, EnumPack.FieldState fieldState)
-    {
-        if (field.FieldState == fieldState && !fieldStateList.Contains((int)fieldState))
-        {
-            fieldStateList.Add((int)fieldState);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         CalculateExtendFieldState();
         CharacterHandleTrigger characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
-        if (characterHandleTrigger) characterHandleTrigger.TriggerActionFarm();
+        if (characterHandleTrigger) characterHandleTrigger.TriggerActionFarm(gameObject);
     }
 
     private void OnTriggerExit(Collider other)
@@ -108,7 +101,7 @@ public class ExtendField : GameComponent
         Guid guid = Guid.NewGuid();
         uniqueId = guid.ToString();
     }
-    
+
     [ContextMenu("Setup Extend Field")]
     public void SetupExtendField()
     {

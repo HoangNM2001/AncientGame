@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2d69ba6a6f45039806f2a385e1357f, type: 3}
-  m_Name: StrawberryFMFactory
+  m_Script: {fileID: 11500000, guid: 02e9c247d480b994c8c0273c8984614a, type: 3}
+  m_Name: StrawberryST_Pool
   m_EditorClassIdentifier: 
   developerDescription: 
-  prefab: {fileID: 7846790120628075036, guid: 18c63fa7550e2a34db4345e5f2c14786, type: 3}
+  resetOn: 1
+  factory: {fileID: 11400000, guid: 16e1d413ec284a34ba4b1e4919a64d8e, type: 2}

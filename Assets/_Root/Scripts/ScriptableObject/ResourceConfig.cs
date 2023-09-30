@@ -12,8 +12,8 @@ public class ResourceConfig : ScriptableObject
     [SerializeField, ID] private string resourceId = "string";
     public EnumPack.ResourceType resourceType;
     public Sprite resourceIcon;
-    public GameObject smallTree;
-    public GameObject bigTree;
+    public GameObjectPool smallTreePool;
+    public GameObjectPool bigTreePool;
     public Color treeColor;
     public GameObjectPool flyModelPool;
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   resourceId: watermelon_resource
   resourceType: 4
   resourceIcon: {fileID: 21300000, guid: a3c94ead6b5b6f3439a79b15824ff167, type: 3}
-  smallTree: {fileID: 9093369004501505016, guid: f80097b4abe80994186eb81205bb00cd, type: 3}
-  bigTree: {fileID: 218920185921419589, guid: 7afead87d34a5604083cdd7d20ee4857, type: 3}
+  smallTreePool: {fileID: 11400000, guid: a18c04ea9cf8eea42860d2f3d4f14a71, type: 2}
+  bigTreePool: {fileID: 11400000, guid: 251aede99905b1549a6c94d9baec8e4b, type: 2}
   treeColor: {r: 0.03239045, g: 0.735849, b: 0, a: 0}
   flyModelPool: {fileID: 11400000, guid: 3698887597124a043b0e4a4c65b25fbe, type: 2}

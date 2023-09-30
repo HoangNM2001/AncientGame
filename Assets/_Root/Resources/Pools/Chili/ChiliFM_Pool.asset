@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2d69ba6a6f45039806f2a385e1357f, type: 3}
-  m_Name: ChiliFMFactory
+  m_Script: {fileID: 11500000, guid: 02e9c247d480b994c8c0273c8984614a, type: 3}
+  m_Name: ChiliFM_Pool
   m_EditorClassIdentifier: 
   developerDescription: 
-  prefab: {fileID: 5482810456310581208, guid: 3f5cdec1185ef7946b2e4df5526f0812, type: 3}
+  resetOn: 1
+  factory: {fileID: 11400000, guid: 76d2b4fbaadb4754688d506a394c9fb9, type: 2}

@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02e9c247d480b994c8c0273c8984614a, type: 3}
-  m_Name: WatermelonFMPool
+  m_Script: {fileID: 11500000, guid: 1c2d69ba6a6f45039806f2a385e1357f, type: 3}
+  m_Name: ChiliFM_Factory
   m_EditorClassIdentifier: 
   developerDescription: 
-  resetOn: 1
-  factory: {fileID: 11400000, guid: f8f8dfeae3e9888409631c0d8642791f, type: 2}
+  prefab: {fileID: 5482810456310581208, guid: 3f5cdec1185ef7946b2e4df5526f0812, type: 3}

@@ -267,3 +267,4 @@ MonoBehaviour:
   startActionEvent: {fileID: 11400000, guid: 0df41d28cc6804f4f87c453fa383dd07, type: 2}
   popupCloseEvent: {fileID: 11400000, guid: fc37811e37d0adf4eb9f0fc33afe130e, type: 2}
   fruitIcon: {fileID: 2911016231521909814}
+  getCurrentExtendFieldEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}

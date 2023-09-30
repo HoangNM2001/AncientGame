@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c2d69ba6a6f45039806f2a385e1357f, type: 3}
-  m_Name: CarrotFMFactory
+  m_Name: StrawberryST_Factory
   m_EditorClassIdentifier: 
   developerDescription: 
-  prefab: {fileID: 402431329696467944, guid: 7a3c29243f8160f48924fb8ef88150a8, type: 3}
+  prefab: {fileID: 2120416967321027029, guid: e9a271cc188a85b4094f5578ff541371, type: 3}

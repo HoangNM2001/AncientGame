@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2d69ba6a6f45039806f2a385e1357f, type: 3}
-  m_Name: WatermelonFMFactory
+  m_Script: {fileID: 11500000, guid: 02e9c247d480b994c8c0273c8984614a, type: 3}
+  m_Name: StrawberryFM_Pool
   m_EditorClassIdentifier: 
   developerDescription: 
-  prefab: {fileID: 9078942786998666410, guid: 90fe730e5ccbf4d408e4b1e39a6b66e6, type: 3}
+  resetOn: 1
+  factory: {fileID: 11400000, guid: c2d47208642fcb74e83887768f5e5df7, type: 2}

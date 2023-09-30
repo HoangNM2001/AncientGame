@@ -16,6 +16,8 @@ MonoBehaviour:
   resourceType: 13
   resourceIcon: {fileID: 21300000, guid: 0d6f51037f4fbe74e94fe9eb6cfc021b, type: 3}
   smallTree: {fileID: 6480513924248904131, guid: d02defef1ded5cb43ba5ee5369d64157, type: 3}
+  smallTreePool: {fileID: 11400000, guid: fbe6d3c70e12c834d9ce194f63953770, type: 2}
   bigTree: {fileID: 4574853653867560521, guid: 737690823bc405947b63a3dcf877a114, type: 3}
+  bigTreePool: {fileID: 11400000, guid: 4ea3057b2e3365b43862779e0bf6ca70, type: 2}
   treeColor: {r: 1, g: 0.4760489, b: 0, a: 0}
   flyModelPool: {fileID: 11400000, guid: 797c92f76ed74c347a76cd2aaa2261b9, type: 2}
