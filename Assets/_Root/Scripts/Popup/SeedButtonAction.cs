@@ -27,7 +27,15 @@ public class SeedButtonAction : ButtonAction
 
         if (currentExtendField == null) return;
 
-        popupCloseEvent.Raise();
-        popupShowEvent.Raise(chooseSeedPopup, popupParentTrans);
+        if (currentExtendField.IsSeeded())
+        {
+            startActionEvent.Raise((int)characterActionType);
+            popupCloseEvent.Raise();
+        }
+        else
+        {
+            popupCloseEvent.Raise();
+            popupShowEvent.Raise(chooseSeedPopup, popupParentTrans);
+        }
     }
 }

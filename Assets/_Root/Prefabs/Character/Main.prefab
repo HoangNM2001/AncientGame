@@ -823,6 +823,7 @@ MonoBehaviour:
   popupShowEvent: {fileID: 11400000, guid: d4469c64a4abe5641be48cc65e2ab907, type: 2}
   popupCloseEvent: {fileID: 11400000, guid: fc37811e37d0adf4eb9f0fc33afe130e, type: 2}
   getPopupParentEvent: {fileID: 11400000, guid: e12678b2e08a82c47bdf4f1f483b1d26, type: 2}
+  getCurrentExtendFieldEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
   fieldStateList: {fileID: 11400000, guid: f183e1a369e07e0438debf71bea482cd, type: 2}
   stopActionEvent: {fileID: 11400000, guid: 3cfaa22c6c8cfdf4a9ef846bd834e957, type: 2}
 --- !u!1 &5202072408416941277

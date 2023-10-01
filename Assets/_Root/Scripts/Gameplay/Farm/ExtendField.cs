@@ -6,6 +6,7 @@ using Pancake;
 using Pancake.Scriptable;
 using Pancake.UI;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ExtendField : GameComponent
@@ -79,6 +80,18 @@ public class ExtendField : GameComponent
                 continue;
             }
         }
+    }
+
+    public bool IsSeeded()
+    {
+        foreach (var field in fieldList)
+        {
+            if (field.FieldState != EnumPack.FieldState.Seedale)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
