@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class HMenuController : GameComponent
 {
+    [SerializeField] private GameObject menuUI;
+    
     [Header("BUTTON")]
     [SerializeField] private UIButton settingBtn;
 
@@ -22,6 +24,11 @@ public class HMenuController : GameComponent
     protected override void OnEnabled()
     {
         getPopupParentEvent.OnRaised += getPopupParent_OnRaised;
+    }
+    
+    private GameObject getPopupParent_OnRaised()
+    {
+        return gameObject;
     }
 
     protected override void OnDisabled()
@@ -38,9 +45,9 @@ public class HMenuController : GameComponent
     {
         popupShowEvent.Raise(settingsPopup, transform);
     }
-    
-    private GameObject getPopupParent_OnRaised()
+
+    public void ToggleMenuUI()
     {
-        return gameObject;
+        
     }
 }

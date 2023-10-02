@@ -13,6 +13,13 @@ public class EnumPack
         Fishing,
         Hunting,
     }
+
+    public enum ControlType
+    {
+        Move,
+        Horizontal, 
+        Vertical
+    }
     
     public enum FieldState
     {

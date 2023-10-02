@@ -8,31 +8,34 @@ using UnityEngine;
 
 public class CharacterHandleTrigger : GameComponent
 {
-    [Header("INTERACT")]
-    [SerializeField, PopupPickup] private string farmActionPopup;
     [SerializeField] private PopupShowEvent popupShowEvent;
     [SerializeField] private ScriptableEventNoParam popupCloseEvent;
     [SerializeField] private ScriptableEventGetGameObject getPopupParentEvent;
-    [SerializeField] private ScriptableEventGetGameObject getCurrentExtendFieldEvent;
-    [SerializeField] private ScriptableListInt fieldStateList;
+    [SerializeField] private ScriptableEventGetGameObject getCurrentInteractEvent;
+    
+    [Header("Farm Interact")]
     [SerializeField] private ScriptableEventNoParam stopActionEvent;
+    [SerializeField, PopupPickup] private string farmActionPopup;
+
+    [Header("Tree Interact")]
+    [SerializeField, PopupPickup] private string fruitActionPopup; 
 
     private Transform popupParentTrans;
-    private GameObject currentExtendField;
+    private GameObject currentInteract;
 
     protected override void OnEnabled()
     {
-        getCurrentExtendFieldEvent.OnRaised += GetCurrentExtendFieldEvent_OnRaise;
+        getCurrentInteractEvent.OnRaised += getCurrentInteractEvent_OnRaise;
     }
 
     protected override void OnDisabled()
     {
-        getCurrentExtendFieldEvent.OnRaised -= GetCurrentExtendFieldEvent_OnRaise;
+        getCurrentInteractEvent.OnRaised -= getCurrentInteractEvent_OnRaise;
     }
 
-    private GameObject GetCurrentExtendFieldEvent_OnRaise()
+    private GameObject getCurrentInteractEvent_OnRaise()
     {
-        return currentExtendField;
+        return currentInteract;
     }
 
     private void Start()
@@ -42,14 +45,26 @@ public class CharacterHandleTrigger : GameComponent
 
     public void TriggerActionFarm(GameObject triggerField)
     {
-        currentExtendField = triggerField;
+        currentInteract = triggerField;
         popupShowEvent.Raise(farmActionPopup, popupParentTrans);
     }
 
     public void ExitTriggerActionFarm()
     {
-        currentExtendField = null;
+        currentInteract = null;
         popupCloseEvent.Raise();
         stopActionEvent.Raise();
+    }
+
+    public void TriggerActionTree(GameObject triggerTree)
+    {
+        currentInteract = triggerTree;
+        popupShowEvent.Raise(fruitActionPopup, popupParentTrans);
+    }
+
+    public void ExitTriggerActionTree()
+    {
+        currentInteract = null;
+        popupCloseEvent.Raise();
     }
 }

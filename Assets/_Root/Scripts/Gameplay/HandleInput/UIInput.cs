@@ -7,8 +7,7 @@ using Pancake.Scriptable;
 
 public class UIInput : GameComponent
 {
-    [SerializeField] private Joystick joystick;
-    [SerializeField] private Vector2Variable moveDirection;
+    [SerializeField] private EnumPack.ControlType controlType;
 
-    public Vector3 MoveDirection => moveDirection.Value = joystick.Direction;
+    public EnumPack.ControlType ControlType => controlType;
 }

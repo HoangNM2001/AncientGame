@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Pancake;
 using UnityEngine;
 
-public class ResourceFlyModel : MonoBehaviour
+public class ResourceFlyModel : GameComponent
 {
     [SerializeField] private float forceMin;
     [SerializeField] private float forceMax;
@@ -29,5 +30,10 @@ public class ResourceFlyModel : MonoBehaviour
         var randomPos = new Vector3(defaultPos.x - randomDistance, defaultPos.y, defaultPos.z + randomDistance);
         transform.DOLocalJump(randomPos, randomJumpForce, randomNumJump, duration: randomNumJump / 2.0f ).SetEase(Ease.Linear)
             .OnComplete(() => completeAction?.Invoke());
+    }
+
+    public void DoDrop()
+    {
+        
     }
 }
