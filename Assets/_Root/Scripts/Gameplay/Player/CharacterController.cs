@@ -8,12 +8,13 @@ using UnityEngine;
 public class CharacterController : GameComponent
 {
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
-    [SerializeField] private ScriptableEventVector3 moveToTreeEvent;
+    [SerializeField] private ScriptableEventInt changeInputEvent;
     [SerializeField] private CharacterStat characterStat;
     [SerializeField] private CharacterAnimController characterAnimController;
-    
+
     private NavmeshController navmeshController;
     private CharacterHandleInput characterHandleInput;
+    private EnumPack.ControlType controlType;
     private float currentMoveSpeed;
 
     public CharacterStat CharacterStat => characterStat;
@@ -28,32 +29,35 @@ public class CharacterController : GameComponent
     protected override void OnEnabled()
     {
         getCharacterEvent.OnRaised += getCharacterEvent_OnRaised;
-        // moveToTreeEvent.OnRaised += moveToTreeEvent_OnRaised;
-    }
-
-    private void moveToTreeEvent_OnRaised(Vector3 movePosition)
-    {
-        MoveToPosition(movePosition, characterStat.workingMoveSpeed, Time.deltaTime);
+        changeInputEvent.OnRaised += changeInputEvent_OnRaised;
     }
 
     private GameObject getCharacterEvent_OnRaised()
     {
         return gameObject;
     }
-    
+
+    private void changeInputEvent_OnRaised(int newControlType)
+    {
+        controlType = (EnumPack.ControlType)newControlType;
+    }
+
     protected override void OnDisabled()
     {
         getCharacterEvent.OnRaised -= getCharacterEvent_OnRaised;
-        // moveToTreeEvent.OnRaised -= moveToTreeEvent_OnRaised;
+        changeInputEvent.OnRaised -= changeInputEvent_OnRaised;
     }
 
-    private void Start() 
+    private void Start()
     {
-        currentMoveSpeed = characterStat.moveSpeed;    
+        currentMoveSpeed = characterStat.moveSpeed;
+        controlType = EnumPack.ControlType.Move;
     }
 
     protected override void Tick()
     {
+        if (controlType != EnumPack.ControlType.Move) return;
+
         characterHandleInput.GetInput();
         MoveByDirection(characterHandleInput.MoveDir.normalized, currentMoveSpeed, Time.deltaTime);
     }
@@ -64,9 +68,9 @@ public class CharacterController : GameComponent
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
     }
 
-    private void MoveToPosition(Vector3 position, float moveSpeed, float deltaTime)
+    public void MoveToPosition(Vector3 position, float moveSpeed, float deltaTime)
     {
-        navmeshController.MoveByPosition(position, 0, moveSpeed, characterStat.rotateSpeed, 0.1f, deltaTime);
+        navmeshController.MoveByPosition(position, 0.0f, moveSpeed, characterStat.rotateSpeed, 0.1f, deltaTime);
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
     }
 

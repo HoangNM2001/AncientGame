@@ -6,6 +6,7 @@ public static class SimpleMath
     {
         if (!compareY) p.y = c.y;
         sqrDst = SqrDist(p, c);
+        Debug.LogError(sqrDst);
         return sqrDst <= r * r;
     }
 

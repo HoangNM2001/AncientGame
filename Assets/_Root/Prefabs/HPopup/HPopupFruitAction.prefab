@@ -139,9 +139,9 @@ MonoBehaviour:
   onAfterClose:
     m_PersistentCalls:
       m_Calls: []
+  getCharacterEvent: {fileID: 11400000, guid: 5f37ed4166e3d694c9b2d35cbc53d7fa, type: 2}
   getCurrentTreeEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
   changeInputEvent: {fileID: 11400000, guid: 3d68a3cc988281a4aa9c0ba528ec04c4, type: 2}
-  moveToTreeEvent: {fileID: 0}
   shakeUI: {fileID: 6908614398339552320}
   fruitButtonUI: {fileID: 3997245383727844385}
   fruitBtnList:

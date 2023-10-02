@@ -29,7 +29,7 @@ public class NavmeshController : GameComponent
         navMeshAgent.updateRotation = false;
         navMeshAgent.updatePosition = true;
         navMeshAgent.isStopped = false;
-            
+
         navMeshAgent.speed = moveSpeed;
         navMeshAgent.velocity = direction * moveSpeed;
         if (direction != Vector3.zero)
@@ -45,7 +45,11 @@ public class NavmeshController : GameComponent
         navMeshAgent.stoppingDistance = stoppingDistance;
 
         var direction = targetPosition - navMeshAgent.transform.position;
+        direction = new Vector3(direction.x, 0.0f, direction.z);
+
         var distance = direction.magnitude - targetRadius - stoppingDistance;
+
+        Debug.LogError(direction + " + " + distance);
 
         if (distance <= 0.0f)
         {
@@ -64,6 +68,12 @@ public class NavmeshController : GameComponent
             navMeshAgent.updateRotation = true;
             navMeshAgent.isStopped = false;
             navMeshAgent.destination = navMeshAgent.transform.position + direction.normalized * distance;
+            // navMeshAgent.velocity = direction.normalized * moveSpeed;
+            // if (direction != Vector3.zero)
+            // {
+            //     targetRotation = Quaternion.LookRotation(direction);
+            // }
+            // navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRotation, deltaTime * rotateSpeed);
         }
     }
 }
