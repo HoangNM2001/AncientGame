@@ -18,4 +18,4 @@ MonoBehaviour:
   smallTreePool: {fileID: 0}
   bigTreePool: {fileID: 0}
   treeColor: {r: 0, g: 0, b: 0, a: 0}
-  flyModelPool: {fileID: 0}
+  flyModelPool: {fileID: 11400000, guid: 90af4d208ff3ecf41bc1bb03707801e9, type: 2}

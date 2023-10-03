@@ -1,22 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pancake.SceneFlow;
 using Pancake.Scriptable;
 using Pancake.UI;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HPopupFruitAction : UIPopup
 {
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
     [SerializeField] private ScriptableEventGetGameObject getCurrentTreeEvent;
     [SerializeField] private ScriptableEventInt changeInputEvent;
+    [SerializeField] private ScriptableEventNoParam harvestFruitEvent;
+    [SerializeField] private Vector2Variable shakeInput;
     [SerializeField] private GameObject shakeUI;
     [SerializeField] private GameObject fruitButtonUI;
+    [SerializeField] private Image fruitFillBar;
+    [SerializeField] private TextMeshProUGUI fillText;
     [SerializeField] private List<FruitActionBtn> fruitBtnList;
 
+    private CharacterController characterController;
     private FruitTree currentTree;
     private bool isShaking;
-    private bool startShake;
-    private CharacterController characterController;
+    private bool shakeable;
+
+    protected override void OnEnabled()
+    {
+        harvestFruitEvent.OnRaised += harvestFruitEvent_OnRaised;
+    }
+
+    private void harvestFruitEvent_OnRaised()
+    {
+        currentTree.Shake();
+    }
+
+    protected override void OnDisabled()
+    {
+        harvestFruitEvent.OnRaised -= harvestFruitEvent_OnRaised;
+    }
 
     private void Start()
     {
@@ -27,11 +49,9 @@ public class HPopupFruitAction : UIPopup
     {
         IsShakingState(false);
 
-        startShake = false;
-
         currentTree = getCurrentTreeEvent.Raise().GetComponent<FruitTree>();
         if (currentTree == null) return;
-
+        
         foreach (var fruitBtn in fruitBtnList)
         {
             fruitBtn.gameObject.SetActive(currentTree.FruitResource.resourceType == fruitBtn.FruitType);
@@ -41,30 +61,35 @@ public class HPopupFruitAction : UIPopup
     protected override void Tick()
     {
         if (!isShaking) return;
-        if (startShake) return;
-        if (!SimpleMath.InRange(characterController.transform.position, currentTree.StandPosition, 0.1f))
+
+        if (!SimpleMath.InRange(characterController.transform.position, currentTree.StandPosition.position, 0.2f))
         {
-            characterController.MoveToPosition(currentTree.StandPosition, characterController.CharacterStat.workingMoveSpeed, Time.deltaTime);
-            Debug.LogError("Move");
+            characterController.MoveToPosition(currentTree.StandPosition.position,
+                characterController.CharacterStat.workingMoveSpeed, Time.deltaTime);
         }
         else
         {
-            characterController.transform.rotation = currentTree.transform.rotation;
-            startShake = true;
-            Debug.LogError("Rotate");
+            characterController.RotateToTarget(currentTree.LookAtPosition.position, Time.deltaTime);
+            Shaking();
         }
-        // Debug.LogError("Run?");
+    }
+
+    private void Shaking()
+    {
+        if (shakeInput.Value.x >= -0.1f && shakeInput.Value.x <= 0.1f) shakeable = true;
+        if (shakeable && (shakeInput.Value.x >= 0.75f || shakeInput.Value.x <= -0.75))
+        {
+            shakeable = false;
+            characterController.CharacterAnimController.Play(Constant.HARVEST_FRUIT, 1);
+        }
     }
 
     public void StartFruitAction()
     {
         IsShakingState(true);
-
+        
+        currentTree.GrownFruitHandle.Pause();
         changeInputEvent.Raise((int)EnumPack.ControlType.Horizontal);
-
-        // var test = SimpleMath.InRange(characterController.transform.position, currentTree.StandPosition, 0.2f);
-        // var test = new Vector3(characterController.transform.position.x - currentTree.StandPosition.x, 0.0f, characterController.transform.position.z - currentTree.StandPosition.z);
-        // Debug.LogError(test.sqrMagnitude);
     }
 
     private void IsShakingState(bool shakingValue)
@@ -76,6 +101,9 @@ public class HPopupFruitAction : UIPopup
 
     public void ClosePopup()
     {
+        currentTree.GrownFruitHandle.Resume();
+        currentTree.ReturnDroppedModel();
+        characterController.CharacterAnimController.Play(Constant.EMPTY, 1);
         changeInputEvent.Raise((int)EnumPack.ControlType.Move);
         closePopupEvent.Raise();
     }

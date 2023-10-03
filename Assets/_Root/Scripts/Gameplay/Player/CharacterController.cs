@@ -40,6 +40,7 @@ public class CharacterController : GameComponent
     private void changeInputEvent_OnRaised(int newControlType)
     {
         controlType = (EnumPack.ControlType)newControlType;
+        navmeshController.ResetPath();
     }
 
     protected override void OnDisabled()
@@ -57,7 +58,7 @@ public class CharacterController : GameComponent
     protected override void Tick()
     {
         if (controlType != EnumPack.ControlType.Move) return;
-
+        
         characterHandleInput.GetInput();
         MoveByDirection(characterHandleInput.MoveDir.normalized, currentMoveSpeed, Time.deltaTime);
     }
@@ -71,6 +72,14 @@ public class CharacterController : GameComponent
     public void MoveToPosition(Vector3 position, float moveSpeed, float deltaTime)
     {
         navmeshController.MoveByPosition(position, 0.0f, moveSpeed, characterStat.rotateSpeed, 0.1f, deltaTime);
+        characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
+    }
+
+    public void RotateToTarget(Vector3 pos, float deltaTime)
+    {
+        var dir = pos - transform.position;
+        dir.y = 0.0f;
+        navmeshController.MoveByDirection(dir, 0, characterStat.rotateSpeed, deltaTime);
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
     }
 

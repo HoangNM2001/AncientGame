@@ -7,10 +7,6 @@ using UnityEngine;
 
 public class ResourceFlyModel : GameComponent
 {
-    [SerializeField] private float forceMin;
-    [SerializeField] private float forceMax;
-    [SerializeField] private float speed = 1.5f;
-
     private Vector3 defaultPos;
     private float randomDistance;
     private float randomJumpForce;
@@ -27,13 +23,8 @@ public class ResourceFlyModel : GameComponent
         randomDistance = UnityEngine.Random.Range(1, 4) * 0.25f * randomSign;
         randomJumpForce = UnityEngine.Random.Range(2, 4) * 0.4f;
         randomNumJump = UnityEngine.Random.Range(1, 3);
-        var randomPos = new Vector3(defaultPos.x - randomDistance, defaultPos.y, defaultPos.z + randomDistance);
+        var randomPos = new Vector3(defaultPos.x - randomDistance, 0.0f, defaultPos.z + randomDistance);
         transform.DOLocalJump(randomPos, randomJumpForce, randomNumJump, duration: randomNumJump / 2.0f ).SetEase(Ease.Linear)
             .OnComplete(() => completeAction?.Invoke());
-    }
-
-    public void DoDrop()
-    {
-        
     }
 }

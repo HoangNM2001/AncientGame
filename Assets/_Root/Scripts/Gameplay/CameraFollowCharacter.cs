@@ -51,7 +51,6 @@ public class CameraFollowCharacter : GameComponent
     protected override void LateTick()
     {
         if (!characterTrans) return;
-        if (controlType != EnumPack.ControlType.Move) return;
         
         transform.position = Vector3.SmoothDamp(transform.position, characterTrans.transform.position, ref velocity, SmoothTime);
     }

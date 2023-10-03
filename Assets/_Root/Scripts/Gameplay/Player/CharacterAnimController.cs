@@ -14,6 +14,7 @@ public class CharacterAnimController : GameComponent
     [Header("EVENT")]
     [SerializeField] private ScriptableEventNoParam dropSeedEvent;
     [SerializeField] private ScriptableEventNoParam waterFarmEvent;
+    [SerializeField] private ScriptableEventNoParam harvestFruitEvent;
 
     public string AnimationName => animationName;
     public float Speed
@@ -56,5 +57,10 @@ public class CharacterAnimController : GameComponent
     public void TriggerWaterFarm()
     {
         waterFarmEvent.Raise();
+    }
+
+    public void TriggerHarvestFruit()
+    {
+        harvestFruitEvent.Raise();        
     }
 }

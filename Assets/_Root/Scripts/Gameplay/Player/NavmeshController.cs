@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using Pancake;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,7 +22,7 @@ public class NavmeshController : GameComponent
 
     protected override void Tick()
     {
-        velocityRatio = navMeshAgent.speed > 0 ? navMeshAgent.velocity.magnitude / navMeshAgent.speed : 0;
+        velocityRatio = navMeshAgent.speed > 0.1f ? navMeshAgent.velocity.magnitude / navMeshAgent.speed : 0;
     }
 
     public void MoveByDirection(Vector3 direction, float moveSpeed, float rotateSpeed, float deltaTime)
@@ -36,10 +37,13 @@ public class NavmeshController : GameComponent
         {
             targetRotation = Quaternion.LookRotation(direction);
         }
-        navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRotation, deltaTime * rotateSpeed);
+
+        navMeshAgent.transform.rotation =
+            Quaternion.Slerp(navMeshAgent.transform.rotation, targetRotation, deltaTime * rotateSpeed);
     }
 
-    public void MoveByPosition(Vector3 targetPosition, float targetRadius, float moveSpeed, float rotateSpeed, float stoppingDistance, float deltaTime)
+    public void MoveByPosition(Vector3 targetPosition, float targetRadius, float moveSpeed, float rotateSpeed,
+        float stoppingDistance, float deltaTime)
     {
         navMeshAgent.speed = moveSpeed;
         navMeshAgent.stoppingDistance = stoppingDistance;
@@ -48,8 +52,6 @@ public class NavmeshController : GameComponent
         direction = new Vector3(direction.x, 0.0f, direction.z);
 
         var distance = direction.magnitude - targetRadius - stoppingDistance;
-
-        Debug.LogError(direction + " + " + distance);
 
         if (distance <= 0.0f)
         {
@@ -60,7 +62,9 @@ public class NavmeshController : GameComponent
             {
                 targetRotation = Quaternion.LookRotation(direction);
             }
-            navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRotation, deltaTime * rotateSpeed);
+
+            navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRotation,
+                deltaTime * rotateSpeed);
         }
         else
         {
@@ -75,5 +79,10 @@ public class NavmeshController : GameComponent
             // }
             // navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRotation, deltaTime * rotateSpeed);
         }
+    }
+
+    public void ResetPath()
+    {
+        navMeshAgent.ResetPath();
     }
 }

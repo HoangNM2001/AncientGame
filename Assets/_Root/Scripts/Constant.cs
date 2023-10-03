@@ -21,5 +21,7 @@ namespace Pancake.SceneFlow
         public const string WATER_FARM = "WaterFarm";
         public const string HARVEST_FARM = "HarvestFarm";
         public const string HARVEST_FRUIT = "HarvestFruit";
+
+        public const string TREE_SHAKE = "Shake";
     }
 }
