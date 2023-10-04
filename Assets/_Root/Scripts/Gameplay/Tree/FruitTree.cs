@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using DG.Tweening;
 using Pancake;
 using Pancake.SceneFlow;
+using Pancake.Scriptable;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,6 +20,7 @@ public class FruitTree : GameComponent
     [SerializeField] private GameObject fruitParent;
     [SerializeField] private float timeGrown;
     [SerializeField] private List<GameObject> fruitList;
+    [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
     private List<GameObject> remainFruitList = new List<GameObject>();
     private List<GameObject> appearFruitList = new List<GameObject>();
@@ -120,6 +122,11 @@ public class FruitTree : GameComponent
         foreach (var droppedFruit in droppedFruitList)
         {
             fruitResource.flyModelPool.Return(droppedFruit);
+            flyUIEvent.Raise(new FlyEventData
+                {
+                    resourceType = fruitResource.resourceType,
+                    worldPos = droppedFruit.transform.position
+                });
         }
 
         droppedFruitList.Clear();

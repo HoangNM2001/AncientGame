@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
-  m_Name: StrawberryResource
+  m_Name: Strawberry_Resource
   m_EditorClassIdentifier: 
   resourceId: strawberry_resource
   resourceType: 20
@@ -19,5 +19,5 @@ MonoBehaviour:
   bigTreePool: {fileID: 11400000, guid: 4366521145a34ab498345886f1ffb99e, type: 2}
   treeColor: {r: 0.8396226, g: 0.23469768, b: 0.11485406, a: 0}
   flyModelPool: {fileID: 11400000, guid: dd6e6f9bc24d84a4fbea6b9b235fab83, type: 2}
-  flyUIPool: {fileID: 11400000, guid: 5a58cda6a213bb5449e6dac24e2ed88f, type: 2}
+  flyUIPool: {fileID: 11400000, guid: dde4eeb4914fb5648ae67e51a11d6b29, type: 2}
   resourceQuantity: {fileID: 11400000, guid: 279ccad5b445ab14da9d4f60877c18b7, type: 2}

@@ -122,11 +122,11 @@ public class HPopupFruitAction : UIPopup
 
     public void ClosePopup()
     {
-        currentTree.GrownFruitHandle.Resume();
-        currentTree.ReturnDroppedModel();
         characterController.CharacterAnimController.Play(Constant.EMPTY, 1);
         changeInputEvent.Raise((int)EnumPack.ControlType.Move);
         toggleMenuUIEvent.Raise(true);
+        currentTree.GrownFruitHandle.Resume();
+        currentTree.ReturnDroppedModel();
         closePopupEvent.Raise();
     }
 

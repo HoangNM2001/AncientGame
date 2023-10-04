@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 public class ResourceDropModel : GameComponent
 {
+    [SerializeField] private float dropSpeed;
+
     private float randomBounceTime;
     private bool isStopped;
     private Vector3 velocity;
@@ -33,7 +35,7 @@ public class ResourceDropModel : GameComponent
         if (isStopped) return;
         if (velocity.magnitude > SleepThreshold || transform.position.y > FloorHeight)
         {
-            velocity.y += Gravity * Time.fixedDeltaTime * 2.5f;
+            velocity.y += Gravity * Time.fixedDeltaTime * dropSpeed;
         }
         
         transform.position += velocity * Time.fixedDeltaTime;

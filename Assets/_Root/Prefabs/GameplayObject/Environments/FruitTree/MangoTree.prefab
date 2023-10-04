@@ -923,6 +923,7 @@ MonoBehaviour:
   - {fileID: 8284625719662189130}
   - {fileID: 7964066176141810883}
   - {fileID: 2986199725538653231}
+  flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}
 --- !u!1 &2283499009618944462
 GameObject:
   m_ObjectHideFlags: 0

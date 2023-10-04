@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56cdb8ad39a5bdd4f8ed3d18fae14a63, type: 3}
-  m_Name: Strawberry_Quantity
+  m_Name: Peach_Quantity
   m_EditorClassIdentifier: 
-  guid: 279ccad5b445ab14da9d4f60877c18b7
-  value: 137
+  guid: dc4ee995d251f2e46ad36382bf7db8a3
+  value: 88
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0
