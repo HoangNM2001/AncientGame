@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Schema;
 using DG.Tweening;
 using Pancake;
+using Pancake.Scriptable;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -16,6 +17,7 @@ public class Field : GameComponent
     [SerializeField] private Color seededColor;
     [SerializeField] private Color wateredColor;
     [SerializeField] private GameObjectPool leavesParticlePool;
+    [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
     private ResourceConfig resourceConfig;
     private MaterialPropertyBlock fieldMaterialBlock;
@@ -123,8 +125,8 @@ public class Field : GameComponent
 
         bigTreePool.Return(bigTree);
 
-        GameObject tempLeaves = leavesParticlePool.Request();
-        float tempYPos = tempLeaves.transform.localPosition.y;
+        var tempLeaves = leavesParticlePool.Request();
+        var tempYPos = tempLeaves.transform.localPosition.y;
         tempLeaves.transform.SetParent(transform);
         tempLeaves.transform.localPosition = new Vector3(0.0f, tempYPos, 0.0f);
         tempLeaves.GetComponent<LeavesParticle>().ChangeParticleColor(resourceConfig.treeColor);
@@ -132,13 +134,23 @@ public class Field : GameComponent
 
         ChangeFieldColor(wateredColor, soilColor, HarvestDuration);
 
-        int randomFlyModel = Random.Range(1, MaxFlyModel);
-        for (int i = 1; i <= randomFlyModel; i++)
+        var randomFlyModel = Random.Range(1, MaxFlyModel);
+        
+        for (var i = 1; i <= randomFlyModel; i++)
         {
-            GameObject tempFly = flyModelPool.Request();
+            var tempFly = flyModelPool.Request();
             tempFly.transform.SetParent(transform);
             tempFly.transform.localPosition = Vector3.zero;
-            tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() => flyModelPool.Return(tempFly));
+            tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() =>
+            {
+                // Camera.main.WorldToScreenPoint(tempFly.transform.position);
+                flyModelPool.Return(tempFly);
+                flyUIEvent.Raise(new FlyEventData
+                {
+                    resourceType = resourceConfig.resourceType,
+                    worldPos = tempFly.transform.position
+                });
+            });
         }
     }
 

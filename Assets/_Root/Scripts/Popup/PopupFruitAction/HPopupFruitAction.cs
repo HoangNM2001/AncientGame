@@ -6,6 +6,7 @@ using Pancake.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HPopupFruitAction : UIPopup
 {
@@ -13,6 +14,7 @@ public class HPopupFruitAction : UIPopup
     [SerializeField] private ScriptableEventGetGameObject getCurrentTreeEvent;
     [SerializeField] private ScriptableEventInt changeInputEvent;
     [SerializeField] private ScriptableEventNoParam harvestFruitEvent;
+    [SerializeField] private ScriptableEventBool toggleMenuUIEvent;
     [SerializeField] private Vector2Variable shakeInput;
     [SerializeField] private GameObject shakeUI;
     [SerializeField] private GameObject fruitButtonUI;
@@ -33,6 +35,7 @@ public class HPopupFruitAction : UIPopup
     private void harvestFruitEvent_OnRaised()
     {
         currentTree.Shake();
+        UpdateShakeProcessBar();
     }
 
     protected override void OnDisabled()
@@ -87,9 +90,27 @@ public class HPopupFruitAction : UIPopup
     public void StartFruitAction()
     {
         IsShakingState(true);
+        SetShakeProcessbar();
         
         currentTree.GrownFruitHandle.Pause();
         changeInputEvent.Raise((int)EnumPack.ControlType.Horizontal);
+        toggleMenuUIEvent.Raise(false);
+    }
+
+    private void SetShakeProcessbar()
+    {
+        fruitFillBar.fillAmount = (float)currentTree.CurrentFruitQuantity / currentTree.MaxFruitQuantity;
+        fillText.text = currentTree.CurrentFruitQuantity + "/" + currentTree.MaxFruitQuantity;
+    }
+
+    private void UpdateShakeProcessBar()
+    {
+        var targetFillAmount = (float)currentTree.CurrentFruitQuantity / currentTree.MaxFruitQuantity;
+        
+        fruitFillBar.DOFillAmount(targetFillAmount, 0.8f) 
+            .OnUpdate(() => {
+                fillText.text = Mathf.RoundToInt(fruitFillBar.fillAmount * currentTree.MaxFruitQuantity) + "/" + currentTree.MaxFruitQuantity;
+            });
     }
 
     private void IsShakingState(bool shakingValue)
@@ -105,6 +126,7 @@ public class HPopupFruitAction : UIPopup
         currentTree.ReturnDroppedModel();
         characterController.CharacterAnimController.Play(Constant.EMPTY, 1);
         changeInputEvent.Raise((int)EnumPack.ControlType.Move);
+        toggleMenuUIEvent.Raise(true);
         closePopupEvent.Raise();
     }
 

@@ -52,6 +52,7 @@ MonoBehaviour:
   seededColor: {r: 0.65882355, g: 0.5411765, b: 0.24705882, a: 0}
   wateredColor: {r: 0.5294118, g: 0.34509805, b: 0.05882353, a: 0}
   leavesParticlePool: {fileID: 11400000, guid: 2e7997dc706ed51448b583e0b8df7c90, type: 2}
+  flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}
 --- !u!135 &8804489006909381113
 SphereCollider:
   m_ObjectHideFlags: 0

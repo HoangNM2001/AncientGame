@@ -70,7 +70,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.454
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -218,11 +218,12 @@ MonoBehaviour:
   getCurrentTreeEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
   changeInputEvent: {fileID: 11400000, guid: 3d68a3cc988281a4aa9c0ba528ec04c4, type: 2}
   harvestFruitEvent: {fileID: 11400000, guid: b2dfb3779f69d274c8927f3bdf1f6150, type: 2}
+  toggleMenuUIEvent: {fileID: 11400000, guid: 546fc11dac5653847a4c4472a5171389, type: 2}
   shakeInput: {fileID: 11400000, guid: 2cbac918da195084684a5b828d2033c2, type: 2}
   shakeUI: {fileID: 6908614398339552320}
   fruitButtonUI: {fileID: 3997245383727844385}
-  fruitFillBar: {fileID: 0}
-  fillText: {fileID: 0}
+  fruitFillBar: {fileID: 4667356200789991741}
+  fillText: {fileID: 8130144169023323512}
   fruitBtnList:
   - {fileID: 4022704342935099015}
   - {fileID: 3896217606239322271}
@@ -1125,7 +1126,7 @@ GameObject:
   - component: {fileID: 8352081651204754885}
   - component: {fileID: 8130144169023323512}
   m_Layer: 5
-  m_Name: Count
+  m_Name: CountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

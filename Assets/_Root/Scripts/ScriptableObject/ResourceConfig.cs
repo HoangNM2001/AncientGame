@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Pancake;
 using Pancake.Apex;
+using Pancake.Scriptable;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,7 +17,9 @@ public class ResourceConfig : ScriptableObject
     public GameObjectPool bigTreePool;
     public Color treeColor;
     public GameObjectPool flyModelPool;
-
+    public GameObjectPool flyUIPool;
+    public IntVariable resourceQuantity;
+    
     public string ResourceId => resourceId;
 
 #if UNITY_EDITOR

@@ -20,9 +20,9 @@ public class FruitTree : GameComponent
     [SerializeField] private float timeGrown;
     [SerializeField] private List<GameObject> fruitList;
 
-    [SerializeField] private List<GameObject> remainFruitList = new List<GameObject>();
-    [SerializeField] private List<GameObject> appearFruitList = new List<GameObject>();
-    [SerializeField] private List<GameObject> droppedFruitList = new List<GameObject>();
+    private List<GameObject> remainFruitList = new List<GameObject>();
+    private List<GameObject> appearFruitList = new List<GameObject>();
+    private List<GameObject> droppedFruitList = new List<GameObject>();
     private DelayHandle grownFruitHandle;
 
     public ResourceConfig FruitResource => fruitResource;
@@ -30,11 +30,13 @@ public class FruitTree : GameComponent
     public Transform LookAtPosition => lookAtPosition;
     public DelayHandle GrownFruitHandle => grownFruitHandle;
 
-    private int CurrentFruit
+    public int CurrentFruitQuantity
     {
         get => Data.Load(uniqueId, fruitList.Count);
-        set => Data.Save(uniqueId, value);
+        private set => Data.Save(uniqueId, value);
     }
+
+    public int MaxFruitQuantity => fruitList.Count;
 
     private void Awake()
     {
@@ -42,7 +44,7 @@ public class FruitTree : GameComponent
 
         for (int i = 0; i < fruitList.Count; i++)
         {
-            if (i < CurrentFruit)
+            if (i < CurrentFruitQuantity)
             {
                 fruitList[i].SetActive(true);
                 appearFruitList.Add(fruitList[i]);
@@ -81,7 +83,8 @@ public class FruitTree : GameComponent
         treeAnimator.CrossFade(Constant.TREE_SHAKE, 0.1f);
 
         var numOfDrop = Mathf.Min(Random.Range(1, 6), appearFruitList.Count);
-        CurrentFruit -= numOfDrop;
+        CurrentFruitQuantity -= numOfDrop;
+        fruitResource.resourceQuantity.Value += numOfDrop;
 
         for (var i = 0; i < numOfDrop; i++)
         {
@@ -101,7 +104,7 @@ public class FruitTree : GameComponent
         fruit.transform.DOScale(defaultScale, 0.5f).SetEase(Ease.OutBack);
         appearFruitList.Add(fruit);
         remainFruitList.Remove(fruit);
-        CurrentFruit++;
+        CurrentFruitQuantity++;
     }
 
     private void DropFruit(GameObject randomFruit)
