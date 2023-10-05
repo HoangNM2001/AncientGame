@@ -19,6 +19,7 @@ public class HPopupFruitAction : UIPopup
     [SerializeField] private GameObject shakeUI;
     [SerializeField] private GameObject fruitButtonUI;
     [SerializeField] private Image fruitFillBar;
+    [SerializeField] private Image fruitBarImage;
     [SerializeField] private TextMeshProUGUI fillText;
     [SerializeField] private List<FruitActionBtn> fruitBtnList;
 
@@ -90,17 +91,19 @@ public class HPopupFruitAction : UIPopup
     public void StartFruitAction()
     {
         IsShakingState(true);
-        SetShakeProcessbar();
+        SetShakeProcessBar();
         
         currentTree.GrownFruitHandle.Pause();
         changeInputEvent.Raise((int)EnumPack.ControlType.Horizontal);
         toggleMenuUIEvent.Raise(false);
     }
 
-    private void SetShakeProcessbar()
+    private void SetShakeProcessBar()
     {
         fruitFillBar.fillAmount = (float)currentTree.CurrentFruitQuantity / currentTree.MaxFruitQuantity;
         fillText.text = currentTree.CurrentFruitQuantity + "/" + currentTree.MaxFruitQuantity;
+        fruitBarImage.sprite = currentTree.FruitResource.resourceIcon;
+        fruitBarImage.SetNativeSize();
     }
 
     private void UpdateShakeProcessBar()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Pancake;
 using Pancake.Scriptable;
 using Pancake.UI;
@@ -17,7 +18,8 @@ public class ExtendField : GameComponent
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
     
     private ResourceConfig resourceConfig;
-    private Dictionary<EnumPack.ResourceType, ResourceConfig> resourceConfigDict =
+
+    private readonly Dictionary<EnumPack.ResourceType, ResourceConfig> resourceConfigDict =
         new Dictionary<EnumPack.ResourceType, ResourceConfig>();
 
     public EnumPack.ResourceType ResourceType
@@ -57,29 +59,31 @@ public class ExtendField : GameComponent
     {
         fieldStateList.Reset();
 
+        var canSeedCount = 0;
+        var canWaterCount = 0;
+        var canHarvestCount = 0;
+
         foreach (var field in fieldList)
         {
-            if (field.FieldState == EnumPack.FieldState.Seedale &&
-                !fieldStateList.Contains((int)EnumPack.FieldState.Seedale))
+            switch (field.FieldState)
             {
-                fieldStateList.Add((int)EnumPack.FieldState.Seedale);
-                continue;
-            }
-
-            if (field.FieldState == EnumPack.FieldState.Waterable &&
-                !fieldStateList.Contains((int)EnumPack.FieldState.Waterable))
-            {
-                fieldStateList.Add((int)EnumPack.FieldState.Waterable);
-                continue;
-            }
-
-            if (field.FieldState == EnumPack.FieldState.Harvestable &&
-                !fieldStateList.Contains((int)EnumPack.FieldState.Harvestable))
-            {
-                fieldStateList.Add((int)EnumPack.FieldState.Harvestable);
-                continue;
+                case EnumPack.FieldState.Seedale:
+                    canSeedCount++;
+                    break;
+                case EnumPack.FieldState.Waterable:
+                    canWaterCount++;
+                    break;
+                case EnumPack.FieldState.Harvestable:
+                    canHarvestCount++;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
+
+        if (canSeedCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Seedale);
+        if (canWaterCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Waterable);
+        if (canHarvestCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Harvestable);
     }
 
     public bool IsSeeded()
@@ -91,19 +95,20 @@ public class ExtendField : GameComponent
                 return true;
             }
         }
+
         return false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         CalculateExtendFieldState();
-        CharacterHandleTrigger characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
         if (characterHandleTrigger) characterHandleTrigger.TriggerActionFarm(gameObject);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        CharacterHandleTrigger characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
         if (characterHandleTrigger) characterHandleTrigger.ExitTriggerActionFarm();
     }
 
@@ -129,10 +134,10 @@ public class ExtendField : GameComponent
         EditorUtility.SetDirty(this);
     }
 
-    [ContextMenu("Get Resources")]
+    [ContextMenu("Get Farm Resources")]
     public void GetResources()
     {
-        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources";
+        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources/FarmResources";
 
         var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
 

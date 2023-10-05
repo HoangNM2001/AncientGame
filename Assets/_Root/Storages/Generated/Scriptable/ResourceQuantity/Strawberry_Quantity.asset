@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Strawberry_Quantity
   m_EditorClassIdentifier: 
   guid: 279ccad5b445ab14da9d4f60877c18b7
-  value: 137
+  value: 185
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

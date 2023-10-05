@@ -223,6 +223,7 @@ MonoBehaviour:
   shakeUI: {fileID: 6908614398339552320}
   fruitButtonUI: {fileID: 3997245383727844385}
   fruitFillBar: {fileID: 4667356200789991741}
+  fruitBarImage: {fileID: 2930646861237798455}
   fillText: {fileID: 8130144169023323512}
   fruitBtnList:
   - {fileID: 4022704342935099015}
@@ -602,7 +603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 34, y: 657}
+  m_AnchoredPosition: {x: 47, y: 657}
   m_SizeDelta: {x: 548.2, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &78150715307728988

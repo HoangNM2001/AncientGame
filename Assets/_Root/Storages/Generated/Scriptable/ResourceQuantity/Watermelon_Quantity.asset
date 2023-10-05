@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Watermelon_Quantity
   m_EditorClassIdentifier: 
   guid: 09027b58f158dcd47aa6cdb9da703a89
-  value: 268
+  value: 359
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

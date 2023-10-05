@@ -77,6 +77,10 @@ public class FruitTree : GameComponent
             {
                 FruitAppear(remainFruitList[remainFruitList.Count - 1]);
             }
+            else
+            {
+                grownFruitHandle.Pause();
+            }
         }, isLooped: true);
     }
 
@@ -86,7 +90,6 @@ public class FruitTree : GameComponent
 
         var numOfDrop = Mathf.Min(Random.Range(1, 6), appearFruitList.Count);
         CurrentFruitQuantity -= numOfDrop;
-        fruitResource.resourceQuantity.Value += numOfDrop;
 
         for (var i = 0; i < numOfDrop; i++)
         {

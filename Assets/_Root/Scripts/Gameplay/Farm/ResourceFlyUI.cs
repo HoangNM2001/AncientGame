@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Pancake;
-using Unity.Android.Types;
 using UnityEngine;
 
 public class ResourceFlyUI : GameComponent
@@ -21,6 +18,7 @@ public class ResourceFlyUI : GameComponent
 
     public void DoMove(Vector3 endPoint, Action completeAction)
     {
+        animationDuration = UnityEngine.Random.Range(0.5f, 1.5f);
         rectTransform.localScale = Vector3.one;
 
         // Calculate the curve's highest point as the midpoint of the start and end, raised in Y.

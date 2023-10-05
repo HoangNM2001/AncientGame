@@ -66,7 +66,7 @@ public class HMenuController : GameComponent
         position = uiCamera.ScreenToWorldPoint(position);
         
         var resourceFlyUI = resourceFlyUIDict[flyEventData.resourceType].Request();
-        resourceFlyUI.transform.parent = menuUI.transform;
+        resourceFlyUI.transform.SetParent(menuUI.transform);
         resourceFlyUI.transform.position = position;
         resourceFlyUI.GetComponent<ResourceFlyUI>().DoMove(tempQuantity.IconPosition, () =>
         {
