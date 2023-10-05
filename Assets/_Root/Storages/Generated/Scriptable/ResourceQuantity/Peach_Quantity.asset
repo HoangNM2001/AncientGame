@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Peach_Quantity
   m_EditorClassIdentifier: 
   guid: dc4ee995d251f2e46ad36382bf7db8a3
-  value: 111
+  value: 135
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0
