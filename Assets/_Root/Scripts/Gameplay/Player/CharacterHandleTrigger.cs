@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pancake;
+using Pancake.SceneFlow;
 using Pancake.Scriptable;
 using Pancake.UI;
 using UnityEngine;
@@ -66,5 +67,25 @@ public class CharacterHandleTrigger : GameComponent
     {
         currentInteract = null;
         popupCloseEvent.Raise();
+    }
+
+    public void TriggerActionShopFar(GameObject triggerShop)
+    {
+        Debug.LogError("Far");
+    }
+
+    public void ExitTriggerActionShopFar(GameObject triggerShop)
+    {
+        Debug.LogError("ExitFar");
+    }
+
+    public void TriggerActionShopNear(GameObject triggerShop)
+    {
+        Debug.LogError("Near");
+    }
+
+    public void ExitTriggerActionShopNear(GameObject triggerShop)
+    {
+        Debug.LogError("ExitNear");
     }
 }

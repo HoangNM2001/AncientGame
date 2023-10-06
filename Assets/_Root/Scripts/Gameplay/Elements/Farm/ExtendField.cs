@@ -124,7 +124,7 @@ public class ExtendField : GameComponent
     public void SetupExtendField()
     {
         GetFields();
-        GetResources();
+        GetFarmResources();
     }
 
     [ContextMenu("Get Fields")]
@@ -135,7 +135,7 @@ public class ExtendField : GameComponent
     }
 
     [ContextMenu("Get Farm Resources")]
-    public void GetResources()
+    public void GetFarmResources()
     {
         const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources/FarmResources";
 

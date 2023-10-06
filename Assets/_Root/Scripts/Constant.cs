@@ -23,5 +23,10 @@ namespace Pancake.SceneFlow
         public const string HARVEST_FRUIT = "HarvestFruit";
 
         public const string TREE_SHAKE = "Shake";
+
+        public const string SHOPKEEPER_IDLE = "Idle";
+        public const string SHOPKEEPER_WAVE = "WavePlayer";
+        public const string SHOPKEEPER_AFTERSELL = "AfterSell";
+        public const string SHOPKEEPER_TALKING = "Talking";
     }
 }

@@ -22,6 +22,11 @@ public class HPopupChooseSeed : UIPopup
         }
     }
 
+    public void ClosePopup()
+    {
+        closePopupEvent.Raise();
+    }
+    
     protected override bool EnableTrackBackButton()
     {
         return false;
@@ -31,7 +36,7 @@ public class HPopupChooseSeed : UIPopup
     [ContextMenu("Get Resources")]
     public void GetResources()
     {
-        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources";
+        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources/FarmResources";
 
         var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
 
