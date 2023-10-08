@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
-  m_Name: Mango_Resource
+  m_Name: Peach_Resource
   m_EditorClassIdentifier: 
-  resourceId: mango_resource
-  resourceType: 18
-  resourceIcon: {fileID: 21300000, guid: 0f485b84671a03243b895bb1c791ffa9, type: 3}
+  resourceId: peach__resource
+  resourceType: 17
+  resourceIcon: {fileID: 21300000, guid: e1afc35afb293e84499d8a4ac0813598, type: 3}
   smallTreePool: {fileID: 0}
   bigTreePool: {fileID: 0}
   treeColor: {r: 0, g: 0, b: 0, a: 0}
-  flyModelPool: {fileID: 11400000, guid: 90af4d208ff3ecf41bc1bb03707801e9, type: 2}
-  flyUIPool: {fileID: 11400000, guid: f0316a4286a514441bce933fe7a8e34c, type: 2}
-  resourceQuantity: {fileID: 11400000, guid: dfd3ec34389a3dc49ac2fb28a9685a11, type: 2}
+  flyModelPool: {fileID: 11400000, guid: dea568b7308763941988cb062f6a4c2a, type: 2}
+  flyUIPool: {fileID: 11400000, guid: 1c813286c5057d94fb72a3be0cb81399, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: dc4ee995d251f2e46ad36382bf7db8a3, type: 2}
+  Price: 5

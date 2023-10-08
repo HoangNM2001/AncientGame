@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56cdb8ad39a5bdd4f8ed3d18fae14a63, type: 3}
-  m_Name: Mango_Quantity
+  m_Name: Gold_Quantity
   m_EditorClassIdentifier: 
-  guid: dfd3ec34389a3dc49ac2fb28a9685a11
-  value: 0
+  guid: 1d4b77d15290c5840933bfb3884dc4b9
+  value: 48880
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

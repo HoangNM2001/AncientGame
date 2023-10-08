@@ -14,12 +14,11 @@ public class CharacterHandleTrigger : GameComponent
     [SerializeField] private ScriptableEventGetGameObject getPopupParentEvent;
     [SerializeField] private ScriptableEventGetGameObject getCurrentInteractEvent;
     
-    [Header("Farm Interact")]
+    [Header("Interact Popup")]
     [SerializeField] private ScriptableEventNoParam stopActionEvent;
     [SerializeField, PopupPickup] private string farmActionPopup;
-
-    [Header("Tree Interact")]
-    [SerializeField, PopupPickup] private string fruitActionPopup; 
+    [SerializeField, PopupPickup] private string fruitActionPopup;
+    [SerializeField, PopupPickup] private string shopActionPopup; 
 
     private Transform popupParentTrans;
     private GameObject currentInteract;
@@ -82,10 +81,14 @@ public class CharacterHandleTrigger : GameComponent
     public void TriggerActionShopNear(GameObject triggerShop)
     {
         Debug.LogError("Near");
+        currentInteract = triggerShop;
+        popupShowEvent.Raise(shopActionPopup, popupParentTrans);
     }
 
     public void ExitTriggerActionShopNear(GameObject triggerShop)
     {
         Debug.LogError("ExitNear");
+        currentInteract = null;
+        popupCloseEvent.Raise();
     }
 }

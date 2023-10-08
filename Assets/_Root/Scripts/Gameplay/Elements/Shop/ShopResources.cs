@@ -20,6 +20,8 @@ public class ShopResources : GameComponent
     private CharacterHandleTrigger characterHandleTrigger;
     private Vector3 defaultUIScale;
 
+    public Vector3 ShopPos => shopKeeperAnimator.transform.position;
+    public List<ResourceConfig> BuyAbleResourceList => buyAbleResourceList;
     private void Start()
     {
         foreach (var resource in buyAbleResourceList)
@@ -53,7 +55,7 @@ public class ShopResources : GameComponent
         if (characterHandleTrigger == null) characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(obj);
         characterHandleTrigger.TriggerActionShopFar(gameObject);
         
-        ScaleObject(sellableUI.transform, true);
+        IsShowSellableUI(true);
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_WAVE, 0.1f);
     }
 
@@ -62,7 +64,7 @@ public class ShopResources : GameComponent
         if (characterHandleTrigger == null) characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(obj);
         characterHandleTrigger.ExitTriggerActionShopFar(gameObject);
         
-        ScaleObject(sellableUI.transform, false);
+        IsShowSellableUI(false);
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_IDLE, 0.1f);
     }
 
@@ -82,16 +84,16 @@ public class ShopResources : GameComponent
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_IDLE, 0.1f);
     }
 
-    private void ScaleObject(Transform targetTrans, bool isAppear)
+    public void IsShowSellableUI(bool isAppear)
     {
         if (isAppear)
         {
-            targetTrans.gameObject.SetActive(true);
-            targetTrans.DOScale(defaultUIScale, 0.25f);
+            sellableUI.gameObject.SetActive(true);
+            sellableUI.transform.DOScale(defaultUIScale, 0.25f);
         }
         else
         {
-            targetTrans.DOScale(0.0f, 0.25f).OnComplete(() => targetTrans.gameObject.SetActive(false));
+            sellableUI.transform.DOScale(0.0f, 0.25f).OnComplete(() => sellableUI.transform.gameObject.SetActive(false));
         }
     }
 }

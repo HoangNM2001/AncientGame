@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Pancake;
 using Pancake.Scriptable;
 using Pancake.Threading.Tasks.Triggers;
 using TMPro;
@@ -10,7 +11,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class ResourceQuantity : MonoBehaviour
+public class ResourceQuantity : GameComponent
 {
     [SerializeField] private Image resourceIcon;
     [SerializeField] private TextMeshProUGUI quantityText;
@@ -36,6 +37,13 @@ public class ResourceQuantity : MonoBehaviour
     {
         QuantityVariable.Value++;
         quantityText.SetText(QuantityVariable.Value.ToString());
+        ScaleEffect();
+    }
+
+    public void UpdateCoinValue(int changeValue)
+    {
+        // QuantityVariable.Value += changeValue;
+        // quantityText.SetText(QuantityVariable.Value.ToString());
         ScaleEffect();
     }
 

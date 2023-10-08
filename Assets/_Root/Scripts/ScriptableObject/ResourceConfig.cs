@@ -20,7 +20,7 @@ public class ResourceConfig : ScriptableObject
     public GameObjectPool flyUIPool;
     public IntVariable resourceQuantity;
     
-    public string ResourceId => resourceId;
+    public int Price;
 
 #if UNITY_EDITOR
     [ContextMenu("ResetId")]

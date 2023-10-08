@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Pancake;
 using Pancake.Scriptable;
+using Pancake.Threading.Tasks.Triggers;
 using Pancake.UI;
 using UnityEditor;
 using UnityEngine;
@@ -11,17 +12,20 @@ using UnityEngine;
 public class HMenuController : GameComponent
 {
     [SerializeField] private GameObject menuUI;
+    [SerializeField] private ResourceQuantity coinQuantity;
     [SerializeField] private Transform resourceQuantityParent;
     [SerializeField] private ResourceQuantity resourceQuantityPrefab;
 
-    [Header("POPUP")] [SerializeField] private UIButton settingBtn;
+    [Header("POPUP")][SerializeField] private UIButton settingBtn;
     [SerializeField, PopupPickup] private string settingsPopup;
 
-    [Header("EVENT")] [SerializeField] private PopupShowEvent popupShowEvent;
+    [Header("EVENT")][SerializeField] private PopupShowEvent popupShowEvent;
     [SerializeField] private ScriptableEventGetGameObject getPopupParentEvent;
     [SerializeField] private ScriptableEventBool toggleMenuUIEvent;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
+    [SerializeField] private ScriptableEventCoinFlyEventData coinFlyEvent;
 
+    [SerializeField] private ResourceConfig coinResourceConfig;
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
 
     private Dictionary<EnumPack.ResourceType, ResourceQuantity> resourceQuantityDict =
@@ -33,6 +37,8 @@ public class HMenuController : GameComponent
     private Camera mainCamera;
     private Camera uiCamera;
 
+    private const int CoinEffectNums = 15;
+
     private void Awake()
     {
         foreach (var resourceConfig in resourceConfigList)
@@ -41,10 +47,12 @@ public class HMenuController : GameComponent
             tempQuantity.Initialize(resourceConfig.resourceIcon, resourceConfig.resourceType,
                 resourceConfig.resourceQuantity);
             resourceQuantityDict.Add(tempQuantity.ResourceType, tempQuantity);
-            
+
             resourceFlyUIDict.Add(resourceConfig.resourceType, resourceConfig.flyUIPool);
             tempQuantity.gameObject.SetActive(tempQuantity.QuantityVariable.Value != 0);
         }
+
+        coinQuantity.Initialize(coinResourceConfig.resourceIcon, coinResourceConfig.resourceType, coinResourceConfig.resourceQuantity);
 
         mainCamera = Camera.main;
         uiCamera = GetComponent<Canvas>().worldCamera;
@@ -55,6 +63,35 @@ public class HMenuController : GameComponent
         getPopupParentEvent.OnRaised += getPopupParent_OnRaised;
         toggleMenuUIEvent.OnRaised += toggleMenuUIEvent_OnRaised;
         flyUIEvent.OnRaised += flyUIEvent_OnRaised;
+        coinFlyEvent.OnRaised += coinFlyEvent_OnRaised;
+    }
+
+    private void coinFlyEvent_OnRaised(CoinFlyEventData coinFlyEventData)
+    {
+        var position = mainCamera.WorldToScreenPoint(coinFlyEventData.worldPos);
+        position = uiCamera.ScreenToWorldPoint(position);
+
+        for (int i = 0; i < CoinEffectNums; i++)
+        {
+            var coinFlyUI = coinResourceConfig.flyUIPool.Request();
+            coinFlyUI.transform.SetParent(menuUI.transform);
+            var randomDistance = UnityEngine.Random.insideUnitCircle * 150.0f;
+            var randomPos = new Vector3(position.x + randomDistance.x, position.y + randomDistance.y, position.z);
+            coinFlyUI.transform.position = new Vector3(randomPos.x, randomPos.y, position.z);
+            coinFlyUI.GetComponent<CoinFlyUI>().DoMove(coinQuantity.IconPosition, () =>
+            {
+                coinResourceConfig.flyUIPool.Return(coinFlyUI);
+                coinQuantity.UpdateCoinValue(coinFlyEventData.changeValue);
+            });
+        }
+
+        foreach (ResourceQuantity resourceQuantity in resourceQuantityDict.Values)
+        {
+            if (resourceQuantity.QuantityVariable.Value == 0)
+            {
+                resourceQuantity.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void flyUIEvent_OnRaised(FlyEventData flyEventData)
@@ -64,7 +101,7 @@ public class HMenuController : GameComponent
 
         var position = mainCamera.WorldToScreenPoint(flyEventData.worldPos);
         position = uiCamera.ScreenToWorldPoint(position);
-        
+
         var resourceFlyUI = resourceFlyUIDict[flyEventData.resourceType].Request();
         resourceFlyUI.transform.SetParent(menuUI.transform);
         resourceFlyUI.transform.position = position;
@@ -90,6 +127,7 @@ public class HMenuController : GameComponent
         getPopupParentEvent.OnRaised -= getPopupParent_OnRaised;
         toggleMenuUIEvent.OnRaised -= toggleMenuUIEvent_OnRaised;
         flyUIEvent.OnRaised -= flyUIEvent_OnRaised;
+        coinFlyEvent.OnRaised -= coinFlyEvent_OnRaised;
     }
 
     private void Start()
@@ -106,7 +144,7 @@ public class HMenuController : GameComponent
     [ContextMenu("Get Resources")]
     public void GetResources()
     {
-        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources";
+        const string resourcesFolderPath = "Assets/_Root/ScriptableData/Resources";
 
         var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
 
@@ -119,6 +157,7 @@ public class HMenuController : GameComponent
         }
 
         resourceConfigList = resourceConfigs.ToList();
+        resourceConfigList.Remove(resourceConfigList.FirstOrDefault(x => x.resourceType == EnumPack.ResourceType.Gold));
         EditorUtility.SetDirty(this);
     }
 #endif
@@ -128,5 +167,12 @@ public class HMenuController : GameComponent
 public class FlyEventData
 {
     public EnumPack.ResourceType resourceType;
+    public Vector3 worldPos;
+}
+
+[Serializable]
+public class CoinFlyEventData
+{
+    public int changeValue;
     public Vector3 worldPos;
 }
