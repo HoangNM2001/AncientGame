@@ -137,7 +137,7 @@ public class ExtendField : GameComponent
     [ContextMenu("Get Farm Resources")]
     public void GetFarmResources()
     {
-        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources/FarmResources";
+        const string resourcesFolderPath = "Assets/_Root/ScriptableData/Resources/FarmResources";
 
         var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
 

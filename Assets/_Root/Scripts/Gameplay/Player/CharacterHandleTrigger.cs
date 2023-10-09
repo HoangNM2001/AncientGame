@@ -68,16 +68,6 @@ public class CharacterHandleTrigger : GameComponent
         popupCloseEvent.Raise();
     }
 
-    public void TriggerActionShopFar(GameObject triggerShop)
-    {
-        Debug.LogError("Far");
-    }
-
-    public void ExitTriggerActionShopFar(GameObject triggerShop)
-    {
-        Debug.LogError("ExitFar");
-    }
-
     public void TriggerActionShopNear(GameObject triggerShop)
     {
         Debug.LogError("Near");

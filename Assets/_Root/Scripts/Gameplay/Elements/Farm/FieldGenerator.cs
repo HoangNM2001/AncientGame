@@ -12,10 +12,14 @@ public class FieldGenerator : MonoBehaviour
     [SerializeField] private GameObject fieldPrefab;
     [SerializeField] private int rowNum;
     [SerializeField] private int columnNum;
+    [SerializeField] private float rowOffset; 
+    [SerializeField] private float columnOffset; 
 
     public GameObject FieldPrefab => fieldPrefab;
     public int RowNum => rowNum;
     public int ColumnNum => columnNum;
+    public float RowOffset => rowOffset;
+    public float ColumnOffset => columnOffset;
 }
 
 [CustomEditor(typeof(FieldGenerator))]
@@ -25,6 +29,8 @@ public class FieldGeneratorEditor : Editor
     private GameObject fieldPrefab;
     private int rowNum;
     private int columnNum;
+    private float rowOffset;
+    private float columnOffset;
 
     public override void OnInspectorGUI()
     {
@@ -33,6 +39,8 @@ public class FieldGeneratorEditor : Editor
         fieldPrefab = fieldGenerator.FieldPrefab;
         rowNum = fieldGenerator.RowNum;
         columnNum = fieldGenerator.ColumnNum;
+        rowOffset = fieldGenerator.RowOffset;
+        columnOffset = fieldGenerator.ColumnOffset;
 
         EditorGUILayout.Space();
 
@@ -59,8 +67,8 @@ public class FieldGeneratorEditor : Editor
         GameObject tempField = (GameObject)PrefabUtility.InstantiatePrefab(fieldPrefab, extendField.transform);
 
         MeshFilter fieldMesh = tempField.GetComponentInChildren<MeshFilter>();
-        float fieldSizeX = fieldMesh.sharedMesh.bounds.size.x;
-        float fieldSizeY = fieldMesh.sharedMesh.bounds.size.y;
+        float fieldSizeX = fieldMesh.sharedMesh.bounds.size.x - columnOffset;
+        float fieldSizeY = fieldMesh.sharedMesh.bounds.size.y - rowOffset;
 
         Vector3 startPos = new Vector3(-fieldSizeX * (columnNum - 1) / 2.0f, tempField.transform.localPosition.y,
             -fieldSizeY * (rowNum - 1) / 2.0f);

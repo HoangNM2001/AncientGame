@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -22,7 +23,9 @@ public class ResourceQuantity : GameComponent
     public EnumPack.ResourceType ResourceType { get; private set; }
     public IntVariable QuantityVariable { get; private set; }
     
-    public Vector3 IconPosition => resourceIcon.transform.position; 
+    public Vector3 IconPosition => resourceIcon.transform.position;
+    public TextMeshProUGUI QuantityText => quantityText;
+    public int CurrentValue => int.Parse(quantityText.text);
 
     public void Initialize(Sprite icon, EnumPack.ResourceType type, IntVariable variable)
     {
@@ -42,12 +45,17 @@ public class ResourceQuantity : GameComponent
 
     public void UpdateCoinValue(int changeValue)
     {
-        // QuantityVariable.Value += changeValue;
-        // quantityText.SetText(QuantityVariable.Value.ToString());
-        ScaleEffect();
+        ChangeValueTxtEffect(QuantityVariable.Value += changeValue);
     }
 
-    private void ScaleEffect()
+    public void ChangeValueTxtEffect(int targetValue, Action completeAction = null)
+    {
+        DOVirtual.Int(int.Parse(quantityText.text), targetValue, 1.0f,
+                value => { quantityText.text = value.ToString(); })
+            .SetEase(Ease.InOutQuad).OnComplete(() => completeAction?.Invoke());
+    }
+
+    public void ScaleEffect()
     {
         scaleSequence?.Kill();
 

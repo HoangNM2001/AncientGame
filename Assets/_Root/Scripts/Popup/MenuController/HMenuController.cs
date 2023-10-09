@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Pancake;
 using Pancake.Scriptable;
 using Pancake.Threading.Tasks.Triggers;
 using Pancake.UI;
 using UnityEditor;
 using UnityEngine;
+using Math = System.Math;
 
 public class HMenuController : GameComponent
 {
@@ -16,10 +18,10 @@ public class HMenuController : GameComponent
     [SerializeField] private Transform resourceQuantityParent;
     [SerializeField] private ResourceQuantity resourceQuantityPrefab;
 
-    [Header("POPUP")][SerializeField] private UIButton settingBtn;
+    [Header("POPUP")] [SerializeField] private UIButton settingBtn;
     [SerializeField, PopupPickup] private string settingsPopup;
 
-    [Header("EVENT")][SerializeField] private PopupShowEvent popupShowEvent;
+    [Header("EVENT")] [SerializeField] private PopupShowEvent popupShowEvent;
     [SerializeField] private ScriptableEventGetGameObject getPopupParentEvent;
     [SerializeField] private ScriptableEventBool toggleMenuUIEvent;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
@@ -52,7 +54,8 @@ public class HMenuController : GameComponent
             tempQuantity.gameObject.SetActive(tempQuantity.QuantityVariable.Value != 0);
         }
 
-        coinQuantity.Initialize(coinResourceConfig.resourceIcon, coinResourceConfig.resourceType, coinResourceConfig.resourceQuantity);
+        coinQuantity.Initialize(coinResourceConfig.resourceIcon, coinResourceConfig.resourceType,
+            coinResourceConfig.resourceQuantity);
 
         mainCamera = Camera.main;
         uiCamera = GetComponent<Canvas>().worldCamera;
@@ -78,19 +81,19 @@ public class HMenuController : GameComponent
             var randomDistance = UnityEngine.Random.insideUnitCircle * 150.0f;
             var randomPos = new Vector3(position.x + randomDistance.x, position.y + randomDistance.y, position.z);
             coinFlyUI.transform.position = new Vector3(randomPos.x, randomPos.y, position.z);
-            coinFlyUI.GetComponent<CoinFlyUI>().DoMove(coinQuantity.IconPosition, () =>
+            coinFlyUI.GetComponent<ResourceFlyUI>().DoMove(coinQuantity.IconPosition, () =>
             {
                 coinResourceConfig.flyUIPool.Return(coinFlyUI);
-                coinQuantity.UpdateCoinValue(coinFlyEventData.changeValue);
+                coinQuantity.ScaleEffect();
             });
         }
+        
+        coinQuantity.UpdateCoinValue(coinFlyEventData.changeValue);
 
-        foreach (ResourceQuantity resourceQuantity in resourceQuantityDict.Values)
+        foreach (var resourceQuantity in resourceQuantityDict.Values.Where(resourceQuantity =>
+                     resourceQuantity.QuantityVariable.Value == 0))
         {
-            if (resourceQuantity.QuantityVariable.Value == 0)
-            {
-                resourceQuantity.gameObject.SetActive(false);
-            }
+            resourceQuantity.ChangeValueTxtEffect(0, () => resourceQuantity.gameObject.SetActive(false));
         }
     }
 

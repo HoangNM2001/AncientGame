@@ -52,18 +52,12 @@ public class ShopResources : GameComponent
 
     private void OnTriggerWave(Collider obj)
     {
-        if (characterHandleTrigger == null) characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(obj);
-        characterHandleTrigger.TriggerActionShopFar(gameObject);
-        
         IsShowSellableUI(true);
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_WAVE, 0.1f);
     }
 
     private void ExitTriggerWave(Collider obj)
     {
-        if (characterHandleTrigger == null) characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(obj);
-        characterHandleTrigger.ExitTriggerActionShopFar(gameObject);
-        
         IsShowSellableUI(false);
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_IDLE, 0.1f);
     }

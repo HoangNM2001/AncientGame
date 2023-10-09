@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7435345967612951286}
   - component: {fileID: 3348417949524243193}
   - component: {fileID: 8242873300031807848}
-  - component: {fileID: -2222631083076564581}
+  - component: {fileID: 8463543128954709670}
   m_Layer: 5
   m_Name: Coin_FlyUI
   m_TagString: Untagged
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
---- !u!114 &-2222631083076564581
+--- !u!114 &8463543128954709670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,6 +101,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3553957674400509831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f754f8d0f65d4174480b2ca2fb566f5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 478c8948c6d647e42a986d114a5323de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
