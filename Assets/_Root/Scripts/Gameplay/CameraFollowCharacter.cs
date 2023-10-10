@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Pancake;
 using Pancake.Scriptable;
 using UnityEngine;
@@ -21,8 +22,9 @@ public class CameraFollowCharacter : GameComponent
 
     private Transform characterTrans;
     private Vector3 velocity;
-    private const float SmoothTime = 0.3f;
     private EnumPack.ControlType controlType;
+    private const float SmoothTime = 0.3f;
+    private const float CamMoveDuration = 1.5f;
 
     protected override void OnEnabled()
     {
@@ -70,23 +72,31 @@ public class CameraFollowCharacter : GameComponent
         }
     }
 
-    private void MoveCamera(Vector3 newPosition, Vector3 newRotation)
+    private void MoveCamera(Vector3 newPosition, Vector3 newRotation, bool isSmooth = true)
     {
-        mainCameraTrans.localPosition = newPosition;
-        mainCameraTrans.localRotation = Quaternion.Euler(newRotation);
+        if (isSmooth)
+        {
+            mainCameraTrans.DOLocalMove(newPosition, CamMoveDuration).SetEase(Ease.OutCirc);
+            mainCameraTrans.DOLocalRotate(newRotation, CamMoveDuration).SetEase(Ease.OutCirc);
+        }
+        else
+        {
+            mainCameraTrans.localPosition = newPosition;
+            mainCameraTrans.localRotation = Quaternion.Euler(newRotation);
+        }
     }
 
 #if UNITY_EDITOR
     [ContextMenu("Camera Move")]
     public void CameraMove()
     {
-        MoveCamera(moveCamPosition, moveCamRotation);
+        MoveCamera(moveCamPosition, moveCamRotation, false);
     }
     
     [ContextMenu("Camera Shake")]
     public void CameraShake()
     {
-        MoveCamera(shakeTreeCamPosition, shakeTreeCamRotation);
+        MoveCamera(shakeTreeCamPosition, shakeTreeCamRotation, false);
     }
 #endif
 }

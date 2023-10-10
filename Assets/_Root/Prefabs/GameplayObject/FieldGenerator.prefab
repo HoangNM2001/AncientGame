@@ -47,3 +47,5 @@ MonoBehaviour:
   fieldPrefab: {fileID: 7395623979324506997, guid: 7b9b0b5a009cff544bfba5e63d14a2bd, type: 3}
   rowNum: 6
   columnNum: 6
+  rowOffset: 0
+  columnOffset: 0

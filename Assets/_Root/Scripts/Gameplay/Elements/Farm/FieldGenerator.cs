@@ -13,13 +13,15 @@ public class FieldGenerator : MonoBehaviour
     [SerializeField] private int rowNum;
     [SerializeField] private int columnNum;
     [SerializeField] private float rowOffset; 
-    [SerializeField] private float columnOffset; 
+    [SerializeField] private float columnOffset;
+    [SerializeField] private float space;
 
     public GameObject FieldPrefab => fieldPrefab;
     public int RowNum => rowNum;
     public int ColumnNum => columnNum;
     public float RowOffset => rowOffset;
     public float ColumnOffset => columnOffset;
+    public float Space => space;
 }
 
 [CustomEditor(typeof(FieldGenerator))]
@@ -31,6 +33,7 @@ public class FieldGeneratorEditor : Editor
     private int columnNum;
     private float rowOffset;
     private float columnOffset;
+    private float space;
 
     public override void OnInspectorGUI()
     {
@@ -41,6 +44,7 @@ public class FieldGeneratorEditor : Editor
         columnNum = fieldGenerator.ColumnNum;
         rowOffset = fieldGenerator.RowOffset;
         columnOffset = fieldGenerator.ColumnOffset;
+        space = fieldGenerator.Space;
 
         EditorGUILayout.Space();
 
@@ -75,14 +79,18 @@ public class FieldGeneratorEditor : Editor
 
         DestroyImmediate(tempField);
 
-        for (var row = 0; row < rowNum; row++)
+        for (int row = 0; row < rowNum; row++)
         {
-            for (var column = 0; column < columnNum; column++)
+            for (int column = 0; column < columnNum; column++)
             {
                 GameObject newField = (GameObject)PrefabUtility.InstantiatePrefab(fieldPrefab, extendField.transform);
                 newField.name = "Field " + row + "x" + column;
-                newField.transform.localPosition = new Vector3(startPos.x + fieldSizeX * column, startPos.y,
-                    startPos.z + fieldSizeY * row);
+                Debug.LogError(newField.name);
+                
+                newField.transform.localPosition = new Vector3(startPos.x + fieldSizeX * column + space * (column / 4), startPos.y,
+                    startPos.z + fieldSizeY * row + space * (row / 4));
+                
+                Debug.LogError((column % 4) + " + " + (row % 4));
                 
                 newField.GetComponent<Field>().ResetUniqueID();
             }
