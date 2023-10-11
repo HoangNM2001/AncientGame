@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Position
   m_EditorClassIdentifier: 
   guid: 3d61e143d3d4f73419a52f67c44fd97c
-  value: {x: 6.178047, y: 0, z: -8.466667}
+  value: {x: 25.435545, y: 0, z: -2.9388428}
   debugLogEnabled: 0
   saved: 1
   defaultValue: {x: 0, y: 0, z: 0}
