@@ -70,14 +70,12 @@ public class CharacterHandleTrigger : GameComponent
 
     public void TriggerActionShopNear(GameObject triggerShop)
     {
-        Debug.LogError("Near");
         currentInteract = triggerShop;
         popupShowEvent.Raise(shopActionPopup, popupParentTrans);
     }
 
     public void ExitTriggerActionShopNear(GameObject triggerShop)
     {
-        Debug.LogError("ExitNear");
         currentInteract = null;
         popupCloseEvent.Raise();
     }

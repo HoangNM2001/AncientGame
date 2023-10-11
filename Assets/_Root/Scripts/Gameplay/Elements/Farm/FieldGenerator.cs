@@ -12,7 +12,7 @@ public class FieldGenerator : MonoBehaviour
     [SerializeField] private GameObject fieldPrefab;
     [SerializeField] private int rowNum;
     [SerializeField] private int columnNum;
-    [SerializeField] private float rowOffset; 
+    [SerializeField] private float rowOffset;
     [SerializeField] private float columnOffset;
     [SerializeField] private float space;
 
@@ -63,9 +63,13 @@ public class FieldGeneratorEditor : Editor
 
         ExtendField extendFieldScript = extendField.AddComponent<ExtendField>();
 
+        var sizeOfBoxPerBigField = 6.2f;
         BoxCollider boxCollider = extendField.AddComponent<BoxCollider>();
-        boxCollider.size = new Vector3(1.6f * columnNum, 1.0f, 1.6f * rowNum);
-        boxCollider.center = new Vector3(0.0f, 0.5f, 0.0f);
+        // boxCollider.size = new Vector3(1.6f * columnNum, 1.0f, 1.6f * rowNum);
+        // boxCollider.center = new Vector3(0.0f, 0.5f, 0.0f);
+        boxCollider.size = new Vector3(sizeOfBoxPerBigField * columnNum / 4, 1.0f, sizeOfBoxPerBigField * rowNum / 4);
+        boxCollider.center = new Vector3(sizeOfBoxPerBigField * (columnNum / 4 - 1) / 2, 0.5f,
+            sizeOfBoxPerBigField * (rowNum / 4 - 1) / 2);
         boxCollider.isTrigger = true;
 
         GameObject tempField = (GameObject)PrefabUtility.InstantiatePrefab(fieldPrefab, extendField.transform);
@@ -73,9 +77,10 @@ public class FieldGeneratorEditor : Editor
         MeshFilter fieldMesh = tempField.GetComponentInChildren<MeshFilter>();
         float fieldSizeX = fieldMesh.sharedMesh.bounds.size.x - columnOffset;
         float fieldSizeY = fieldMesh.sharedMesh.bounds.size.y - rowOffset;
-
-        Vector3 startPos = new Vector3(-fieldSizeX * (columnNum - 1) / 2.0f, tempField.transform.localPosition.y,
-            -fieldSizeY * (rowNum - 1) / 2.0f);
+        
+        // Vector3 startPos = new Vector3(-fieldSizeX * (columnNum - 1) / 2.0f, tempField.transform.localPosition.y,
+        //     -fieldSizeY * (rowNum - 1) / 2.0f);
+        Vector3 startPos = new Vector3(-fieldSizeX * 1.5f, tempField.transform.localPosition.y, -fieldSizeY * 1.5f);
 
         DestroyImmediate(tempField);
 
@@ -85,13 +90,11 @@ public class FieldGeneratorEditor : Editor
             {
                 GameObject newField = (GameObject)PrefabUtility.InstantiatePrefab(fieldPrefab, extendField.transform);
                 newField.name = "Field " + row + "x" + column;
-                Debug.LogError(newField.name);
-                
-                newField.transform.localPosition = new Vector3(startPos.x + fieldSizeX * column + space * (column / 4), startPos.y,
+
+                newField.transform.localPosition = new Vector3(startPos.x + fieldSizeX * column + space * (column / 4),
+                    startPos.y,
                     startPos.z + fieldSizeY * row + space * (row / 4));
-                
-                Debug.LogError((column % 4) + " + " + (row % 4));
-                
+
                 newField.GetComponent<Field>().ResetUniqueID();
             }
         }

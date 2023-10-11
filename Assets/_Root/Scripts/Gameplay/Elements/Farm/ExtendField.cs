@@ -118,13 +118,11 @@ public class ExtendField : GameComponent
     {
         Guid guid = Guid.NewGuid();
         uniqueId = guid.ToString();
-    }
 
-    [ContextMenu("Setup Extend Field")]
-    public void SetupExtendField()
-    {
-        GetFields();
-        GetFarmResources();
+        foreach (var field in fieldList)
+        {
+            field.ResetUniqueID();
+        }
     }
 
     [ContextMenu("Get Fields")]
@@ -150,6 +148,15 @@ public class ExtendField : GameComponent
         }
 
         resourceConfigList = resourceConfigs.ToList();
+        EditorUtility.SetDirty(this);
+    }
+    
+    [ContextMenu("Setup Extend Field")]
+    public void SetupExtendField()
+    {
+        GetFields();
+        GetFarmResources();
+        ResetUniqueID();
         EditorUtility.SetDirty(this);
     }
 #endif

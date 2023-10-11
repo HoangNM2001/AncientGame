@@ -7,10 +7,13 @@ using UnityEngine;
 
 public class CharacterController : GameComponent
 {
+    
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
     [SerializeField] private ScriptableEventInt changeInputEvent;
     [SerializeField] private CharacterStat characterStat;
     [SerializeField] private CharacterAnimController characterAnimController;
+    [SerializeField] private Vector3Variable playerPosition;
+    [SerializeField] private Vector3Variable playerRotation;
 
     private NavmeshController navmeshController;
     private CharacterHandleInput characterHandleInput;
@@ -24,6 +27,9 @@ public class CharacterController : GameComponent
     {
         navmeshController = GetComponent<NavmeshController>();
         characterHandleInput = GetComponent<CharacterHandleInput>();
+
+        transform.position = playerPosition.Value;
+        transform.rotation = Quaternion.Euler(playerRotation.Value);
     }
 
     protected override void OnEnabled()
@@ -61,6 +67,9 @@ public class CharacterController : GameComponent
         
         characterHandleInput.GetInput();
         MoveByDirection(characterHandleInput.MoveDir.normalized, currentMoveSpeed, Time.deltaTime);
+
+        playerPosition.Value = transform.position;
+        playerRotation.Value = transform.rotation.eulerAngles;
     }
 
     private void MoveByDirection(Vector3 direction, float moveSpeed, float deltaTime)

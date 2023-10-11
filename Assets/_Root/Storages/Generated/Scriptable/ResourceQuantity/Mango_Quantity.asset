@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mango_Quantity
   m_EditorClassIdentifier: 
   guid: dfd3ec34389a3dc49ac2fb28a9685a11
-  value: 85
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0
