@@ -6,8 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/Character/Statistics")]
 public class CharacterStat : ScriptableObject
 {
+    public float rotateSpeed = 20.0f;
     public float moveSpeed = 5.0f;
-    public float rotateSpeed = 360.0f;
     public float workingMoveSpeed = 3.0f;
-    public float workingSpeed = 0.5f;
+    public float workingSpeed = 0.8f;
 }

@@ -1,13 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Pancake;
-using Pancake.Scriptable;
-using Pancake.UI;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ExtendField : GameComponent
@@ -16,11 +11,17 @@ public class ExtendField : GameComponent
     [SerializeField] private ScriptableListInt fieldStateList;
     [SerializeField] private List<Field> fieldList = new List<Field>();
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
-    
+
+    private int fieldCount;
+    private int canSeedCount;
+    private int canWaterCount;
+    private int canHarvestCount;
     private ResourceConfig resourceConfig;
 
-    private readonly Dictionary<EnumPack.ResourceType, ResourceConfig> resourceConfigDict =
-        new Dictionary<EnumPack.ResourceType, ResourceConfig>();
+    public Action OnStateChange;
+    public Action<bool> OnHarvest;
+
+    public ResourceConfig ResourceConfig => resourceConfig;
 
     public EnumPack.ResourceType ResourceType
     {
@@ -29,11 +30,14 @@ public class ExtendField : GameComponent
         set => Data.Save(uniqueId, value);
     }
 
-    private void Awake()
+    public EnumPack.FieldState TransferFarmState
     {
-        foreach (var resource in resourceConfigList)
+        get
         {
-            resourceConfigDict.Add(resource.resourceType, resource);
+            if (canHarvestCount > 0) return EnumPack.FieldState.Harvestable;
+            if (canSeedCount > 0) return EnumPack.FieldState.Seedale;
+            if (canWaterCount > 0) return EnumPack.FieldState.Waterable;
+            return EnumPack.FieldState.Seedale;            
         }
     }
 
@@ -42,26 +46,30 @@ public class ExtendField : GameComponent
         if (ResourceType != EnumPack.ResourceType.None)
         {
             Initialize();
+            InitCount();
         }
     }
 
     public void Initialize()
     {
-        resourceConfig = resourceConfigDict[ResourceType];
+        foreach (var resource in resourceConfigList)
+        {
+            if (ResourceType == resource.resourceType)
+            {
+                resourceConfig = resource;
+                break;
+            }
+        }
 
         foreach (var field in fieldList)
         {
-            field.Initialize(resourceConfig);
+            field.Initialize(this, resourceConfig);
         }
     }
 
-    private void CalculateExtendFieldState()
+    private void InitCount()
     {
-        fieldStateList.Reset();
-
-        var canSeedCount = 0;
-        var canWaterCount = 0;
-        var canHarvestCount = 0;
+        fieldCount = fieldList.Count;
 
         foreach (var field in fieldList)
         {
@@ -76,14 +84,84 @@ public class ExtendField : GameComponent
                 case EnumPack.FieldState.Harvestable:
                     canHarvestCount++;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
+    }
+
+    public void GenerateRandomResource()
+    {
+        ResourceType = resourceConfigList[UnityEngine.Random.Range(0, resourceConfigList.Count)].resourceType;
+        Initialize();
+    }
+
+    private void CalculateExtendFieldState()
+    {
+        fieldStateList.Reset();
 
         if (canSeedCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Seedale);
         if (canWaterCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Waterable);
         if (canHarvestCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Harvestable);
+    }
+
+    public List<Field> SortingFieldListByDis(Vector3 pos, EnumPack.FieldState fieldState)
+    {
+        List<Field> newList = new List<Field>();
+        foreach (var field in fieldList)
+        {
+            if (field.FieldState == fieldState)
+            {
+                newList.Add(field);
+            }
+        }
+
+        newList.Sort((a, b) => SimpleMath.SqrDist(pos, a.transform.position).CompareTo(SimpleMath.SqrDist(pos, b.transform.position)));
+        return newList;
+    }
+
+    public Field GetNearestFieldWithState(Vector3 pos, EnumPack.FieldState fieldState)
+    {
+        Field targetField = null;
+        var minDistance = 10000f;
+
+        foreach (var field in fieldList)
+        {
+            if (field.FieldState == fieldState)
+            {
+                var distance = SimpleMath.SqrDist(pos, field.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    targetField = field;
+                }
+            }
+        }
+
+        return targetField;
+    }
+
+    public void DoSeed()
+    {
+        CheckChangeState(ref canSeedCount, ref canWaterCount);
+        if (canSeedCount == 0) OnStateChange?.Invoke();
+    }
+
+    public void DoWater()
+    {
+        CheckChangeState(ref canWaterCount, ref canHarvestCount);
+        if (canWaterCount == 0) OnStateChange?.Invoke();
+    }
+
+    public void DoHarvest()
+    {
+        CheckChangeState(ref canHarvestCount, ref canSeedCount);
+        OnHarvest?.Invoke(canHarvestCount == 0);
+        // if (canHarvestCount == 0) OnStateChange?.Invoke();
+    }
+
+    private void CheckChangeState(ref int previousStateCount, ref int newStateCount)
+    {
+        previousStateCount--;
+        newStateCount++;
     }
 
     public bool IsSeeded()
@@ -102,14 +180,12 @@ public class ExtendField : GameComponent
     private void OnTriggerEnter(Collider other)
     {
         CalculateExtendFieldState();
-        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
-        if (characterHandleTrigger) characterHandleTrigger.TriggerActionFarm(gameObject);
+        if (other.TryGetComponent<IFarmer>(out var farmer)) farmer.TriggerActionFarm(gameObject);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
-        if (characterHandleTrigger) characterHandleTrigger.ExitTriggerActionFarm();
+        if (other.TryGetComponent<IFarmer>(out var farmer)) farmer.ExitTriggerActionFarm();
     }
 
 #if UNITY_EDITOR
@@ -118,11 +194,6 @@ public class ExtendField : GameComponent
     {
         Guid guid = Guid.NewGuid();
         uniqueId = guid.ToString();
-
-        foreach (var field in fieldList)
-        {
-            field.ResetUniqueID();
-        }
     }
 
     [ContextMenu("Get Fields")]
@@ -150,7 +221,7 @@ public class ExtendField : GameComponent
         resourceConfigList = resourceConfigs.ToList();
         EditorUtility.SetDirty(this);
     }
-    
+
     [ContextMenu("Setup Extend Field")]
     public void SetupExtendField()
     {

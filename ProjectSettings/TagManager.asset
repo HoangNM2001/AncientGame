@@ -6,6 +6,9 @@ TagManager:
   tags:
   - ShopWave
   - ShopTalk
+  - ExtendField
+  - Cave
+  - Main
   layers:
   - Default
   - TransparentFX

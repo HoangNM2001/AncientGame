@@ -9,6 +9,7 @@ using Pancake.Threading.Tasks.Triggers;
 using Pancake.UI;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using Math = System.Math;
 
 public class HMenuController : GameComponent
@@ -18,14 +19,15 @@ public class HMenuController : GameComponent
     [SerializeField] private Transform resourceQuantityParent;
     [SerializeField] private ResourceQuantity resourceQuantityPrefab;
 
-    [Header("POPUP")] [SerializeField] private UIButton settingBtn;
+    [Header("POPUP")][SerializeField] private UIButton settingBtn;
     [SerializeField, PopupPickup] private string settingsPopup;
 
-    [Header("EVENT")] [SerializeField] private PopupShowEvent popupShowEvent;
+    [Header("EVENT")][SerializeField] private PopupShowEvent popupShowEvent;
     [SerializeField] private ScriptableEventGetGameObject getPopupParentEvent;
     [SerializeField] private ScriptableEventBool toggleMenuUIEvent;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
     [SerializeField] private ScriptableEventCoinFlyEventData coinFlyEvent;
+    [SerializeField] private ScriptableEventStorageAddData addStorageEvent;
 
     [SerializeField] private ResourceConfig coinResourceConfig;
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
@@ -67,6 +69,12 @@ public class HMenuController : GameComponent
         toggleMenuUIEvent.OnRaised += toggleMenuUIEvent_OnRaised;
         flyUIEvent.OnRaised += flyUIEvent_OnRaised;
         coinFlyEvent.OnRaised += coinFlyEvent_OnRaised;
+        addStorageEvent.OnRaised += addStorageEvent_OnRaised;
+    }
+
+    private void addStorageEvent_OnRaised(StorageAddData storageAddData)
+    {
+
     }
 
     private void coinFlyEvent_OnRaised(CoinFlyEventData coinFlyEventData)
@@ -87,7 +95,7 @@ public class HMenuController : GameComponent
                 coinQuantity.ScaleEffect();
             });
         }
-        
+
         coinQuantity.UpdateCoinValue(coinFlyEventData.changeValue);
 
         foreach (var resourceQuantity in resourceQuantityDict.Values.Where(resourceQuantity =>
@@ -131,6 +139,7 @@ public class HMenuController : GameComponent
         toggleMenuUIEvent.OnRaised -= toggleMenuUIEvent_OnRaised;
         flyUIEvent.OnRaised -= flyUIEvent_OnRaised;
         coinFlyEvent.OnRaised -= coinFlyEvent_OnRaised;
+        addStorageEvent.OnRaised -= addStorageEvent_OnRaised;
     }
 
     private void Start()
@@ -178,4 +187,13 @@ public class CoinFlyEventData
 {
     public int changeValue;
     public Vector3 worldPos;
+}
+
+[Serializable]
+public class StorageAddData
+{
+    public Vector3 startPos;
+    public Vector3 endPos;
+    public int number;
+    public Action onDone;
 }

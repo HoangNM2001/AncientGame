@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Schema;
 using DG.Tweening;
 using Pancake;
 using Pancake.Scriptable;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Field : GameComponent
@@ -19,6 +15,7 @@ public class Field : GameComponent
     [SerializeField] private GameObjectPool leavesParticlePool;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
+    private ExtendField parentField;
     private ResourceConfig resourceConfig;
     private MaterialPropertyBlock fieldMaterialBlock;
     private GameObject smallTree;
@@ -44,8 +41,9 @@ public class Field : GameComponent
         fieldRenderer.GetPropertyBlock(fieldMaterialBlock);
     }
 
-    public void Initialize(ResourceConfig newResource)
+    public void Initialize(ExtendField extendField, ResourceConfig newResource)
     {
+        parentField = extendField;
         resourceConfig = newResource;
 
         smallTreePool = resourceConfig.smallTreePool;
@@ -70,7 +68,7 @@ public class Field : GameComponent
         }
     }
 
-    public void DoFarming(EnumPack.CharacterActionType actionType)
+    public void DoFarming(EnumPack.CharacterActionType actionType, bool isPlayer)
     {
         switch (actionType)
         {
@@ -81,7 +79,7 @@ public class Field : GameComponent
                 DoWater();
                 break;
             case EnumPack.CharacterActionType.HarvestFarm:
-                DoHarvest();
+                DoHarvest(isPlayer);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(actionType), actionType, null);
@@ -100,6 +98,8 @@ public class Field : GameComponent
         smallTree.transform.localScale = Vector3.zero;
         smallTree.transform.DOScale(Vector3.one, SeedDuration).SetTarget(smallTree);
         ChangeFieldColor(soilColor, seededColor, SeedDuration);
+
+        parentField.DoSeed();
     }
 
     private void DoWater()
@@ -116,9 +116,11 @@ public class Field : GameComponent
         bigTree.transform.localScale = Vector3.zero;
         bigTree.transform.DOScale(Vector3.one, WaterDuration).SetEase(Ease.OutBack).SetTarget(bigTree);
         ChangeFieldColor(seededColor, wateredColor, WaterDuration);
+
+        parentField.DoWater();
     }
 
-    private void DoHarvest()
+    private void DoHarvest(bool isPlayer)
     {
         if (FieldState != EnumPack.FieldState.Harvestable) return;
         FieldState = EnumPack.FieldState.Seedale;
@@ -135,7 +137,7 @@ public class Field : GameComponent
         ChangeFieldColor(wateredColor, soilColor, HarvestDuration);
 
         var randomFlyModel = Random.Range(1, MaxFlyModel);
-        
+
         for (var i = 1; i <= randomFlyModel; i++)
         {
             var tempFly = flyModelPool.Request();
@@ -143,15 +145,19 @@ public class Field : GameComponent
             tempFly.transform.localPosition = Vector3.zero;
             tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() =>
             {
-                // Camera.main.WorldToScreenPoint(tempFly.transform.position);
                 flyModelPool.Return(tempFly);
-                flyUIEvent.Raise(new FlyEventData
+                if (isPlayer)
                 {
-                    resourceType = resourceConfig.resourceType,
-                    worldPos = tempFly.transform.position
-                });
+                    flyUIEvent.Raise(new FlyEventData
+                    {
+                        resourceType = resourceConfig.resourceType,
+                        worldPos = tempFly.transform.position
+                    });
+                }
             });
         }
+
+        parentField.DoHarvest();
     }
 
     private void SetSeededState()

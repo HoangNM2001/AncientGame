@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SlaveAvatar
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Bone005
+    m_Weight: 1
+  - m_Path: Bone005/Bone006
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone025
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone025/Bone026
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone027
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone027/Bone028
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone029
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone029/Bone030
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone031
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone009/Bone010/Bone011/Bone031/Bone032
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone033
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone033/Bone034
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone035
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone035/Bone036
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone037
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone037/Bone038
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone039
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Bone039/Bone040
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Hook
+    m_Weight: 1
+  - m_Path: 'Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler '
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water001
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water003
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water004
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water005
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water006
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water007
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water008
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water009
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water010
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water011
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone012/Bone013/Hand_right/Sprinkler /Water012
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone015
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone015/Bone016
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone015/Bone016/Bone042
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone015/Bone016/Bone043
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Bone007/Bone015/Bone016/Bone046
+    m_Weight: 1
+  - m_Path: Bone005/Bone006/Tui_hat_giong
+    m_Weight: 1
+  - m_Path: Bone005/Bone017
+    m_Weight: 1
+  - m_Path: Bone005/Bone017/Bone018
+    m_Weight: 1
+  - m_Path: Bone005/Bone017/Bone018/Bone019
+    m_Weight: 1
+  - m_Path: Bone005/Bone017/Bone018/Bone019/Bone045
+    m_Weight: 1
+  - m_Path: Bone005/Bone021
+    m_Weight: 0
+  - m_Path: Bone005/Bone021/Bone022
+    m_Weight: 0
+  - m_Path: Bone005/Bone021/Bone022/Bone023
+    m_Weight: 0
+  - m_Path: Bone005/Bone021/Bone022/Bone023/Bone044
+    m_Weight: 0
+  - m_Path: Main
+    m_Weight: 0

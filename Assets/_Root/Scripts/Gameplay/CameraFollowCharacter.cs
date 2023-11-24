@@ -11,11 +11,12 @@ public class CameraFollowCharacter : GameComponent
     [SerializeField] private Transform mainCameraTrans;
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
     [SerializeField] private ScriptableEventInt changeInputEvent;
+    [SerializeField] private ScriptableEventBool toggleMainCamera;
 
-    [Header("Camera Move")] 
+    [Header("Camera Move")]
     [SerializeField] private Vector3 moveCamPosition;
     [SerializeField] private Vector3 moveCamRotation;
-    
+
     [Header("Camera ShakeTree")]
     [SerializeField] private Vector3 shakeTreeCamPosition;
     [SerializeField] private Vector3 shakeTreeCamRotation;
@@ -29,6 +30,7 @@ public class CameraFollowCharacter : GameComponent
     protected override void OnEnabled()
     {
         changeInputEvent.OnRaised += changeInputEvent_OnRaised;
+        toggleMainCamera.OnRaised += toggleMainCamera_OnRaised;
     }
 
     private void changeInputEvent_OnRaised(int newControlType)
@@ -37,15 +39,21 @@ public class CameraFollowCharacter : GameComponent
         ChangeCamera();
     }
 
+    private void toggleMainCamera_OnRaised(bool status)
+    {
+        mainCameraTrans.gameObject.SetActive(status);
+    }
+
     protected override void OnDisabled()
     {
         changeInputEvent.OnRaised -= changeInputEvent_OnRaised;
+        toggleMainCamera.OnRaised -= toggleMainCamera_OnRaised;
     }
 
     private void Start()
     {
         characterTrans = getCharacterEvent.Raise().transform;
-        
+
         controlType = EnumPack.ControlType.Move;
         ChangeCamera();
     }
@@ -53,7 +61,7 @@ public class CameraFollowCharacter : GameComponent
     protected override void LateTick()
     {
         if (!characterTrans) return;
-        
+
         transform.position = Vector3.SmoothDamp(transform.position, characterTrans.transform.position, ref velocity, SmoothTime);
     }
 
@@ -68,7 +76,7 @@ public class CameraFollowCharacter : GameComponent
                 MoveCamera(shakeTreeCamPosition, shakeTreeCamRotation);
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                break;
         }
     }
 
@@ -92,7 +100,7 @@ public class CameraFollowCharacter : GameComponent
     {
         MoveCamera(moveCamPosition, moveCamRotation, false);
     }
-    
+
     [ContextMenu("Camera Shake")]
     public void CameraShake()
     {

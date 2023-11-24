@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5701212610416997177}
   m_Layer: 8
   m_Name: ExtendField 4x12
-  m_TagString: Untagged
+  m_TagString: ExtendField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +149,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 570244483dd2a7d4cb1dc97b13926ab1, type: 2}
   - {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
   - {fileID: 11400000, guid: 62e48a472f4b2094883ca660b7d01649, type: 2}
+  canSeedCount: 0
+  canWaterCount: 0
+  canHarvestCount: 0
 --- !u!65 &5701212610416997177
 BoxCollider:
   m_ObjectHideFlags: 0

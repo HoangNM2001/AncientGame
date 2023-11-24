@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EnumPack
 {
+    public enum MiniGameType
+    {
+        Fishing,
+        Hunting
+    }
+
     public enum CharacterActionType
     {
         SeedFarm,

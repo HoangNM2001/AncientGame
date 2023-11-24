@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Pancake.SceneFlow
 {
     public static class Constant
@@ -24,9 +26,18 @@ namespace Pancake.SceneFlow
 
         public const string TREE_SHAKE = "Shake";
 
+        public const string SLAVE_RELAX = "Relax";
+
         public const string SHOPKEEPER_IDLE = "Idle";
         public const string SHOPKEEPER_WAVE = "WavePlayer";
         public const string SHOPKEEPER_AFTERSELL = "AfterSell";
         public const string SHOPKEEPER_TALKING = "Talking";
+
+        public const string FISH_IDLE = "Idle";
+        public const string FISH_CAUGHT = "Caught";
+
+        public const string EXTEND_FIELD_TAG = "ExtendField";
+        public const string CAVE_TAG = "Cave";
+        public const string MAIN_TAG = "Main";
     }
 }

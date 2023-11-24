@@ -23,7 +23,7 @@ public class HPopupFruitAction : UIPopup
     [SerializeField] private TextMeshProUGUI fillText;
     [SerializeField] private List<FruitActionBtn> fruitBtnList;
 
-    private CharacterController characterController;
+    private PlayerController characterController;
     private FruitTree currentTree;
     private bool isShaking;
     private bool shakeable;
@@ -46,7 +46,7 @@ public class HPopupFruitAction : UIPopup
 
     private void Start()
     {
-        characterController = getCharacterEvent.Raise().GetComponent<CharacterController>();
+        characterController = getCharacterEvent.Raise().GetComponent<PlayerController>();
     }
 
     protected override void OnBeforeShow()
