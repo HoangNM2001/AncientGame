@@ -44,7 +44,7 @@ Material:
     - _EdgeFoamDepth: 0.1
     - _FancyShadows: 0
     - _FoamContribution: 0.619
-    - _FoamNoiseScale: 0.218
+    - _FoamNoiseScale: 0.59
     - _FoamScale: 10
     - _FoamSpeed: 0.1
     - _MaxSampleDistance: 49
