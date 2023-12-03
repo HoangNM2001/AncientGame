@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Pancake.Scriptable;
 using Pancake.UI;
 using TMPro;
@@ -30,7 +27,7 @@ public class HPopupFishingAction : UIPopup
         currentMiniGameType.Value = (int)EnumPack.MiniGameType.Fishing;
         toggleMiniGame.Raise(true);
 
-        changeInputEvent.Raise((int)EnumPack.ControlType.Vertical);
+        changeInputEvent.Raise((int)EnumPack.ControlType.MiniGame);
         toggleMainCamera.Raise(false);
         toggleMenuUIEvent.Raise(false);
 

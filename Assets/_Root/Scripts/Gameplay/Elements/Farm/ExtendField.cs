@@ -12,7 +12,6 @@ public class ExtendField : GameComponent
     [SerializeField] private List<Field> fieldList = new List<Field>();
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
 
-    private int fieldCount;
     private int canSeedCount;
     private int canWaterCount;
     private int canHarvestCount;
@@ -69,8 +68,6 @@ public class ExtendField : GameComponent
 
     private void InitCount()
     {
-        fieldCount = fieldList.Count;
-
         foreach (var field in fieldList)
         {
             switch (field.FieldState)

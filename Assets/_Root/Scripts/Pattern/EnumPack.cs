@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class EnumPack
 {
+    public enum PredatorType
+    {
+        Elephant,
+        Dinosaur,
+        Saber,
+        Rhino,
+        Chicken,
+    }
+
     public enum MiniGameType
     {
         Fishing,
@@ -23,10 +32,11 @@ public class EnumPack
     public enum ControlType
     {
         Move,
-        Horizontal, 
-        Vertical
+        Horizontal,
+        Vertical,
+        MiniGame
     }
-    
+
     public enum FieldState
     {
         Seedale,

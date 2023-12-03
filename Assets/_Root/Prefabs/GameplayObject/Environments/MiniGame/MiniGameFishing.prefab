@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc952d1d559290428f3bc35b57d1ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishingInput: {fileID: 11400000, guid: 2cbac918da195084684a5b828d2033c2, type: 2}
   moveSpeed: 3
   moveLR:
     leftTrans: {fileID: 1417476512337346501}
@@ -779,7 +778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6352599830443219463
 Transform:
   m_ObjectHideFlags: 0

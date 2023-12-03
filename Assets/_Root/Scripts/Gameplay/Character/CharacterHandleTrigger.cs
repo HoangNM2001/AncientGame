@@ -7,7 +7,7 @@ using Pancake.Scriptable;
 using Pancake.UI;
 using UnityEngine;
 
-public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher
+public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher, IHunter
 {
     [SerializeField] private PopupShowEvent popupShowEvent;
     [SerializeField] private ScriptableEventNoParam popupCloseEvent;
@@ -20,6 +20,7 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher
     [SerializeField, PopupPickup] private string fruitActionPopup;
     [SerializeField, PopupPickup] private string shopActionPopup;
     [SerializeField, PopupPickup] private string fishingActionPopup;
+    [SerializeField, PopupPickup] private string huntingActionPopup;
 
     private Transform popupParentTrans;
     private GameObject currentInteract;
@@ -98,6 +99,18 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher
     }
 
     public void ExitTriggerActionFishing()
+    {
+        currentInteract = null;
+        popupCloseEvent.Raise();
+    }
+
+    public void TriggerActionHunting(GameObject predator)
+    {
+        currentInteract = predator;
+        popupShowEvent.Raise(huntingActionPopup, popupParentTrans);
+    }
+
+    public void ExitTriggerActionHunting()
     {
         currentInteract = null;
         popupCloseEvent.Raise();

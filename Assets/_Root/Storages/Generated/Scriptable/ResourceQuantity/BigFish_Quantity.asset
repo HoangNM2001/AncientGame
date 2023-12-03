@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BigFish_Quantity
   m_EditorClassIdentifier: 
   guid: 3a1bcac480c676849ae9995bc72386aa
-  value: 9
+  value: 20
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

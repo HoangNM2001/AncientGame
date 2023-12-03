@@ -10,6 +10,7 @@ public class CharacterAnimController : GameComponent
     private Animator animator;
     private string animationName;
 
+    public Action OnAnimationEvent;
     public string AnimationName => animationName;
     public float Speed
     {
@@ -41,5 +42,10 @@ public class CharacterAnimController : GameComponent
         {
             animator.CrossFade(animationName, 0.2f, layer);
         }
+    }
+
+    public void OnAnimEvent()
+    {
+        OnAnimationEvent?.Invoke();
     }
 }

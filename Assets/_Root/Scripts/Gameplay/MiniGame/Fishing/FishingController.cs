@@ -8,7 +8,6 @@ using UnityEngine;
 public class FishingController : GameComponent
 {
     [Header("Moving")]
-    [SerializeField] private Vector2Variable fishingInput;
     [SerializeField] private float moveSpeed;
     [SerializeField] private LeftRightCouple moveLR;
 
@@ -61,7 +60,7 @@ public class FishingController : GameComponent
 
         if (!Firing) Move();
 
-        if (!Firing && Input.GetMouseButtonDown(0) && !InputUtils.IsPointerOverUI(Input.mousePosition)) Fire();
+        if (!Firing && fishingData.FishCount > 0 && Input.GetMouseButtonDown(0) && !InputUtils.IsPointerOverUI(Input.mousePosition)) Fire();
     }
 
     private void Fire()
