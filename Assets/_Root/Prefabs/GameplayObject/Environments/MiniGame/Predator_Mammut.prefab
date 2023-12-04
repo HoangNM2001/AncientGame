@@ -50,7 +50,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: c17cebeebe964fc49bcc85a5af9e0936, type: 3}
   maxHp: 10
   moveSpeed: 3
-  maxStep: 0
+  maxStep: 3
   colliderList:
   - {fileID: 9003884728630267193}
   - {fileID: 587349368514388035}

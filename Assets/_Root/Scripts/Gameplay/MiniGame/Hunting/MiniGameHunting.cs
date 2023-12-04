@@ -23,6 +23,8 @@ public class MiniGameHunting : GameComponent, IMiniGame
 
     public void Activate()
     {
+        huntingController.transform.position = playerStartPos.position;
+        huntingController.transform.forward = Vector3.right;
 
         var mapPredator = getCurrentMonsterEvent.Raise().GetComponent<MapPredator>();
         Predator = Instantiate(predatorPrefabList.FirstOrDefault(p => p.PredatorType == mapPredator.PredatorType), container.transform);
@@ -35,7 +37,6 @@ public class MiniGameHunting : GameComponent, IMiniGame
         container.SetActive(true);
         huntingController.Activate(this);
         Predator.Activate();
-
     }
 
     public void Deactivate()
