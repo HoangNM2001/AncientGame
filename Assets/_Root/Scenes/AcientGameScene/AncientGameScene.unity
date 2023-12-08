@@ -10897,6 +10897,7 @@ MonoBehaviour:
   playerStartPos: {fileID: 1089568582}
   monsterStartPos: {fileID: 1695893379}
   getCurrentMonsterEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
+  predatorVariable: {fileID: 11400000, guid: b0b510714dc48394aa4f2b01c57d2dc6, type: 2}
   predatorPrefabList:
   - {fileID: 8810085459539785798, guid: fef4362a05ff4c04e84cc04eb79ddeeb, type: 3}
 --- !u!1 &1337933834
@@ -19760,15 +19761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5485652826206319609, guid: fef4362a05ff4c04e84cc04eb79ddeeb, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5969016634539189261, guid: fef4362a05ff4c04e84cc04eb79ddeeb, type: 3}
-      propertyPath: m_Center.y
-      value: -0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5969016634539189261, guid: fef4362a05ff4c04e84cc04eb79ddeeb, type: 3}
-      propertyPath: m_Center.z
-      value: -0.65
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

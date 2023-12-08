@@ -9,12 +9,12 @@ public class Spear : GameComponent
 {
     private Vector3 velocity;
     private Vector3 gravity;
-    private float damage;
+    private int damage;
     private bool isStop;
     private bool isLaunched;
     private Action<bool> onStopCallback;
 
-    public void Launch(float force, float damage, Action<bool> onStopCallback)
+    public void Launch(float force, int damage, Action<bool> onStopCallback)
     {
         this.damage = damage;
         this.onStopCallback = onStopCallback;

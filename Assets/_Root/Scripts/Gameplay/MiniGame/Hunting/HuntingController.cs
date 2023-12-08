@@ -13,7 +13,7 @@ public class HuntingController : GameComponent
     [SerializeField] private Spear spear;
     [SerializeField] private Transform launchPos;
     [SerializeField] private float launchForce;
-    [SerializeField] private float damage;
+    [SerializeField] private int damage;
 
     private Vector3 launchDirection;
     private Vector3 startPoint;
@@ -107,6 +107,16 @@ public class HuntingController : GameComponent
             miniGameHunting.OnMiss();
         }
         spear.gameObject.SetActive(true);
+    }
+
+    public void ClearSpear()
+    {
+        foreach (var spear in spearList)
+        {
+            Destroy(spear.gameObject);
+        }
+
+        spearList.Clear();
     }
 
     public void DoDie()

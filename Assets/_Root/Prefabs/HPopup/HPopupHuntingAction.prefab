@@ -996,5 +996,9 @@ MonoBehaviour:
   changeInputEvent: {fileID: 11400000, guid: 3d68a3cc988281a4aa9c0ba528ec04c4, type: 2}
   toggleMainCamera: {fileID: 11400000, guid: 142999a117a260b4898e170cf451c4e9, type: 2}
   toggleMenuUIEvent: {fileID: 11400000, guid: 546fc11dac5653847a4c4472a5171389, type: 2}
+  predatorVariable: {fileID: 11400000, guid: b0b510714dc48394aa4f2b01c57d2dc6, type: 2}
   huntingUI: {fileID: 1802378752038621270}
   hungtingButton: {fileID: 281586192671868259}
+  predatorImage: {fileID: 5214272637034234852}
+  healthBar: {fileID: 5721668156598370826}
+  predatorNameText: {fileID: 0}

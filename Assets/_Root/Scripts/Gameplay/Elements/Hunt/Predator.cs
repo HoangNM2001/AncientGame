@@ -13,20 +13,22 @@ public class Predator : GameComponent
     [SerializeField] private EnumPack.PredatorType predatorType;
     [SerializeField] private CharacterAnimController animController;
     [SerializeField] private Sprite icon;
-    [SerializeField] private float maxHp;
+    [SerializeField] private int maxHp;
     [SerializeField] private float moveSpeed;
     [SerializeField] private int maxStep;
     [SerializeField] private List<SphereCollider> colliderList;
     [SerializeField] public ParticleSystem bloodFx;
 
     private float speedRatio;
-    private float currentHp;
+    private int currentHp;
     private ParticleSystem cacheBlood;
 
     public EnumPack.PredatorType PredatorType => predatorType;
-    public float CurrentHp => currentHp;
+    public int CurrentHp => currentHp;
+    public int MaxHp => maxHp;
     public int MaxStep => maxStep;
-    public Action onHpChangeEvent;
+    public Sprite PredatorIcon => icon;
+    public Action OnHpChangeEvent;
 
     public void Activate()
     {
@@ -57,10 +59,10 @@ public class Predator : GameComponent
         DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() => onCompleted?.Invoke());
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         currentHp -= damage;
-        onHpChangeEvent?.Invoke();
+        OnHpChangeEvent?.Invoke();
 
         if (currentHp <= 0)
         {

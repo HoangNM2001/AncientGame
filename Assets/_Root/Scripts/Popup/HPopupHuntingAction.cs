@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Pancake.Scriptable;
 using Pancake.UI;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HPopupHuntingAction : UIPopup
 {
@@ -11,8 +13,13 @@ public class HPopupHuntingAction : UIPopup
     [SerializeField] private ScriptableEventInt changeInputEvent;
     [SerializeField] private ScriptableEventBool toggleMainCamera;
     [SerializeField] private ScriptableEventBool toggleMenuUIEvent;
+    [SerializeField] private PredatorVariable predatorVariable;
     [SerializeField] private GameObject huntingUI;
     [SerializeField] private GameObject hungtingButton;
+    [SerializeField] private Image predatorImage;
+    [SerializeField] private Image healthBar;
+
+    private MapPredator mapPredator;
 
     protected override void OnBeforeShow()
     {
@@ -29,6 +36,7 @@ public class HPopupHuntingAction : UIPopup
         toggleMenuUIEvent.Raise(false);
 
         HuntingStateEnable(true);
+        OnActiveMiniGame();
     }
 
     public void StopHuntingAction()
@@ -50,6 +58,23 @@ public class HPopupHuntingAction : UIPopup
         hungtingButton.SetActive(!isHunting);
     }
 
+    private void OnActiveMiniGame()
+    {
+        healthBar.fillAmount = 1.0f;
+        predatorImage.sprite = predatorVariable.Value.PredatorIcon;
+
+        predatorVariable.Value.OnHpChangeEvent += OnHpChangeEvent;
+    }
+
+    private void OnDeactiveMiniGame()
+    {
+        predatorVariable.Value.OnHpChangeEvent -= OnHpChangeEvent;
+    }
+
+    private void OnHpChangeEvent()
+    {
+        healthBar.fillAmount = (float)predatorVariable.Value.CurrentHp /  (float)predatorVariable.Value.MaxHp;
+    }
 
     public void ClosePopup()
     {

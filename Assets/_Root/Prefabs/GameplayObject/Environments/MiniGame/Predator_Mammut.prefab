@@ -48,7 +48,7 @@ MonoBehaviour:
   predatorType: 0
   animController: {fileID: 7480247209320702823}
   icon: {fileID: 21300000, guid: c17cebeebe964fc49bcc85a5af9e0936, type: 3}
-  maxHp: 10
+  maxHp: 6
   moveSpeed: 3
   maxStep: 3
   colliderList:
@@ -488,7 +488,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: -0.57, y: -0.06, z: 0}
+  m_Center: {x: -0.57, y: -0.12, z: -0.65}
 --- !u!1 &5416583051329324780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5239440660427312367, guid: 26f0dd5837facd74bb5e2b2d991af03c, type: 3}

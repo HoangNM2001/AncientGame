@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chili_Quantity
   m_EditorClassIdentifier: 
   guid: 4485429a0f76e9f45875e03d71c8a14c
-  value: 108
+  value: 134
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

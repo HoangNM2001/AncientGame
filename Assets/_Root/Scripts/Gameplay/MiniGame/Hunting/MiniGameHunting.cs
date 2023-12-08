@@ -13,6 +13,7 @@ public class MiniGameHunting : GameComponent, IMiniGame
     [SerializeField] private Transform playerStartPos;
     [SerializeField] private Transform monsterStartPos;
     [SerializeField] private ScriptableEventGetGameObject getCurrentMonsterEvent;
+    [SerializeField] private PredatorVariable predatorVariable;
     [SerializeField] private List<Predator> predatorPrefabList;
 
     public EnumPack.MiniGameType MiniGameType => miniGameType;
@@ -30,6 +31,7 @@ public class MiniGameHunting : GameComponent, IMiniGame
         Predator = Instantiate(predatorPrefabList.FirstOrDefault(p => p.PredatorType == mapPredator.PredatorType), container.transform);
         Predator.transform.position = monsterStartPos.position;
         Predator.transform.forward = Vector3.left;
+        predatorVariable.Value = Predator;
 
         IsPlayerTurn = true;
         remainStep = Predator.MaxStep;
@@ -42,11 +44,15 @@ public class MiniGameHunting : GameComponent, IMiniGame
     public void Deactivate()
     {
         container.SetActive(false);
+        huntingController.ClearSpear();
     }
 
     public void OnHit()
     {
-        Debug.LogError("Hit");
+        if (Predator.CurrentHp > 0)
+        {
+            
+        }
     }
 
     public void OnMiss()
