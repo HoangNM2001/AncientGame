@@ -86,6 +86,7 @@ public class NavmeshController : GameComponent
 
     public void Stop()
     {
+        navMeshAgent.velocity = Vector3.zero;
         navMeshAgent.isStopped = true;
     }
 
