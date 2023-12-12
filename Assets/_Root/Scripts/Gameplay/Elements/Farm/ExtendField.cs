@@ -22,7 +22,7 @@ public class ExtendField : GameComponent
 
     public ResourceConfig ResourceConfig => resourceConfig;
 
-    public EnumPack.ResourceType ResourceType
+    private EnumPack.ResourceType ResourceType
     {
         get => Data.Load(uniqueId, EnumPack.ResourceType.None);
 
@@ -36,28 +36,22 @@ public class ExtendField : GameComponent
             if (canHarvestCount > 0) return EnumPack.FieldState.Harvestable;
             if (canSeedCount > 0) return EnumPack.FieldState.Seedale;
             if (canWaterCount > 0) return EnumPack.FieldState.Waterable;
-            return EnumPack.FieldState.Seedale;            
+            return EnumPack.FieldState.Seedale;
         }
     }
 
     private void Start()
     {
-        if (ResourceType != EnumPack.ResourceType.None)
-        {
-            Initialize();
-            InitCount();
-        }
+        if (ResourceType != EnumPack.ResourceType.None) Initialize();
+        InitCount();
     }
 
-    public void Initialize()
+    private void Initialize()
     {
-        foreach (var resource in resourceConfigList)
+        foreach (var resource in resourceConfigList.Where(resource => ResourceType == resource.resourceType))
         {
-            if (ResourceType == resource.resourceType)
-            {
-                resourceConfig = resource;
-                break;
-            }
+            resourceConfig = resource;
+            break;
         }
 
         foreach (var field in fieldList)
@@ -111,7 +105,8 @@ public class ExtendField : GameComponent
             }
         }
 
-        newList.Sort((a, b) => SimpleMath.SqrDist(pos, a.transform.position).CompareTo(SimpleMath.SqrDist(pos, b.transform.position)));
+        newList.Sort((a, b) => SimpleMath.SqrDist(pos, a.transform.position)
+            .CompareTo(SimpleMath.SqrDist(pos, b.transform.position)));
         return newList;
     }
 

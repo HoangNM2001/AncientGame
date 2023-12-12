@@ -8,6 +8,11 @@ public class RelaxState : SlaveBaseState
     {
     }
 
+    protected override void OnStateEnter(State from, object data)
+    {
+        Debug.LogError("RelaxState");
+    }
+
     protected override void OnStateUpdate()
     {
         base.OnStateUpdate();

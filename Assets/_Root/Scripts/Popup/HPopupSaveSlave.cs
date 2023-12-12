@@ -7,20 +7,21 @@ using UnityEngine;
 
 public class HPopupSaveSlave : UIPopup
 {
+    [SerializeField] private ResourceConfig coinResource;
     [SerializeField] private ScriptableEventGetGameObject getCurrentSaveSlaveEvent;
     [SerializeField] private TextMeshProUGUI priceText;
 
-    private SlaveElement _currentSlaveElement;
+    private SlaveElement currentSlaveElement;
 
     protected override void OnBeforeShow()
     {
-        _currentSlaveElement = getCurrentSaveSlaveEvent.Raise().GetComponent<SlaveElement>();
-        priceText.SetText(_currentSlaveElement.Price.ToString());
+        currentSlaveElement = getCurrentSaveSlaveEvent.Raise().GetComponent<SlaveElement>();
+        priceText.SetText(currentSlaveElement.Price.ToString());
     }
 
     public void UnlockSlave()
     {
-        _currentSlaveElement.UnlockSlave();
+        currentSlaveElement.UnlockSlave();
         closePopupEvent.Raise();
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using DG.Tweening;
 using Pancake;
@@ -10,6 +11,7 @@ using UnityEditor.AddressableAssets.Build.BuildPipelineTasks;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using UnityEngine.TextCore.Text;
 
 public class SlaveController : GameComponent, IFarmer, ICaveMan
@@ -24,22 +26,21 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     private NavmeshController navmeshController;
     private StateMachine stateMachine;
-    private Vector3 targetPostion;
+    private Vector3 targetPosition;
     private EnumPack.FieldState currentFarmState;
 
     // Test Variables
-    private ResourceConfig currentResource;
-    public int currentCapacity = 0;
-    public int maxCapacity = 10;
-    public bool IsRelaxing = true;
+    private EnumPack.ResourceType currentResourceType = EnumPack.ResourceType.None;
+    private int currentCapacity;
+    private const int MAX_CAPACITY = 10;
 
     public CharacterActionList ActionList => characterActionList;
-    private bool IsBackpackFull => currentCapacity == maxCapacity;
+    private bool IsBackpackFull => currentCapacity >= MAX_CAPACITY;
 
     private void Awake()
     {
         navmeshController = GetComponent<NavmeshController>();
-        
+
         stateMachine = new StateMachine();
         stateMachine.InitStates(new RelaxState(this), new MovingState(this), new FarmingState(this));
         stateMachine.ChangeState<RelaxState>();
@@ -52,7 +53,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     public void Relaxing()
     {
-        if (cave.IsCaveFull())
+        if (!cave.IsCaveAvailable || !cave.IsAddable(currentResourceType))
         {
             navmeshController.Stop();
 
@@ -77,7 +78,8 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
     public void Moving()
     {
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
-        navmeshController.MoveByPosition(targetPostion, 0.0f, characterStat.moveSpeed, characterStat.rotateSpeed, 0.1f, Time.deltaTime);
+        navmeshController.MoveByPosition(targetPosition, 0.0f, characterStat.moveSpeed, characterStat.rotateSpeed, 0.1f,
+            Time.deltaTime);
     }
 
     public void Farming()
@@ -90,10 +92,12 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     public void GoToNearestField()
     {
-        var nearestField = extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
+        var nearestField =
+            extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
         if (nearestField)
         {
-            navmeshController.MoveByPosition(nearestField.transform.position, 1.0f, characterStat.workingMoveSpeed, characterStat.rotateSpeed, 0.1f, Time.deltaTime);
+            navmeshController.MoveByPosition(nearestField.transform.position, 1.0f, characterStat.workingMoveSpeed,
+                characterStat.rotateSpeed, 0.1f, Time.deltaTime);
         }
     }
 
@@ -128,13 +132,22 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     public void TriggerActionCave(GameObject gameObject = null)
     {
-        var tempCapacity = currentCapacity;
-        currentCapacity = cave.AddStorage(currentResource.resourceType, tempCapacity, () => DOTween.Sequence().AppendInterval(2.0f).AppendCallback(GoToField));
+        if (!cave.IsAddable(currentResourceType))
+        {
+            stateMachine.ChangeState<RelaxState>();
+        }
+        else
+        {
+            DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+            {
+                currentCapacity = cave.AddStorage(currentResourceType, currentCapacity, GoToField);
+                if (currentCapacity == 0) currentResourceType = EnumPack.ResourceType.None;
+            });
+        }
     }
 
     public void ExitTriggerActionCave()
     {
-        
     }
 
     public void ActiveFarmAction()
@@ -153,13 +166,24 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
                 ActiveHarvest();
                 break;
             default:
-                break;
+                throw new ArgumentOutOfRangeException();
         }
     }
 
     private void ActiveSeed()
     {
-        if (!extendField.IsSeeded()) extendField.InitializeOnNewSeed(cave.SuitableResouce());
+        if (!extendField.IsSeeded())
+        {
+            extendField.InitializeOnNewSeed(cave.SuitableResource());
+        }
+        else
+        {
+            if (currentResourceType != extendField.ResourceConfig.resourceType)
+            {
+                stateMachine.ChangeState<RelaxState>();
+                return;
+            }
+        }
 
         characterActionList.StartActionEvent((int)EnumPack.CharacterActionType.SeedFarm);
     }
@@ -171,25 +195,24 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     private void ActiveHarvest()
     {
-        currentResource = extendField.ResourceConfig;
+        currentResourceType = extendField.ResourceConfig.resourceType;
         characterActionList.StartActionEvent((int)EnumPack.CharacterActionType.HarvestFarm);
     }
 
     private void GoToField()
     {
-        targetPostion = extendField.transform.position;
+        var nearestField =
+            extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
+        
+        targetPosition = nearestField ? nearestField.transform.position : extendField.transform.position;
+
         stateMachine.ChangeState<MovingState>();
     }
 
     private void GoToCave()
     {
-        targetPostion = cave.GoToPos.position;
+        targetPosition = cave.GoToPos.position;
         stateMachine.ChangeState<MovingState>();
-    }
-
-    private bool IsCaveFull()
-    {
-        return cave.IsCaveFull();
     }
 
     public void EmptyLayer1()
