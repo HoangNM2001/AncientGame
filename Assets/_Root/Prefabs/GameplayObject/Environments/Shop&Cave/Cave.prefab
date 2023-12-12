@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &566855222182934048
+--- !u!1 &1707543936232570538
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 51147972205255269}
-  m_Layer: 0
+  - component: {fileID: 5137897322223463894}
+  m_Layer: 8
   m_Name: GoToPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &51147972205255269
+--- !u!4 &5137897322223463894
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566855222182934048}
+  m_GameObject: {fileID: 1707543936232570538}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.63}
+  m_LocalPosition: {x: 0, y: 0, z: -2.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -315,7 +315,7 @@ Transform:
   - {fileID: 1753415795139192145}
   - {fileID: 8871571596951038361}
   - {fileID: 5388521544043533085}
-  - {fileID: 51147972205255269}
+  - {fileID: 5137897322223463894}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1785629415221048754
@@ -337,8 +337,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: -2.58}
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: -2.6}
 --- !u!114 &3400477093580714458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,10 +359,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 570244483dd2a7d4cb1dc97b13926ab1, type: 2}
   - {fileID: 11400000, guid: 1fd41024a2972f74f9be3bdb18f45493, type: 2}
   - {fileID: 11400000, guid: 62e48a472f4b2094883ca660b7d01649, type: 2}
-  MaxNumberOfResources: 3
   resourceUIParent: {fileID: 6596163381955881967}
-  goToPos: {fileID: 51147972205255269}
-  isCaveFull: 1
+  goToPos: {fileID: 5137897322223463894}
 --- !u!1001 &4936910212035757618
 PrefabInstance:
   m_ObjectHideFlags: 0

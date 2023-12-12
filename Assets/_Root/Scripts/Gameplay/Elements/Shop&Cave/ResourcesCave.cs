@@ -147,7 +147,7 @@ public class ResourcesCave : SaveDataElement
     {
         if (other.TryGetComponent<ICaveMan>(out var caveMan))
         {
-            caveMan.ExitTriggerActionCave();
+            caveMan.ExitTriggerAction();
             showableUI.Show(false);
         }
     }

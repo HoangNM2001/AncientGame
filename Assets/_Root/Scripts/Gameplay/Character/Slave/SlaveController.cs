@@ -146,7 +146,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         }
     }
 
-    public void ExitTriggerActionCave()
+    public void ExitTriggerAction()
     {
     }
 

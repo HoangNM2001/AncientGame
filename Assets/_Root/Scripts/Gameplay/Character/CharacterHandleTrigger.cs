@@ -22,6 +22,7 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     [SerializeField, PopupPickup] private string fishingActionPopup;
     [SerializeField, PopupPickup] private string huntingActionPopup;
     [SerializeField, PopupPickup] private string saveSlaveActionPopup;
+    [SerializeField, PopupPickup] private string caveActionPopup;
 
     private Transform popupParentTrans;
     private GameObject currentInteract;
@@ -71,14 +72,10 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
         popupShowEvent.Raise(shopActionPopup, popupParentTrans);
     }
 
-    public void TriggerActionCave(GameObject gameObject = null)
+    public void TriggerActionCave(GameObject triggerCave)
     {
-        // Debug.LogError("EnterCave");
-    }
-
-    public void ExitTriggerActionCave()
-    {
-        // Debug.LogError("ExitCave");
+        currentInteract = triggerCave;
+        popupShowEvent.Raise(caveActionPopup, popupParentTrans);
     }
 
     public void TriggerActionFishing(GameObject fishingField)

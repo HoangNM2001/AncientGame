@@ -5,5 +5,5 @@ using UnityEngine;
 public interface ICaveMan
 {
     public void TriggerActionCave(GameObject gameObject = null);
-    public void ExitTriggerActionCave();
+    public void ExitTriggerAction();
 }
