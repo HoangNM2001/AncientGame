@@ -70,7 +70,7 @@ public class ShopResources : GameComponent
     private void ExitTriggerTalk(Collider obj)
     {
         if (characterHandleTrigger == null) characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(obj);
-        characterHandleTrigger.ExitTriggerActionShopNear(gameObject);
+        characterHandleTrigger.ExitTriggerAction();
         
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_IDLE, 0.1f);
     }

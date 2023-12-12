@@ -29,6 +29,7 @@ public class Predator : GameComponent
     public int MaxStep => maxStep;
     public Sprite PredatorIcon => icon;
     public Action OnHpChangeEvent;
+    public Action<Vector3> OnShowHitTargetEvent;
 
     public void Activate()
     {

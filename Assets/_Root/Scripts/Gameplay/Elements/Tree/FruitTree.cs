@@ -144,7 +144,7 @@ public class FruitTree : GameComponent
     private void OnTriggerExit(Collider other)
     {
         CharacterHandleTrigger characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
-        if (characterHandleTrigger) characterHandleTrigger.ExitTriggerActionTree();
+        if (characterHandleTrigger) characterHandleTrigger.ExitTriggerAction();
     }
 
 #if UNITY_EDITOR

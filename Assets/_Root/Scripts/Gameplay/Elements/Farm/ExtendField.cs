@@ -85,9 +85,9 @@ public class ExtendField : GameComponent
         }
     }
 
-    public void GenerateRandomResource()
+    public void InitializeOnNewSeed(EnumPack.ResourceType newResourceType)
     {
-        ResourceType = resourceConfigList[UnityEngine.Random.Range(0, resourceConfigList.Count)].resourceType;
+        ResourceType = newResourceType;
         Initialize();
     }
 

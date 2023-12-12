@@ -21,6 +21,7 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     [SerializeField, PopupPickup] private string shopActionPopup;
     [SerializeField, PopupPickup] private string fishingActionPopup;
     [SerializeField, PopupPickup] private string huntingActionPopup;
+    [SerializeField, PopupPickup] private string saveSlaveActionPopup;
 
     private Transform popupParentTrans;
     private GameObject currentInteract;
@@ -64,22 +65,10 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
         popupShowEvent.Raise(fruitActionPopup, popupParentTrans);
     }
 
-    public void ExitTriggerActionTree()
-    {
-        currentInteract = null;
-        popupCloseEvent.Raise();
-    }
-
     public void TriggerActionShopNear(GameObject triggerShop)
     {
         currentInteract = triggerShop;
         popupShowEvent.Raise(shopActionPopup, popupParentTrans);
-    }
-
-    public void ExitTriggerActionShopNear(GameObject triggerShop)
-    {
-        currentInteract = null;
-        popupCloseEvent.Raise();
     }
 
     public void TriggerActionCave(GameObject gameObject = null)
@@ -98,19 +87,19 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
         popupShowEvent.Raise(fishingActionPopup, popupParentTrans);
     }
 
-    public void ExitTriggerActionFishing()
-    {
-        currentInteract = null;
-        popupCloseEvent.Raise();
-    }
-
     public void TriggerActionHunting(GameObject predator)
     {
         currentInteract = predator;
         popupShowEvent.Raise(huntingActionPopup, popupParentTrans);
     }
 
-    public void ExitTriggerActionHunting()
+    public void TriggerSaveSlave(GameObject drownSlave)
+    {
+        currentInteract = drownSlave;
+        popupShowEvent.Raise(saveSlaveActionPopup, popupParentTrans);
+    }
+
+    public void ExitTriggerAction()
     {
         currentInteract = null;
         popupCloseEvent.Raise();

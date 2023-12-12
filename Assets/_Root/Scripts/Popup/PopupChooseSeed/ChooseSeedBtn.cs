@@ -26,7 +26,6 @@ public class ChooseSeedBtn : ButtonAction
         var currentExtendField = getCurrentExtendFieldEvent.Raise().GetComponent<ExtendField>();
         if (currentExtendField == null) return;
 
-        currentExtendField.ResourceType = resourceType;
-        currentExtendField.Initialize();
+        currentExtendField.InitializeOnNewSeed(resourceType);
     }
 }

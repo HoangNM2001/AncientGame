@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class HPopupHuntingAction : UIPopup
 {
+    [SerializeField] private ScriptableEventGetGameObject getHuntingFieldEvent;
     [SerializeField] private IntVariable currentMiniGameType;
     [SerializeField] private ScriptableEventBool toggleMiniGame;
     [SerializeField] private ScriptableEventInt changeInputEvent;
@@ -48,6 +49,11 @@ public class HPopupHuntingAction : UIPopup
         toggleMenuUIEvent.Raise(true);
 
         HuntingStateEnable(false);
+
+        if (getHuntingFieldEvent.Raise().TryGetComponent<HuntingField>(out var huntingField))
+        {
+            huntingField.HarvestOnWin();
+        }
 
         ClosePopup();
     }

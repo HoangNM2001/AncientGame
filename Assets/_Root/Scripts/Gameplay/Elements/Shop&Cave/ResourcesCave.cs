@@ -9,10 +9,10 @@ using Pancake;
 using Pancake.SceneFlow;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class ResourcesCave : GameComponent
+public class ResourcesCave : SaveDataElement
 {
-    [SerializeField, UniqueID] private string uniqueId;
     [SerializeField] private ShowableUI showableUI;
     [SerializeField] private CaveResourcesUI caveResourcesUIPrefab;
     [SerializeField] private List<ResourceConfig> caveResourceList;
@@ -21,8 +21,9 @@ public class ResourcesCave : GameComponent
     [SerializeField] private Transform goToPos;
     [SerializeField] private bool isCaveFull;
 
-    private const int CaveMaxCapacity = 150;
+    private const int CaveMaxCapacity = 50;
     private CharacterHandleTrigger characterHandleTrigger;
+    private Dictionary<EnumPack.ResourceType, ResourceConfig> resourceDict;
     private Dictionary<EnumPack.ResourceType, CaveResourcesUI> caveResourceUIDict;
     private Dictionary<EnumPack.ResourceType, int> resourceCapacityDict;
     private string ResourceCapacityJson
@@ -38,6 +39,12 @@ public class ResourcesCave : GameComponent
     {
         caveResourceUIDict = new Dictionary<EnumPack.ResourceType, CaveResourcesUI>();
         resourceCapacityDict = JsonConvert.DeserializeObject<Dictionary<EnumPack.ResourceType, int>>(ResourceCapacityJson) ?? new Dictionary<EnumPack.ResourceType, int>();
+        resourceDict = new Dictionary<EnumPack.ResourceType, ResourceConfig>();
+        
+        foreach (var resource in caveResourceList)
+        {
+            resourceDict[resource.resourceType] = resource;
+        }
     }
 
     private void Start()
@@ -49,6 +56,13 @@ public class ResourcesCave : GameComponent
         //     caveResourceUIDict[resource.resourceType] = newResourceUI;
         //     newResourceUI.Setup(resource.resourceIcon, resourceCapacityDict[resource.resourceType], CaveMaxCapacity);
         // }
+
+        foreach (var pair in resourceCapacityDict)
+        {
+            var newResourceUI = Instantiate(caveResourcesUIPrefab, resourceUIParent);
+            caveResourceUIDict[pair.Key] = newResourceUI;
+            newResourceUI.Setup(resourceDict[pair.Key].resourceIcon, pair.Value, CaveMaxCapacity);
+        }
     }
 
     public int AddStorage(EnumPack.ResourceType resourceType, int amount, Action callback)
@@ -103,6 +117,18 @@ public class ResourcesCave : GameComponent
         }
     }
 
+    public EnumPack.ResourceType SuitableResouce()
+    {
+        var copyList = new List<ResourceConfig>(caveResourceList);
+
+        foreach (var resource in copyList)
+        {
+            if (resourceCapacityDict[resource.resourceType] == CaveMaxCapacity) copyList.Remove(resource);
+        }
+
+        return copyList[Random.Range(0, copyList.Count)].resourceType;
+    }
+
     public bool IsCaveFull()
     {
         return isCaveFull;
@@ -130,15 +156,6 @@ public class ResourcesCave : GameComponent
     {
         ResourceCapacityJson = JsonConvert.SerializeObject(resourceCapacityDict);
     }
-
-#if UNITY_EDITOR
-    [ContextMenu("Reset Unique ID")]
-    public void ResetUniqueID()
-    {
-        Guid guid = Guid.NewGuid();
-        uniqueId = guid.ToString();
-    }
-#endif    
 }
 
 public class CaveResource

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Rotation
   m_EditorClassIdentifier: 
   guid: afb0f469e12db7643968aaec27c766a5
-  value: {x: 0, y: 349.8579, z: 0}
+  value: {x: -0, y: 68.0339, z: 0}
   debugLogEnabled: 0
   saved: 1
   defaultValue: {x: 0, y: 0, z: 0}

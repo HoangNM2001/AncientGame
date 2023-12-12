@@ -79,7 +79,7 @@ public class FishingField : GameComponent
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<IFisher>(out var fisher)) fisher.ExitTriggerActionFishing();
+        if (other.TryGetComponent<IFisher>(out var fisher)) fisher.ExitTriggerAction();
     }
 
     private void OnTriggerAroundEnterEvent(Collider collider)

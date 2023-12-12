@@ -34,14 +34,12 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
     public bool IsRelaxing = true;
 
     public CharacterActionList ActionList => characterActionList;
+    private bool IsBackpackFull => currentCapacity == maxCapacity;
 
     private void Awake()
     {
         navmeshController = GetComponent<NavmeshController>();
-    }
-
-    private void Start()
-    {
+        
         stateMachine = new StateMachine();
         stateMachine.InitStates(new RelaxState(this), new MovingState(this), new FarmingState(this));
         stateMachine.ChangeState<RelaxState>();
@@ -65,7 +63,14 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         }
         else
         {
-            GoToField();
+            if (IsBackpackFull)
+            {
+                GoToCave();
+            }
+            else
+            {
+                GoToField();
+            }
         }
     }
 
@@ -101,7 +106,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
     {
         currentCapacity++;
 
-        if (currentCapacity == maxCapacity || isHarvestDone)
+        if (IsBackpackFull || isHarvestDone)
         {
             GoToCave();
         }
@@ -154,7 +159,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     private void ActiveSeed()
     {
-        if (!extendField.IsSeeded()) extendField.GenerateRandomResource();
+        if (!extendField.IsSeeded()) extendField.InitializeOnNewSeed(cave.SuitableResouce());
 
         characterActionList.StartActionEvent((int)EnumPack.CharacterActionType.SeedFarm);
     }

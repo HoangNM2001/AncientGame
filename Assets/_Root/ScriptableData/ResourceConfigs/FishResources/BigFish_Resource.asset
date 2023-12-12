@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
-  m_Name: SmallFish_Resource
+  m_Name: BigFish_Resource
   m_EditorClassIdentifier: 
-  resourceId: small_fish__resource
-  resourceType: 12
-  resourceIcon: {fileID: 21300000, guid: b29b3c10fb95b3742a04492c5591cc50, type: 3}
+  resourceId: big_fish__resource
+  resourceType: 11
+  resourceIcon: {fileID: 21300000, guid: ca30a3cd536e12d489316973ad1d790a, type: 3}
   smallTreePool: {fileID: 0}
   bigTreePool: {fileID: 0}
   treeColor: {r: 0, g: 0, b: 0, a: 0}
-  flyModelPool: {fileID: 11400000, guid: 0e198acfa8c1e0644a953b8620933763, type: 2}
-  flyUIPool: {fileID: 11400000, guid: c9d24b0d8748f38448ebeff770db05f7, type: 2}
-  resourceQuantity: {fileID: 11400000, guid: f845b7c7ed32d72479d0eefd00255c17, type: 2}
-  Price: 0
+  flyModelPool: {fileID: 11400000, guid: 4c7c6b59c5018f14e84c60068872ec77, type: 2}
+  flyUIPool: {fileID: 11400000, guid: 13416327316af3b4e86537e551eba8ee, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: 3a1bcac480c676849ae9995bc72386aa, type: 2}
+  Price: 5

@@ -11,8 +11,9 @@ public class MiniGameHunting : GameComponent, IMiniGame
     [SerializeField] private GameObject container;
     [SerializeField] private HuntingController huntingController;
     [SerializeField] private Transform playerStartPos;
-    [SerializeField] private Transform monsterStartPos;
+    [SerializeField] private Transform predatorStartPos;
     [SerializeField] private ScriptableEventGetGameObject getCurrentMonsterEvent;
+    [SerializeField] private ScriptableEventNoParam forceStopMinigameEvent;
     [SerializeField] private PredatorVariable predatorVariable;
     [SerializeField] private List<Predator> predatorPrefabList;
 
@@ -21,6 +22,7 @@ public class MiniGameHunting : GameComponent, IMiniGame
     public Predator Predator { get; private set; }
 
     private int remainStep;
+    private float stepSize;
 
     public void Activate()
     {
@@ -29,12 +31,13 @@ public class MiniGameHunting : GameComponent, IMiniGame
 
         var mapPredator = getCurrentMonsterEvent.Raise().GetComponent<MapPredator>();
         Predator = Instantiate(predatorPrefabList.FirstOrDefault(p => p.PredatorType == mapPredator.PredatorType), container.transform);
-        Predator.transform.position = monsterStartPos.position;
+        Predator.transform.position = predatorStartPos.position;
         Predator.transform.forward = Vector3.left;
         predatorVariable.Value = Predator;
 
         IsPlayerTurn = true;
         remainStep = Predator.MaxStep;
+        stepSize = Mathf.Abs(playerStartPos.position.x - predatorStartPos.position.x) / Predator.MaxStep;
 
         container.SetActive(true);
         huntingController.Activate(this);
@@ -51,13 +54,37 @@ public class MiniGameHunting : GameComponent, IMiniGame
     {
         if (Predator.CurrentHp > 0)
         {
+            IsPlayerTurn = true;
+        }
+        else
+        {
             
         }
     }
 
     public void OnMiss()
     {
-        Debug.LogError("Miss");
+        remainStep--;
+        Predator.MoveForward(1, stepSize, () =>
+        {
+            if (remainStep > 0)
+            {
+                Predator.Attack(() =>
+                {
+                    huntingController.DoDie();
+                    EndMinigame();
+                });
+            }
+            else
+            {
+                IsPlayerTurn = true;
+            }
+        });
+    }
+
+    private void EndMinigame()
+    {
+        Debug.LogError("EndMiniGame");
     }
 
     public void OnRelease()

@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pancake;
+using Pancake.SceneFlow;
+using Pancake.Scriptable;
 using UnityEngine;
 
-public class Egg : MonoBehaviour
+public class Egg : GameComponent
 {
-    // Start is called before the first frame update
-    void Start()
+    private Henhouse _henhouse;
+
+    public void Setup(Henhouse henhouse)
     {
-        
+        _henhouse = henhouse;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag(Constant.MAIN_TAG))
+        {
+            _henhouse.HarvestEgg(gameObject);
+        }
     }
 }

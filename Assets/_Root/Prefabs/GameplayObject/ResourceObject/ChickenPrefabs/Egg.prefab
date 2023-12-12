@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1039629029928780582}
   - component: {fileID: 7703908832232901813}
   - component: {fileID: 7871070642373744761}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Egg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,6 +118,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 00e2df650f6c2044d8c213a393cb4db3, type: 3}
       propertyPath: m_Name
       value: Egg
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 00e2df650f6c2044d8c213a393cb4db3, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -21,12 +21,7 @@ public class HuntingController : GameComponent
     private bool isDragging;
     private int remainStep;
     private MiniGameHunting miniGameHunting;
-    private List<Spear> spearList;
-
-    private void Awake()
-    {
-        spearList = new List<Spear>();
-    }
+    private List<Spear> spearList = new List<Spear>();
 
     protected override void OnEnabled()
     {

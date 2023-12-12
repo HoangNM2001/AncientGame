@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
-  m_Name: Meat_Resource
+  m_Name: Egg_Resource
   m_EditorClassIdentifier: 
-  resourceId: meat__resource
-  resourceType: 0
-  resourceIcon: {fileID: 21300000, guid: 348574a4444d07645993ad8c5d339017, type: 3}
+  resourceId: egg__resource
+  resourceType: 7
+  resourceIcon: {fileID: 21300000, guid: a10adcf0278d7ef4e9473671f8be4cab, type: 3}
   smallTreePool: {fileID: 0}
   bigTreePool: {fileID: 0}
   treeColor: {r: 0, g: 0, b: 0, a: 0}
   flyModelPool: {fileID: 0}
-  flyUIPool: {fileID: 0}
-  resourceQuantity: {fileID: 0}
-  Price: 0
+  flyUIPool: {fileID: 11400000, guid: d5f3347718fb50240b319453f19441bb, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: b4e6966d5b6c419428188e631c85754f, type: 2}
+  Price: 3

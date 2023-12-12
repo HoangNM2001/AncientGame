@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IHunter
 {
     public void TriggerActionHunting(GameObject gameObject);
-    public void ExitTriggerActionHunting();
+    public void ExitTriggerAction();
 }

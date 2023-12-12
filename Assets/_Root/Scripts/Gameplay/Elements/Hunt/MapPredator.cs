@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil;
 using Pancake;
 using Unity.SharpZipLib.Zip;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class MapPredator : GameComponent
     [SerializeField] private NavmeshController navmeshController;
     [SerializeField] private CharacterAnimController animController;
 
+    [Header("Reward")]
+    [SerializeField] private ResourceConfig meatResource; 
+    [SerializeField] private int numberOfMeat; 
+
     [Header("Move")]
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float wanderSpeed;
@@ -19,6 +24,8 @@ public class MapPredator : GameComponent
     [SerializeField] private float changePathTime;
 
     public EnumPack.PredatorType PredatorType => predatorType;
+    public ResourceConfig MeatResource => meatResource;
+    public int NumberOfMeat => numberOfMeat;
 
     private Vector3 wanderCenter;
     private bool isPlayerInSight;
