@@ -7,8 +7,11 @@ using Mono.Cecil;
 using Newtonsoft.Json;
 using Pancake;
 using Pancake.SceneFlow;
+using Pancake.Scriptable;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.Purchasing.MiniJSON;
 using Random = UnityEngine.Random;
 
 public class ResourcesCave : SaveDataElement
@@ -18,6 +21,7 @@ public class ResourcesCave : SaveDataElement
     [SerializeField] private List<ResourceConfig> caveResourceList;
     [SerializeField] private Transform resourceUIParent;
     [SerializeField] private Transform goToPos;
+    [SerializeField] private ScriptableEventStorageAddData addStorageEvent;
 
     private const int MaxNumberOfResources = 3;
     private const int CaveMaxCapacity = 50;
@@ -65,11 +69,34 @@ public class ResourcesCave : SaveDataElement
 
     public bool IsAddable(EnumPack.ResourceType resourceType)
     {
-        if (resourceCapacityDict.Count < MaxNumberOfResources) return true;
-
         if (resourceCapacityDict.TryGetValue(resourceType, out var value)) return value < CaveMaxCapacity;
 
-        return false;
+        return resourceCapacityDict.Count < MaxNumberOfResources;
+    }
+
+    public void CollectStorage()
+    {
+        StartCoroutine(IECollect());
+    }
+
+    IEnumerator IECollect()
+    {
+        foreach (var pair in resourceCapacityDict)
+        {
+            addStorageEvent.Raise(new StorageAddData
+            {
+                resourceType = pair.Key,
+                changeValue = pair.Value,
+                worldPos = transform.position
+            });
+
+            caveResourceUIDict[pair.Key].UpdateCapacity(0, () => { Destroy(caveResourceUIDict[pair.Key].gameObject); });
+            yield return new WaitForSeconds(0.75f);
+        }
+
+        caveResourceUIDict.Clear();
+        resourceCapacityDict.Clear();
+        ResourceCapacityJson = JsonConvert.SerializeObject(resourceCapacityDict);
     }
 
     public int AddStorage(EnumPack.ResourceType resourceType, int amount, Action callback)
@@ -105,8 +132,8 @@ public class ResourcesCave : SaveDataElement
             caveResourceUIDict[resourceType] = newResourceUI;
         }
 
-        Debug.LogError(amount + " - " + availableStorage + " - " + slaveRemainCapacity);
         caveResourceUIDict[resourceType].UpdateCapacity(resourceCapacityDict[resourceType], callback);
+        Debug.LogError($"{amount}-{slaveRemainCapacity}");
         return slaveRemainCapacity;
     }
 
@@ -139,7 +166,7 @@ public class ResourcesCave : SaveDataElement
         if (other.TryGetComponent<ICaveMan>(out var caveMan))
         {
             showableUI.Show(true);
-            caveMan.TriggerActionCave();
+            caveMan.TriggerActionCave(gameObject);
         }
     }
 
@@ -156,6 +183,7 @@ public class ResourcesCave : SaveDataElement
     {
         resourceCapacityDict[resourceType] = value;
         ResourceCapacityJson = JsonConvert.SerializeObject(resourceCapacityDict);
+        Debug.LogError(ResourceCapacityJson);
     }
 }
 

@@ -11,11 +11,17 @@ public class RelaxState : SlaveBaseState
     protected override void OnStateEnter(State from, object data)
     {
         Debug.LogError("RelaxState");
+        SlaveController.SphereCollider.enabled = false;
     }
 
     protected override void OnStateUpdate()
     {
         base.OnStateUpdate();
         SlaveController.Relaxing();
+    }
+
+    protected override void OnStateExit(State to)
+    {
+        SlaveController.SphereCollider.enabled = true;
     }
 }

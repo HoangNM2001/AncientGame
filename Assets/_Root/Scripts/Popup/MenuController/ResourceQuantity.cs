@@ -43,7 +43,7 @@ public class ResourceQuantity : GameComponent
         ScaleEffect();
     }
 
-    public void UpdateCoinValue(int changeValue)
+    public void UpdateResourcesValue(int changeValue)
     {
         ChangeValueTxtEffect(QuantityVariable.Value += changeValue);
     }

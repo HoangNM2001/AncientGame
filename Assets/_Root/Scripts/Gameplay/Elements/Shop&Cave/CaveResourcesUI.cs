@@ -12,8 +12,14 @@ public class CaveResourcesUI : MonoBehaviour
     [SerializeField] private Image fillBar;
     [SerializeField] private TextMeshProUGUI fillText;
 
-    private int currentCapacity = 0;
+    private int currentCapacity;
     private int maxCapacity;
+
+    private void Awake()
+    {
+        currentCapacity = 0;
+        fillBar.fillAmount = 0;
+    }
 
     public void Setup(Sprite resourceSprite, int capacity)
     {
@@ -31,6 +37,9 @@ public class CaveResourcesUI : MonoBehaviour
         });
         
         DOTween.To(() => currentCapacity, x => currentCapacity = x, currCapacity, 0.5f).SetUpdate(true)
-            .OnUpdate(() => fillText.text = $"{currentCapacity}/{maxCapacity}");
+            .OnUpdate(() => fillText.text = $"{currentCapacity}/{maxCapacity}").OnComplete(() =>
+            {
+                if (currentCapacity == 0) Destroy(gameObject);
+            });
     }
 }

@@ -27,8 +27,8 @@ public class PlayerController : GameComponent
         navmeshController = GetComponent<NavmeshController>();
         playerHandleInput = GetComponent<PlayerHandleInput>();
 
-        transform.position = playerPosition.Value;
-        transform.rotation = Quaternion.Euler(playerRotation.Value);
+        // transform.position = playerPosition.Value;
+        // transform.rotation = Quaternion.Euler(playerRotation.Value);
     }
 
     protected override void OnEnabled()
@@ -67,8 +67,8 @@ public class PlayerController : GameComponent
         playerHandleInput.GetInput();
         MoveByDirection(playerHandleInput.MoveDir.normalized, currentMoveSpeed, Time.deltaTime);
 
-        playerPosition.Value = transform.position;
-        playerRotation.Value = transform.rotation.eulerAngles;
+        // playerPosition.Value = transform.position;
+        // playerRotation.Value = transform.rotation.eulerAngles;
     }
 
     private void MoveByDirection(Vector3 direction, float moveSpeed, float deltaTime)

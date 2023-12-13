@@ -5293,7 +5293,6 @@ MonoBehaviour:
   characterActionList: {fileID: 1912830947}
   characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
   staffBackpack: {fileID: 289631796}
-  addStorageEvent: {fileID: 0}
 --- !u!54 &427732049
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5336,7 +5335,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 247
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -17202,6 +17201,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3400477093580714458, guid: 6a4008d7b409ada469ac801def98e805, type: 3}
+      propertyPath: addStorageEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 375561c53e722a64a8cc7ca88784c533, type: 2}
     - target: {fileID: 6596163381955881967, guid: 6a4008d7b409ada469ac801def98e805, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -33471,14 +33474,6 @@ PrefabInstance:
     - target: {fileID: 5343550134950889563, guid: 638ce415f74300c4584881173657a60e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922737772938810296, guid: 638ce415f74300c4584881173657a60e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345393343488906084, guid: 638ce415f74300c4584881173657a60e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8802312738055567338, guid: 638ce415f74300c4584881173657a60e, type: 3}
       propertyPath: m_Name

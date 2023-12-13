@@ -1,18 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
 using DG.Tweening;
 using Pancake;
 using Pancake.SceneFlow;
-using Pancake.Scriptable;
-using UnityEditor.AddressableAssets.Build.BuildPipelineTasks;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
-using UnityEngine.TextCore.Text;
 
 public class SlaveController : GameComponent, IFarmer, ICaveMan
 {
@@ -22,23 +12,25 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
     [SerializeField] private CharacterActionList characterActionList;
     [SerializeField] private CharacterStat characterStat;
     [SerializeField] private Transform staffBackpack;
-    [SerializeField] private ScriptableEventStorageAddData addStorageEvent;
 
     private NavmeshController navmeshController;
     private StateMachine stateMachine;
     private Vector3 targetPosition;
     private EnumPack.FieldState currentFarmState;
+    private SphereCollider sphereCollider;
 
     // Test Variables
     private EnumPack.ResourceType currentResourceType = EnumPack.ResourceType.None;
     private int currentCapacity;
     private const int MAX_CAPACITY = 10;
 
+    public SphereCollider SphereCollider => sphereCollider;
     public CharacterActionList ActionList => characterActionList;
     private bool IsBackpackFull => currentCapacity >= MAX_CAPACITY;
 
     private void Awake()
     {
+        sphereCollider = GetComponent<SphereCollider>();
         navmeshController = GetComponent<NavmeshController>();
 
         stateMachine = new StateMachine();
@@ -130,7 +122,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         characterActionList.StopActionEvent();
     }
 
-    public void TriggerActionCave(GameObject gameObject = null)
+    public void TriggerActionCave(GameObject interactCave)
     {
         if (!cave.IsAddable(currentResourceType))
         {
@@ -178,7 +170,8 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         }
         else
         {
-            if (currentResourceType != extendField.ResourceConfig.resourceType)
+            if (currentResourceType != extendField.ResourceConfig.resourceType &&
+                !cave.IsAddable(extendField.ResourceConfig.resourceType))
             {
                 stateMachine.ChangeState<RelaxState>();
                 return;
@@ -203,7 +196,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
     {
         var nearestField =
             extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
-        
+
         targetPosition = nearestField ? nearestField.transform.position : extendField.transform.position;
 
         stateMachine.ChangeState<MovingState>();

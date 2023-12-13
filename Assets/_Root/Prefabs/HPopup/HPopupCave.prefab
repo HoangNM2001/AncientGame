@@ -659,9 +659,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HPopupSaveSlave, Assembly-CSharp
-        m_MethodName: UnlockSlave
+      - m_Target: {fileID: 2623372014198127754}
+        m_TargetAssemblyTypeName: HPopupCave, Assembly-CSharp
+        m_MethodName: CollectResource
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1154,3 +1154,4 @@ MonoBehaviour:
   onAfterClose:
     m_PersistentCalls:
       m_Calls: []
+  getCurrentCaveEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
