@@ -7,6 +7,7 @@ using Pancake.SceneFlow;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class Predator : GameComponent
 {
@@ -29,7 +30,7 @@ public class Predator : GameComponent
     public int MaxStep => maxStep;
     public Sprite PredatorIcon => icon;
     public Action OnHpChangeEvent;
-    public Action<Vector3> OnShowHitTargetEvent;
+    public Action<Vector3> OnShowNextHitPointEvent;
 
     public void Activate()
     {
@@ -65,24 +66,31 @@ public class Predator : GameComponent
         currentHp -= damage;
         OnHpChangeEvent?.Invoke();
 
-        if (currentHp <= 0)
-        {
-            animController.Play(Constant.PREDATOR_DIE, 0);
-        }
+        animController.Play(currentHp <= 0 ? Constant.PREDATOR_DIE : Constant.PREDATOR_HITTED, 0);
     }
 
-    public void Hurt(Transform transform)
+    public void Hurt(Transform hitPos)
     {
         if (cacheBlood == null)
         {
-            cacheBlood = Instantiate(bloodFx, transform);
+            cacheBlood = Instantiate(bloodFx, hitPos);
         }
         else
         {
-            cacheBlood.transform.SetParent(transform);
+            cacheBlood.transform.SetParent(hitPos);
             cacheBlood.Play();
         }
-        animController.Play(Constant.PREDATOR_HITTED, 0);
+    }
+
+    public void ShowNextHitPoint()
+    {
+        var random = UnityEngine.Random.Range(0, colliderList.Count);
+        for (var i = 0; i < colliderList.Count; i++)
+        {
+            colliderList[i].enabled = i == random;
+        }
+        Debug.LogError(colliderList[random].name);
+        OnShowNextHitPointEvent?.Invoke(colliderList[random].bounds.center);
     }
 
     protected override void Tick()

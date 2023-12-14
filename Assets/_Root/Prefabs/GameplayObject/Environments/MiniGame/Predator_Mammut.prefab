@@ -487,7 +487,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Center: {x: -0.57, y: -0.12, z: -0.65}
 --- !u!1 &5416583051329324780 stripped
 GameObject:
@@ -539,7 +539,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.62
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0.16, z: -0.54}
 --- !u!1 &7451536775283741669 stripped
 GameObject:
@@ -565,7 +565,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.88
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0.34, z: 0}
 --- !u!1 &8845571066183963332 stripped
 GameObject:
@@ -591,5 +591,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.35
+  m_Radius: 0.3
   m_Center: {x: 0.06, y: -0.12, z: 0}

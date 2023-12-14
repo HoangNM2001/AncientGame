@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class HPopupHuntingAction : UIPopup
 {
+    [SerializeField] private ScriptableEventNoParam forceStopMiniGame;
     [SerializeField] private ScriptableEventGetGameObject getHuntingFieldEvent;
     [SerializeField] private IntVariable currentMiniGameType;
     [SerializeField] private ScriptableEventBool toggleMiniGame;
@@ -16,11 +17,24 @@ public class HPopupHuntingAction : UIPopup
     [SerializeField] private ScriptableEventBool toggleMenuUIEvent;
     [SerializeField] private PredatorVariable predatorVariable;
     [SerializeField] private GameObject huntingUI;
-    [SerializeField] private GameObject hungtingButton;
+    [SerializeField] private GameObject huntingButton;
     [SerializeField] private Image predatorImage;
     [SerializeField] private Image healthBar;
+    [SerializeField] private CameraVariable mainCameraVariable;
+    [SerializeField] private CameraVariable uiCameraVariable;
+    [SerializeField] private GameObject hitNotification;
 
     private MapPredator mapPredator;
+
+    protected override void OnEnabled()
+    {
+        forceStopMiniGame.OnRaised += StopHuntingAction;
+    }
+
+    protected override void OnDisabled()
+    {
+        forceStopMiniGame.OnRaised -= StopHuntingAction;
+    }
 
     protected override void OnBeforeShow()
     {
@@ -55,13 +69,14 @@ public class HPopupHuntingAction : UIPopup
             huntingField.HarvestOnWin();
         }
 
+        OnDeActiveMiniGame();
         ClosePopup();
     }
 
     private void HuntingStateEnable(bool isHunting)
     {
         huntingUI.SetActive(isHunting);
-        hungtingButton.SetActive(!isHunting);
+        huntingButton.SetActive(!isHunting);
     }
 
     private void OnActiveMiniGame()
@@ -70,19 +85,30 @@ public class HPopupHuntingAction : UIPopup
         predatorImage.sprite = predatorVariable.Value.PredatorIcon;
 
         predatorVariable.Value.OnHpChangeEvent += OnHpChangeEvent;
+        predatorVariable.Value.OnShowNextHitPointEvent += OnShowNextHitPointEvent;
     }
 
-    private void OnDeactiveMiniGame()
+    private void OnDeActiveMiniGame()
     {
         predatorVariable.Value.OnHpChangeEvent -= OnHpChangeEvent;
+        predatorVariable.Value.OnShowNextHitPointEvent -= OnShowNextHitPointEvent;
     }
 
     private void OnHpChangeEvent()
     {
-        healthBar.fillAmount = (float)predatorVariable.Value.CurrentHp /  (float)predatorVariable.Value.MaxHp;
+        healthBar.fillAmount = (float)predatorVariable.Value.CurrentHp / predatorVariable.Value.MaxHp;
     }
 
-    public void ClosePopup()
+    private void OnShowNextHitPointEvent(Vector3 worldPos)
+    {
+        var position = mainCameraVariable.Value.WorldToScreenPoint(worldPos);
+        position = uiCameraVariable.Value.ScreenToWorldPoint(position);
+
+        Debug.LogError(position);
+        hitNotification.transform.position = position;
+    }
+
+    private void ClosePopup()
     {
         closePopupEvent.Raise();
     }

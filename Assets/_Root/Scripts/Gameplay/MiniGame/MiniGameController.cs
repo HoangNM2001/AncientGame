@@ -22,11 +22,11 @@ public class MiniGameController : GameComponent
     {
         if (active)
         {
-            minigameList.FirstOrDefault(a => (int)a.MiniGameType == currentMiniGameType.Value).Activate();
+            minigameList.FirstOrDefault(a => (int)a.MiniGameType == currentMiniGameType.Value)?.Activate();
         }
         else
         {
-            minigameList.FirstOrDefault(a => (int)a.MiniGameType == currentMiniGameType.Value).Deactivate();
+            minigameList.FirstOrDefault(a => (int)a.MiniGameType == currentMiniGameType.Value)?.Deactivate();
         }
 
     }

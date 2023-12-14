@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold_Quantity
   m_EditorClassIdentifier: 
   guid: 1d4b77d15290c5840933bfb3884dc4b9
-  value: 1094
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

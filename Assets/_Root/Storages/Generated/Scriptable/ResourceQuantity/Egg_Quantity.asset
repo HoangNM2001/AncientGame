@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Egg_Quantity
   m_EditorClassIdentifier: 
   guid: b4e6966d5b6c419428188e631c85754f
-  value: 128
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

@@ -202,6 +202,7 @@ RectTransform:
   - {fileID: 9091491222224890717}
   - {fileID: 4604717815992148246}
   - {fileID: 662494882859102705}
+  - {fileID: 1092286072806336251}
   m_Father: {fileID: 8733982260921331816}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -775,6 +776,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &7663111642376536765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1092286072806336251}
+  - component: {fileID: 5689698396137962370}
+  - component: {fileID: 1092567963780101734}
+  m_Layer: 5
+  m_Name: HitNotification
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1092286072806336251
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663111642376536765}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.46, y: 0.46, z: 0.46}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 6825223915584208391}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5689698396137962370
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663111642376536765}
+  m_CullTransparentMesh: 1
+--- !u!114 &1092567963780101734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663111642376536765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2707ffc3ee0566d4d9e5ded83e9e0864, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7677818956346491983
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +1067,8 @@ MonoBehaviour:
   onAfterClose:
     m_PersistentCalls:
       m_Calls: []
+  forceStopMiniGame: {fileID: 11400000, guid: 52c3b7a2a7db3fc4d92a7a2d5872d474, type: 2}
+  getHuntingFieldEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
   currentMiniGameType: {fileID: 11400000, guid: 9b458a730b969c047be8dce48b2d6955, type: 2}
   toggleMiniGame: {fileID: 11400000, guid: e4c09e69ece639942ac2e945af85154d, type: 2}
   changeInputEvent: {fileID: 11400000, guid: 3d68a3cc988281a4aa9c0ba528ec04c4, type: 2}
@@ -998,7 +1076,9 @@ MonoBehaviour:
   toggleMenuUIEvent: {fileID: 11400000, guid: 546fc11dac5653847a4c4472a5171389, type: 2}
   predatorVariable: {fileID: 11400000, guid: b0b510714dc48394aa4f2b01c57d2dc6, type: 2}
   huntingUI: {fileID: 1802378752038621270}
-  hungtingButton: {fileID: 281586192671868259}
+  huntingButton: {fileID: 281586192671868259}
   predatorImage: {fileID: 5214272637034234852}
   healthBar: {fileID: 5721668156598370826}
-  predatorNameText: {fileID: 0}
+  mainCameraVariable: {fileID: 11400000, guid: b6d9b1b6cb5828c4fbfab5c09769204a, type: 2}
+  uiCameraVariable: {fileID: 11400000, guid: b63a5a5bcace33d44a48543694a1fe56, type: 2}
+  hitNotification: {fileID: 7663111642376536765}

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using DG.Tweening;
 using Pancake;
 using Pancake.Scriptable;
 using UnityEngine;
@@ -16,11 +18,13 @@ public class MiniGameHunting : GameComponent, IMiniGame
     [SerializeField] private ScriptableEventNoParam forceStopMinigameEvent;
     [SerializeField] private PredatorVariable predatorVariable;
     [SerializeField] private List<Predator> predatorPrefabList;
+    [SerializeField] private Transform cameraTrans;
+    [SerializeField] private float camFollowSpeed;
 
     public EnumPack.MiniGameType MiniGameType => miniGameType;
     public bool IsPlayerTurn { get; private set; }
-    public Predator Predator { get; private set; }
 
+    private Predator predator;
     private int remainStep;
     private float stepSize;
 
@@ -30,61 +34,71 @@ public class MiniGameHunting : GameComponent, IMiniGame
         huntingController.transform.forward = Vector3.right;
 
         var mapPredator = getCurrentMonsterEvent.Raise().GetComponent<MapPredator>();
-        Predator = Instantiate(predatorPrefabList.FirstOrDefault(p => p.PredatorType == mapPredator.PredatorType), container.transform);
-        Predator.transform.position = predatorStartPos.position;
-        Predator.transform.forward = Vector3.left;
-        predatorVariable.Value = Predator;
+        predator = Instantiate(predatorPrefabList.FirstOrDefault(p => p.PredatorType == mapPredator.PredatorType),
+            container.transform);
+        predator.transform.position = predatorStartPos.position;
+        predator.transform.forward = Vector3.left;
+        predatorVariable.Value = predator;
 
-        IsPlayerTurn = true;
-        remainStep = Predator.MaxStep;
-        stepSize = Mathf.Abs(playerStartPos.position.x - predatorStartPos.position.x) / Predator.MaxStep;
+        ShowNextHit();
+        remainStep = predator.MaxStep;
+        stepSize = Mathf.Abs(playerStartPos.position.x - predatorStartPos.position.x) / predator.MaxStep;
 
         container.SetActive(true);
         huntingController.Activate(this);
-        Predator.Activate();
+        predator.Activate();
     }
 
     public void Deactivate()
     {
         container.SetActive(false);
         huntingController.ClearSpear();
+
+        if (predator != null) Destroy(predator.gameObject);
+
+        DOTween.Kill(this);
+    }
+
+    private void ShowNextHit()
+    {
+        IsPlayerTurn = true;
+        DOTween.Sequence().AppendInterval(1.0f).AppendCallback(() => predator.ShowNextHitPoint()).SetTarget(this);
     }
 
     public void OnHit()
     {
-        if (Predator.CurrentHp > 0)
+        if (predator.CurrentHp > 0)
         {
-            IsPlayerTurn = true;
+            ShowNextHit();
         }
         else
         {
-            
         }
     }
 
     public void OnMiss()
     {
         remainStep--;
-        Predator.MoveForward(1, stepSize, () =>
+        predator.MoveForward(1, stepSize, () =>
         {
             if (remainStep <= 0)
             {
-                Predator.Attack(() =>
+                predator.Attack(() =>
                 {
                     huntingController.DoDie();
-                    EndMinigame();
+                    EndMiniGame();
                 });
             }
             else
             {
-                IsPlayerTurn = true;
+                ShowNextHit();
             }
         });
     }
 
-    private void EndMinigame()
+    private void EndMiniGame()
     {
-        Debug.LogError("EndMiniGame");
+        DOTween.Sequence().AppendInterval(1.0f).AppendCallback(() => forceStopMinigameEvent.Raise()).SetTarget(this);
     }
 
     public void OnRelease()
