@@ -108,4 +108,9 @@ public class Henhouse : SaveDataElement
     {
         return SimpleMath.RandomVector3(true) * radius;
     }
+
+    private void OnApplicationQuit()
+    {
+
+    }
 }

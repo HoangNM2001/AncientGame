@@ -48,6 +48,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         if (!cave.IsCaveAvailable || !cave.IsAddable(currentResourceType))
         {
             navmeshController.Stop();
+            characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
 
             if (characterAnimController.AnimationName != Constant.SLAVE_RELAX)
             {
@@ -56,7 +57,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         }
         else
         {
-            if (IsBackpackFull)
+            if (currentCapacity > 0)
             {
                 GoToCave();
             }

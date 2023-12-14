@@ -67,7 +67,7 @@ public class MiniGameHunting : GameComponent, IMiniGame
         remainStep--;
         Predator.MoveForward(1, stepSize, () =>
         {
-            if (remainStep > 0)
+            if (remainStep <= 0)
             {
                 Predator.Attack(() =>
                 {
