@@ -30,20 +30,6 @@
       },
       "hash": "b83ee23be8c0de65c66c3c1ff2ea50b6d0efbee2"
     },
-    "com.pancake.heart": {
-      "version": "https://github.com/pancake-llc/heart.git#2.1.12",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.sharp-zip-lib": "1.3.4-preview",
-        "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.2d.sprite": "1.0.0",
-        "com.unity.burst": "1.8.8",
-        "com.unity.collections": "2.1.4",
-        "com.unity.textmeshpro": "3.0.6"
-      },
-      "hash": "4f3f163cf0ddb452faa922e259dca5a1b95becee"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -169,7 +155,7 @@
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
-      "depth": 1,
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -195,6 +181,16 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.serialization": {
+      "version": "3.1.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.collections": "2.1.4",
+        "com.unity.burst": "1.7.2"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.services.core": {
       "version": "1.11.0",
       "depth": 1,
@@ -208,7 +204,7 @@
     },
     "com.unity.sharp-zip-lib": {
       "version": "1.3.4-preview",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

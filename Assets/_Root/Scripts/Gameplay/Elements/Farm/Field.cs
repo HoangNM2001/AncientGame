@@ -29,10 +29,11 @@ public class Field : GameComponent
     private const float HarvestDuration = 5.0f;
     private const int MaxFlyModel = 4;
 
+    private EnumPack.FieldState _fieldState = EnumPack.FieldState.Seedale;
     public EnumPack.FieldState FieldState
     {
-        get => Data.Load(uniqueId, EnumPack.FieldState.Seedale);
-        private set => Data.Save(uniqueId, value);
+        get => _fieldState;
+        private set => _fieldState = value;
     }
 
     private void Awake()
