@@ -23,6 +23,7 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     [SerializeField, PopupPickup] private string huntingActionPopup;
     [SerializeField, PopupPickup] private string saveSlaveActionPopup;
     [SerializeField, PopupPickup] private string caveActionPopup;
+    [SerializeField, PopupPickup] private string henHouseActionPopup;
 
     private Transform popupParentTrans;
     private GameObject currentInteract;
@@ -94,6 +95,12 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     {
         currentInteract = drownSlave;
         popupShowEvent.Raise(saveSlaveActionPopup, popupParentTrans);
+    }
+
+    public void TriggerHenHouse(GameObject henHouse)
+    {
+        currentInteract = henHouse;
+        popupShowEvent.Raise(henHouseActionPopup, popupParentTrans);
     }
 
     public void ExitTriggerAction()

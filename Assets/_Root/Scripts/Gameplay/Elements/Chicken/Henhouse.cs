@@ -13,17 +13,21 @@ public class Henhouse : SaveDataElement
     [SerializeField] private ResourceConfig eggsResourceConfig;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
     [SerializeField] private ShowableUI showableUI;
+    [SerializeField] private TextMeshProUGUI chickenCountText;
     [SerializeField] private TextMeshProUGUI eggCountText;
     [SerializeField] private Trigger triggerEggsCount;
     [SerializeField] private Chicken chickenPrefab;
     [SerializeField] private Transform chickenParent;
 
     private List<Chicken> chickenList;
+    private List<Egg> eggList;
     private const int MAX_EGGS = 20;
+    private const int MAX_CHICKENS = 10;
 
     public bool CanSpawnEggs => EggCount < MAX_EGGS;
+    private bool CanSpawnChickens => ChickenCount < MAX_CHICKENS;
 
-    public int EggCount
+    private int EggCount
     {
         get => Data.Load(uniqueId + "EggCount", 0);
         set
@@ -33,15 +37,20 @@ public class Henhouse : SaveDataElement
         }
     }
 
-    public int ChickenCount
+    private int ChickenCount
     {
         get => Data.Load(uniqueId + "ChickenCount", 3);
-        set => Data.Save(uniqueId + "ChickenCount", value);
+        set
+        {
+            chickenCountText.SetText($"{value} / {MAX_CHICKENS}");
+            Data.Save(uniqueId + "ChickenCount", value);
+        }
     }
 
     private void Awake()
     {
         chickenList = new List<Chicken>();
+        eggList = new List<Egg>();
 
         for (var i = 0; i < ChickenCount; i++)
         {
@@ -52,24 +61,51 @@ public class Henhouse : SaveDataElement
 
         for (var i = 0; i < EggCount; i++)
         {
-            var egg = eggPool.Request();
-            egg.GetComponent<Egg>().Setup(this);
+            var egg = eggPool.Request().GetComponent<Egg>();
+            egg.Setup(this);
             egg.transform.position = transform.position + GetRandomPosition(3f);
+            eggList.Add(egg);
         }
 
+        chickenCountText.SetText($"{ChickenCount} / {MAX_CHICKENS}");
         eggCountText.SetText($"{EggCount} / {MAX_EGGS}");
     }
 
+    public void SpawnChicken()
+    {
+        if (!CanSpawnChickens) return;
+        
+        var chicken = Instantiate(chickenPrefab, chickenParent);
+        chicken.Setup(this);
+        chickenList.Add(chicken);
+
+        ChickenCount++;
+    }
+    
     public void SpawnEgg(Vector3 spawnPos)
     {
-        var egg = eggPool.Request();
+        var egg = eggPool.Request().GetComponent<Egg>();
         egg.transform.position = spawnPos;
         egg.transform.DOJump(egg.transform.position + GetRandomPosition(0.5f), 2, 1, 0.5f).SetEase(Ease.InSine);
-        egg.GetComponent<Egg>().Setup(this);
+        egg.Setup(this);
 
+        eggList.Add(egg);
         EggCount++;
     }
 
+    public void HarvestAllEggs()
+    {
+        Debug.LogError(eggList.Count);
+        if (eggList.IsNullOrEmpty()) return;
+        
+        foreach (var egg in eggList)
+        {
+            HarvestEgg(egg.gameObject);
+        }
+        
+        eggList.Clear();
+    }
+    
     public void HarvestEgg(GameObject egg)
     {
         eggPool.Return(egg);
@@ -94,23 +130,22 @@ public class Henhouse : SaveDataElement
         triggerEggsCount.ExitTriggerEvent -= ExitTriggerEggsCount;
     }
 
-    private void TriggerEggsCount(Collider collider)
+    private void TriggerEggsCount(Collider other)
     {
         showableUI.Show(true);
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
+        if (characterHandleTrigger) characterHandleTrigger.TriggerHenHouse(gameObject);
     }
 
-    private void ExitTriggerEggsCount(Collider collider)
+    private void ExitTriggerEggsCount(Collider other)
     {
         showableUI.Show(false);
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
+        if (characterHandleTrigger) characterHandleTrigger.ExitTriggerAction();
     }
 
     private Vector3 GetRandomPosition(float radius)
     {
         return SimpleMath.RandomVector3(true) * radius;
-    }
-
-    private void OnApplicationQuit()
-    {
-
     }
 }

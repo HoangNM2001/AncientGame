@@ -176,7 +176,7 @@ public class HMenuController : GameComponent
     [ContextMenu("Get Resources")]
     public void GetResources()
     {
-        const string resourcesFolderPath = "Assets/_Root/ScriptableData/Resources";
+        const string resourcesFolderPath = "Assets/_Root/ScriptableData/ResourceConfigs";
 
         var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
 
