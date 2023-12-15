@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Mono.Cecil;
 using Pancake;
-using Unity.SharpZipLib.Zip;
 using UnityEngine;
 
 public class MapPredator : GameComponent

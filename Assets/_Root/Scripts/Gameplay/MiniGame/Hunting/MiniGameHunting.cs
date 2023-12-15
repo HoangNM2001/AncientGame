@@ -15,7 +15,7 @@ public class MiniGameHunting : GameComponent, IMiniGame
     [SerializeField] private Transform playerStartPos;
     [SerializeField] private Transform predatorStartPos;
     [SerializeField] private ScriptableEventGetGameObject getCurrentMonsterEvent;
-    [SerializeField] private ScriptableEventNoParam forceStopMinigameEvent;
+    [SerializeField] private ScriptableEventBool forceStopMinigameEvent;
     [SerializeField] private PredatorVariable predatorVariable;
     [SerializeField] private List<Predator> predatorPrefabList;
     [SerializeField] private Transform cameraTrans;
@@ -73,6 +73,7 @@ public class MiniGameHunting : GameComponent, IMiniGame
         }
         else
         {
+            EndMiniGame(true);
         }
     }
 
@@ -86,7 +87,7 @@ public class MiniGameHunting : GameComponent, IMiniGame
                 predator.Attack(() =>
                 {
                     huntingController.DoDie();
-                    EndMiniGame();
+                    EndMiniGame(false);
                 });
             }
             else
@@ -96,9 +97,9 @@ public class MiniGameHunting : GameComponent, IMiniGame
         });
     }
 
-    private void EndMiniGame()
+    private void EndMiniGame(bool isWin)
     {
-        DOTween.Sequence().AppendInterval(1.0f).AppendCallback(() => forceStopMinigameEvent.Raise()).SetTarget(this);
+        DOTween.Sequence().AppendInterval(1.0f).AppendCallback(() => forceStopMinigameEvent.Raise(isWin)).SetTarget(this);
     }
 
     public void OnRelease()

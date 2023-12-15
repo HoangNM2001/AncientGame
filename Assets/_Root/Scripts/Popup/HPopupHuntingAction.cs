@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class HPopupHuntingAction : UIPopup
 {
-    [SerializeField] private ScriptableEventNoParam forceStopMiniGame;
+    [SerializeField] private ScriptableEventBool forceStopMiniGame;
     [SerializeField] private ScriptableEventGetGameObject getHuntingFieldEvent;
     [SerializeField] private IntVariable currentMiniGameType;
     [SerializeField] private ScriptableEventBool toggleMiniGame;
@@ -23,18 +23,6 @@ public class HPopupHuntingAction : UIPopup
     [SerializeField] private CameraVariable mainCameraVariable;
     [SerializeField] private CameraVariable uiCameraVariable;
     [SerializeField] private GameObject hitNotification;
-
-    private MapPredator mapPredator;
-
-    protected override void OnEnabled()
-    {
-        forceStopMiniGame.OnRaised += StopHuntingAction;
-    }
-
-    protected override void OnDisabled()
-    {
-        forceStopMiniGame.OnRaised -= StopHuntingAction;
-    }
 
     protected override void OnBeforeShow()
     {
@@ -81,17 +69,20 @@ public class HPopupHuntingAction : UIPopup
 
     private void OnActiveMiniGame()
     {
+        hitNotification.SetActive(false);
         healthBar.fillAmount = 1.0f;
         predatorImage.sprite = predatorVariable.Value.PredatorIcon;
 
         predatorVariable.Value.OnHpChangeEvent += OnHpChangeEvent;
         predatorVariable.Value.OnShowNextHitPointEvent += OnShowNextHitPointEvent;
+        forceStopMiniGame.OnRaised += OnForceStopMiniGame;
     }
 
     private void OnDeActiveMiniGame()
     {
         predatorVariable.Value.OnHpChangeEvent -= OnHpChangeEvent;
         predatorVariable.Value.OnShowNextHitPointEvent -= OnShowNextHitPointEvent;
+        forceStopMiniGame.OnRaised -= OnForceStopMiniGame;
     }
 
     private void OnHpChangeEvent()
@@ -104,8 +95,14 @@ public class HPopupHuntingAction : UIPopup
         var position = mainCameraVariable.Value.WorldToScreenPoint(worldPos);
         position = uiCameraVariable.Value.ScreenToWorldPoint(position);
 
-        Debug.LogError(position);
         hitNotification.transform.position = position;
+        hitNotification.SetActive(true);
+    }
+
+    private void OnForceStopMiniGame(bool isWin)
+    {
+
+        StopHuntingAction();
     }
 
     private void ClosePopup()
