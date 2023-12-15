@@ -163,20 +163,16 @@ public class ResourcesCave : SaveDataElement
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<ICaveMan>(out var caveMan))
-        {
-            showableUI.Show(true);
-            caveMan.TriggerActionCave(gameObject);
-        }
+        if (!other.TryGetComponent<ICaveMan>(out var caveMan)) return;
+        showableUI.Show(true);
+        caveMan.TriggerActionCave(gameObject);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<ICaveMan>(out var caveMan))
-        {
-            caveMan.ExitTriggerAction();
-            showableUI.Show(false);
-        }
+        if (!other.TryGetComponent<ICaveMan>(out var caveMan)) return;
+        caveMan.ExitTriggerAction();
+        showableUI.Show(false);
     }
 
     private void UpdateResourceCapacity(EnumPack.ResourceType resourceType, int value)
@@ -185,10 +181,4 @@ public class ResourcesCave : SaveDataElement
         ResourceCapacityJson = JsonConvert.SerializeObject(resourceCapacityDict);
         Debug.LogError(ResourceCapacityJson);
     }
-}
-
-public class CaveResource
-{
-    public EnumPack.ResourceType resourceType;
-    public int resourceCapacity;
 }
