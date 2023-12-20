@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cdb8ad39a5bdd4f8ed3d18fae14a63, type: 3}
   m_Name: Banana_Quantity
   m_EditorClassIdentifier: 
-  guid: dfd3ec34389a3dc49ac2fb28a9685a11
+  guid: 342fe60eb0214cf4cb1a4c5168b31032
   value: 0
   debugLogEnabled: 0
   saved: 1

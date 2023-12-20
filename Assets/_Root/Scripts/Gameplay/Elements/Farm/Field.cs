@@ -5,9 +5,8 @@ using Pancake.Scriptable;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Field : GameComponent
+public class Field : SaveDataElement
 {
-    [SerializeField, UniqueID] private string uniqueId;
     [SerializeField] private MeshRenderer fieldRenderer;
     [SerializeField] private Color soilColor;
     [SerializeField] private Color seededColor;
@@ -191,13 +190,4 @@ public class Field : GameComponent
             fieldRenderer.SetPropertyBlock(fieldMaterialBlock);
         }, 1.0f, duration).SetTarget(fieldRenderer);
     }
-
-#if UNITY_EDITOR
-    [ContextMenu("Reset Unique Id")]
-    public void ResetUniqueID()
-    {
-        Guid guid = Guid.NewGuid();
-        uniqueId = guid.ToString();
-    }
-#endif
 }

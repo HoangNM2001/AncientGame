@@ -206,6 +206,7 @@ Transform:
   m_Children:
   - {fileID: 3535158650892245585}
   - {fileID: 6147876761791804930}
+  - {fileID: 2293219774408710377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1008103308431684266
@@ -227,8 +228,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 7
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 2
+  m_Center: {x: 4.6, y: 0, z: 0}
 --- !u!114 &4675146435194550432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,3 +276,125 @@ MonoBehaviour:
   fishingData: {fileID: 11400000, guid: 3fefd2096e46c3445bc39fcbb8abdd28, type: 2}
   triggerAround: {fileID: 1705376255797942522}
   flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}
+--- !u!1 &6162700911894004286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2293219774408710377}
+  m_Layer: 8
+  m_Name: Raft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2293219774408710377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6162700911894004286}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.21, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6839552847624726728}
+  m_Father: {fileID: 3804388037211783034}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6440218311276072739
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2293219774408710377}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: -0.61872053
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 5.6037893
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 6.179327
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 5.296832
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_Name
+      value: Raft
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d11a69a584ba3534e9b16c9e9cf8121a, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+--- !u!4 &6839552847624726728 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dea6ee322b5725d4ebe09ae6e351c82b, type: 3}
+  m_PrefabInstance: {fileID: 6440218311276072739}
+  m_PrefabAsset: {fileID: 0}
