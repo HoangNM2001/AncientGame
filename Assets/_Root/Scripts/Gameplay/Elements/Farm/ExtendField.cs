@@ -5,9 +5,8 @@ using Pancake;
 using UnityEditor;
 using UnityEngine;
 
-public class ExtendField : GameComponent
+public class ExtendField : SaveDataElement
 {
-    [SerializeField, UniqueID] private string uniqueId;
     [SerializeField] private ScriptableListInt fieldStateList;
     [SerializeField] private List<Field> fieldList = new List<Field>();
     [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
@@ -181,13 +180,6 @@ public class ExtendField : GameComponent
     }
 
 #if UNITY_EDITOR
-    [ContextMenu("Reset Unique ID")]
-    public void ResetUniqueID()
-    {
-        Guid guid = Guid.NewGuid();
-        uniqueId = guid.ToString();
-    }
-
     [ContextMenu("Get Fields")]
     public void GetFields()
     {

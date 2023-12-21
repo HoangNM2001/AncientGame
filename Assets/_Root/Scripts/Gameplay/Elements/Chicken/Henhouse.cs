@@ -32,6 +32,7 @@ public class Henhouse : SaveDataElement
         get => Data.Load(uniqueId + "EggCount", 0);
         set
         {
+            if (value < 0) value = 0;
             eggCountText.SetText($"{value} / {MAX_EGGS}");
             Data.Save(uniqueId + "EggCount", value);
         }
@@ -95,20 +96,25 @@ public class Henhouse : SaveDataElement
 
     public void HarvestAllEggs()
     {
-        Debug.LogError(eggList.Count);
         if (eggList.IsNullOrEmpty()) return;
         
         foreach (var egg in eggList)
         {
-            HarvestEgg(egg.gameObject);
+            EggFly(egg);
         }
         
         eggList.Clear();
     }
     
-    public void HarvestEgg(GameObject egg)
+    public void HarvestEgg(Egg egg)
     {
-        eggPool.Return(egg);
+        EggFly(egg);
+        eggList.Remove(egg);
+    }
+
+    private void EggFly(Egg egg)
+    {
+        eggPool.Return(egg.gameObject);
         flyUIEvent.Raise(new FlyEventData
         {
             resourceType = eggsResourceConfig.resourceType,

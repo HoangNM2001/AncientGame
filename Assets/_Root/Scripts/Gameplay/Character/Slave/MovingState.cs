@@ -10,7 +10,7 @@ public class MovingState : SlaveBaseState
 
     protected override void OnStateEnter(State from, object data)
     {
-        Debug.LogError("MovingState");
+        // Debug.LogError("MovingState");
         SlaveController.EmptyLayer1();
         SlaveController.ActionList.StopActionEvent();
     }

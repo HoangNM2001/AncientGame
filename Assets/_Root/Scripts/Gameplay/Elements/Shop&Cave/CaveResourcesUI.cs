@@ -29,12 +29,12 @@ public class CaveResourcesUI : MonoBehaviour
         maxCapacity = capacity;
     }
 
-    public void SetFillAmount(int currCapacity)
+    public void SetCapacity(int currCapacity)
     {
         currentCapacity = currCapacity;
-        fillBar.fillAmount = (float)currentCapacity / maxCapacity;
-        Debug.LogError(fillBar.fillAmount + "?" + (float)currentCapacity / maxCapacity);
+        fillBar.fillAmount = (float)currCapacity / maxCapacity;
         fillText.text = $"{currentCapacity}/{maxCapacity}";
+        Debug.LogError(currentCapacity + " + " + maxCapacity);
     }
 
     public void UpdateCapacity(int currCapacity, Action callback = null)

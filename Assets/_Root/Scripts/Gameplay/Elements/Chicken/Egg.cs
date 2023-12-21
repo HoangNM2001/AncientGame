@@ -18,7 +18,7 @@ public class Egg : GameComponent
     {
         if (other.CompareTag(Constant.MAIN_TAG))
         {
-            _henhouse.HarvestEgg(gameObject);
+            _henhouse.HarvestEgg(this);
         }
     }
 }

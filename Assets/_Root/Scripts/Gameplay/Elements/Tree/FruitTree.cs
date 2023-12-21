@@ -10,9 +10,8 @@ using Pancake.Scriptable;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class FruitTree : GameComponent
+public class FruitTree : SaveDataElement
 {
-    [SerializeField, UniqueID] private string uniqueId;
     [SerializeField] private ResourceConfig fruitResource;
     [SerializeField] private Animator treeAnimator;
     [SerializeField] private Transform standPosition;
@@ -157,13 +156,6 @@ public class FruitTree : GameComponent
         {
             fruitList.Add(fruitParent.transform.GetChild(i).gameObject);
         }
-    }
-
-    [ContextMenu("Reset Unique ID")]
-    public void ResetUniqueID()
-    {
-        Guid guid = Guid.NewGuid();
-        uniqueId = guid.ToString();
     }
 #endif
 }

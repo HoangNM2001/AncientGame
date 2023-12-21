@@ -63,7 +63,7 @@ public class ResourcesCave : SaveDataElement
             var newResourceUI = Instantiate(caveResourcesUIPrefab, resourceUIParent);
             caveResourceUIDict[pair.Key] = newResourceUI;
             newResourceUI.Setup(resourceDict[pair.Key].resourceIcon, CaveMaxCapacity);
-            newResourceUI.SetFillAmount(pair.Value);
+            // newResourceUI.SetCapacity(pair.Value);
         }
     }
 
@@ -133,7 +133,7 @@ public class ResourcesCave : SaveDataElement
         }
 
         caveResourceUIDict[resourceType].UpdateCapacity(resourceCapacityDict[resourceType], callback);
-        Debug.LogError($"{amount}-{slaveRemainCapacity}");
+        // Debug.LogError($"{amount}-{slaveRemainCapacity}");
         return slaveRemainCapacity;
     }
 
@@ -165,6 +165,12 @@ public class ResourcesCave : SaveDataElement
     {
         if (!other.TryGetComponent<ICaveMan>(out var caveMan)) return;
         showableUI.Show(true);
+        
+        foreach (var resourceCapacity in resourceCapacityDict)
+        {
+            caveResourceUIDict[resourceCapacity.Key].SetCapacity(resourceCapacity.Value);
+        }
+
         caveMan.TriggerActionCave(gameObject);
     }
 
@@ -179,6 +185,11 @@ public class ResourcesCave : SaveDataElement
     {
         resourceCapacityDict[resourceType] = value;
         ResourceCapacityJson = JsonConvert.SerializeObject(resourceCapacityDict);
+        Debug.LogError(ResourceCapacityJson);
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
         Debug.LogError(ResourceCapacityJson);
     }
 }

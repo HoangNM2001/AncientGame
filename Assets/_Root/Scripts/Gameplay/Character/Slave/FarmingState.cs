@@ -11,7 +11,7 @@ public class FarmingState : SlaveBaseState
 
     protected override void OnStateEnter(State from, object data)
     {
-        Debug.LogError("FarmingState");
+        // Debug.LogError("FarmingState");
         SlaveController.ActiveFarmAction();
         SlaveController.GoToNearestField();
     }
