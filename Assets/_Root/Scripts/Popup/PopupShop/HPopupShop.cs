@@ -29,7 +29,7 @@ public class HPopupShop : UIPopup
         var total = 0;
         foreach (var resource in buyAbleResourceList)
         {
-            total += resource.resourceQuantity.Value * resource.Price;
+            total += resource.resourceQuantity.Value * resource.price;
             resource.resourceQuantity.Value = 0;
         }
 

@@ -63,7 +63,7 @@ public class ResourcesCave : SaveDataElement
             var newResourceUI = Instantiate(caveResourcesUIPrefab, resourceUIParent);
             caveResourceUIDict[pair.Key] = newResourceUI;
             newResourceUI.Setup(resourceDict[pair.Key].resourceIcon, CaveMaxCapacity);
-            newResourceUI.UpdateCapacity(pair.Value);
+            newResourceUI.SetFillAmount(pair.Value);
         }
     }
 
