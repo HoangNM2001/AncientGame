@@ -31,7 +31,6 @@ public class MapPredator : GameComponent
         wanderCenter = center;
         lastChangeTime = -changePathTime;
         transform.localPosition = Vector3.zero;
-        navmeshController.Enable();
     }
 
     protected override void Tick()
