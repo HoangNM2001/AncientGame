@@ -6,6 +6,7 @@ using Pancake.Apex;
 using Pancake.Scriptable;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/Resources")]
 public class ResourceConfig : ScriptableObject
@@ -19,8 +20,8 @@ public class ResourceConfig : ScriptableObject
     public GameObjectPool flyModelPool;
     public GameObjectPool flyUIPool;
     public IntVariable resourceQuantity;
-    
-    public int Price;
+    public int price;
+    public int grownTime = 20;
 
 #if UNITY_EDITOR
     [ContextMenu("ResetId")]

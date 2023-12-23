@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8904998079399931681}
   - component: {fileID: 667822987995007608}
   m_Layer: 8
-  m_Name: HuntingField
+  m_Name: HuntingFieldMammut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
