@@ -7,7 +7,7 @@ using Pancake.Scriptable;
 using TMPro;
 using UnityEngine;
 
-public class FishingField : GameComponent
+public class FishingField : SaveDataElement
 {
     [SerializeField] private FishingData fishingData;
     [SerializeField] private Trigger triggerAround;

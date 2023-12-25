@@ -21,9 +21,9 @@ public class FruitTree : SaveDataElement
     [SerializeField] private List<GameObject> fruitList;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
-    private List<GameObject> remainFruitList = new List<GameObject>();
-    private List<GameObject> appearFruitList = new List<GameObject>();
-    private List<GameObject> droppedFruitList = new List<GameObject>();
+    private List<GameObject> remainFruitList = new();
+    private List<GameObject> appearFruitList = new();
+    private List<GameObject> droppedFruitList = new();
     private DelayHandle grownFruitHandle;
 
     public ResourceConfig FruitResource => fruitResource;
@@ -74,7 +74,7 @@ public class FruitTree : SaveDataElement
         {
             if (!remainFruitList.IsNullOrEmpty())
             {
-                FruitAppear(remainFruitList[remainFruitList.Count - 1]);
+                FruitAppear(remainFruitList[^1]);
             }
             else
             {

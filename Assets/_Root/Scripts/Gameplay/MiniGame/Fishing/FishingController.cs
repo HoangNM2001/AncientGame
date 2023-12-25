@@ -27,7 +27,7 @@ public class FishingController : GameComponent
     private Fish fishCaught;
     private Coroutine fireCoroutine;
 
-    public bool Firing { get; private set; }
+    private bool Firing { get; set; }
 
     public void Activate()
     {
@@ -76,7 +76,7 @@ public class FishingController : GameComponent
         fireCoroutine = StartCoroutine(IEFire());
     }
 
-    IEnumerator IEFire()
+    private IEnumerator IEFire()
     {
         while (!fishCaught && !SimpleMath.InRange(hand.transform.localPosition, handLR.rightTrans.transform.localPosition, 0.1f, true))
         {
@@ -135,14 +135,14 @@ public class FishingController : GameComponent
         }
     }
 
-    private void OnTriggerEnterEvent(Collider collider)
+    private void OnTriggerEnterEvent(Collider fishCollider)
     {
         if (isUp || fishCaught != null) return;
 
-        if (collider.TryGetComponent<Fish>(out var fish))
+        if (fishCollider.TryGetComponent<Fish>(out var fish))
         {
-            var fxCaught = Instantiate(fx, collider.transform);
-            fxCaught.transform.position = collider.transform.position;
+            var fxCaught = Instantiate(fx, fishCollider.transform);
+            fxCaught.transform.position = fishCollider.transform.position;
             Destroy(fxCaught, 1.5f);
         
             fishCaught = fish;

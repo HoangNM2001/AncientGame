@@ -30,9 +30,12 @@ public class HPopupShop : UIPopup
         foreach (var resource in buyAbleResourceList)
         {
             total += resource.resourceQuantity.Value * resource.price;
+            Debug.LogError(resource.resourceQuantity.Value);
             resource.resourceQuantity.Value = 0;
         }
 
+        Debug.LogError(total);
+        
         if (total > 0)
         {
             coinFlyEvent.Raise(new CoinFlyEventData
