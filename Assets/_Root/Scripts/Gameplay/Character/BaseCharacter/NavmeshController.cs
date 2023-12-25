@@ -90,14 +90,4 @@ public class NavmeshController : GameComponent
         navMeshAgent.velocity = Vector3.zero;
         navMeshAgent.isStopped = true;
     }
-
-    public void Disable()
-    {
-        navMeshAgent.enabled = false;
-    }
-
-    public void Enable()
-    {
-        navMeshAgent.enabled = true;
-    }
 }
