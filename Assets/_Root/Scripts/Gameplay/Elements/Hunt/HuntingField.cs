@@ -6,7 +6,7 @@ using Pancake.Scriptable;
 using Pancake.Threading.Tasks.Triggers;
 using UnityEngine;
 
-public class HuntingField : GameComponent
+public class HuntingField : SaveDataElement
 {
     [SerializeField] private MapPredator predator;
     [SerializeField] private float respawnInterval;

@@ -16,7 +16,7 @@ public class Fish : GameComponent
 
     public LeftRightCouple LeftRightCouple { get; private set; }
     public ResourceConfig ResourceConfig => resourceConfig;
-    
+
     private MiniGameFishing miniGameFishing;
     private bool isView = false;
     private bool moveToRight;
@@ -34,7 +34,8 @@ public class Fish : GameComponent
 
         if (isRestore)
         {
-            transform.position = SimpleMath.RandomBetween(LeftRightCouple.leftTrans.position, LeftRightCouple.rightTrans.position);
+            transform.position =
+                SimpleMath.RandomBetween(LeftRightCouple.leftTrans.position, LeftRightCouple.rightTrans.position);
         }
         else
         {
@@ -65,7 +66,8 @@ public class Fish : GameComponent
         {
             if (!SimpleMath.InRange(transform.position, LeftRightCouple.rightTrans.position, 0.1f))
             {
-                transform.position = Vector3.MoveTowards(transform.position, LeftRightCouple.rightTrans.position, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, LeftRightCouple.rightTrans.position,
+                    moveSpeed * Time.deltaTime);
             }
             else
             {
@@ -76,26 +78,23 @@ public class Fish : GameComponent
         {
             if (!SimpleMath.InRange(transform.position, LeftRightCouple.leftTrans.position, 0.1f))
             {
-                transform.position = Vector3.MoveTowards(transform.position, LeftRightCouple.leftTrans.position, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, LeftRightCouple.leftTrans.position,
+                    moveSpeed * Time.deltaTime);
             }
             else
             {
                 moveToRight = !moveToRight;
             }
         }
+
         UpdateRotation();
     }
 
     private void UpdateRotation()
     {
-        if (moveToRight)
-        {
-            transform.rotation = Quaternion.LookRotation(LeftRightCouple.rightTrans.position - LeftRightCouple.leftTrans.position);
-        }
-        else
-        {
-            transform.rotation = Quaternion.LookRotation(LeftRightCouple.leftTrans.position - LeftRightCouple.rightTrans.position);
-        }
+        transform.rotation = moveToRight
+            ? Quaternion.LookRotation(LeftRightCouple.rightTrans.position - LeftRightCouple.leftTrans.position)
+            : Quaternion.LookRotation(LeftRightCouple.leftTrans.position - LeftRightCouple.rightTrans.position);
     }
 
     public void OnCaught(Transform handTrans)
@@ -131,7 +130,7 @@ public class Fish : GameComponent
         navMeshAgent.SetDestination(RandomNavmeshLocation(3.0f));
     }
 
-    public Vector3 RandomNavmeshLocation(float radius)
+    private Vector3 RandomNavmeshLocation(float radius)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
         randomDirection += transform.position;
@@ -143,6 +142,7 @@ public class Fish : GameComponent
         {
             finalPosition = hit.position;
         }
+
         return finalPosition;
     }
 }

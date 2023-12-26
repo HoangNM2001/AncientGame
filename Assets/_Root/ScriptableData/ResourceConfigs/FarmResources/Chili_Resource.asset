@@ -21,4 +21,5 @@ MonoBehaviour:
   flyModelPool: {fileID: 11400000, guid: 0a8d9edfee1ba044ea341771987ab329, type: 2}
   flyUIPool: {fileID: 11400000, guid: 3c46b828908c7f64eb9c9330f0978ac7, type: 2}
   resourceQuantity: {fileID: 11400000, guid: 4485429a0f76e9f45875e03d71c8a14c, type: 2}
-  Price: 2
+  price: 10
+  grownTime: 20

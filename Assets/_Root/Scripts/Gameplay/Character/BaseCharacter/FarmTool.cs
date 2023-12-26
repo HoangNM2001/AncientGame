@@ -65,11 +65,6 @@ public class FarmTool : GameComponent
         if (currentParticle) currentParticle.Play();
     }
 
-    public void PlayFarmParticle()
-    {
-        currentParticle.Play();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         var field = CacheCollider.GetField(other);

@@ -187,9 +187,4 @@ public class ResourcesCave : SaveDataElement
         ResourceCapacityJson = JsonConvert.SerializeObject(resourceCapacityDict);
         Debug.LogError(ResourceCapacityJson);
     }
-
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        Debug.LogError(ResourceCapacityJson);
-    }
 }

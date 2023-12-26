@@ -94,22 +94,6 @@ public class ExtendField : SaveDataElement
         if (canHarvestCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Harvestable);
     }
 
-    public List<Field> SortingFieldListByDis(Vector3 pos, EnumPack.FieldState fieldState)
-    {
-        List<Field> newList = new List<Field>();
-        foreach (var field in fieldList)
-        {
-            if (field.FieldState == fieldState)
-            {
-                newList.Add(field);
-            }
-        }
-
-        newList.Sort((a, b) => SimpleMath.SqrDist(pos, a.transform.position)
-            .CompareTo(SimpleMath.SqrDist(pos, b.transform.position)));
-        return newList;
-    }
-
     public Field GetNearestFieldWithState(Vector3 pos, EnumPack.FieldState fieldState)
     {
         Field targetField = null;
