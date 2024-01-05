@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57458e28d4d7cd4ba13c4da842fc5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqueId: 
   predator: {fileID: 1789145295461440595}
   respawnInterval: 60
   flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}
@@ -154,8 +155,8 @@ MonoBehaviour:
   predatorType: 0
   navmeshController: {fileID: 2148727951076459093}
   animController: {fileID: 8134395770853666759}
-  meatResource: {fileID: 0}
-  numberOfMeat: 0
+  meatResource: {fileID: 11400000, guid: e24972614c8e73c47a1b06be2f3c53b9, type: 2}
+  numberOfMeat: 7
   rotateSpeed: 10
   wanderSpeed: 1.5
   wanderRadius: 6.2

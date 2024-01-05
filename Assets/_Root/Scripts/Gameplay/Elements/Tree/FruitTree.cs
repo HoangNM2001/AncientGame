@@ -41,6 +41,13 @@ public class FruitTree : SaveDataElement
 
     private void Awake()
     {
+        Initialize();
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+
         treeAnimator.speed = 2.0f;
 
         for (int i = 0; i < fruitList.Count; i++)
@@ -125,10 +132,10 @@ public class FruitTree : SaveDataElement
         {
             fruitResource.flyModelPool.Return(droppedFruit);
             flyUIEvent.Raise(new FlyEventData
-                {
-                    resourceType = fruitResource.resourceType,
-                    worldPos = droppedFruit.transform.position
-                });
+            {
+                resourceType = fruitResource.resourceType,
+                worldPos = droppedFruit.transform.position
+            });
         }
 
         droppedFruitList.Clear();

@@ -89,7 +89,6 @@ public class Predator : GameComponent
         {
             colliderList[i].enabled = i == random;
         }
-        Debug.LogError(colliderList[random].name);
         OnShowNextHitPointEvent?.Invoke(colliderList[random].bounds.center);
     }
 

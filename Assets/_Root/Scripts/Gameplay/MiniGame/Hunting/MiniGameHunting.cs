@@ -33,8 +33,8 @@ public class MiniGameHunting : GameComponent, IMiniGame
         huntingController.transform.position = playerStartPos.position;
         huntingController.transform.forward = Vector3.right;
 
-        var mapPredator = getCurrentMonsterEvent.Raise().GetComponent<MapPredator>();
-        predator = Instantiate(predatorPrefabList.FirstOrDefault(p => p.PredatorType == mapPredator.PredatorType),
+        var huntingField = getCurrentMonsterEvent.Raise().GetComponent<HuntingField>();
+        predator = Instantiate(predatorPrefabList.FirstOrDefault(p => p.PredatorType == huntingField.Predator.PredatorType),
             container.transform);
         predator.transform.position = predatorStartPos.position;
         predator.transform.forward = Vector3.left;

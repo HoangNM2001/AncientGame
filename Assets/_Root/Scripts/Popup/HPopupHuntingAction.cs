@@ -54,6 +54,7 @@ public class HPopupHuntingAction : UIPopup
 
         if (getHuntingFieldEvent.Raise().TryGetComponent<HuntingField>(out var huntingField))
         {
+            Debug.LogError("?");
             huntingField.HarvestOnWin();
         }
 
@@ -101,7 +102,6 @@ public class HPopupHuntingAction : UIPopup
 
     private void OnForceStopMiniGame(bool isWin)
     {
-
         StopHuntingAction();
     }
 

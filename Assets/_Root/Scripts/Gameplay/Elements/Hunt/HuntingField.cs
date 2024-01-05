@@ -12,6 +12,8 @@ public class HuntingField : SaveDataElement
     [SerializeField] private float respawnInterval;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
+    public MapPredator Predator => predator;
+
     private void Start()
     {
         Activate();
@@ -34,7 +36,7 @@ public class HuntingField : SaveDataElement
         {
             var tempFly = predator.MeatResource.flyModelPool.Request();
             tempFly.transform.SetParent(transform);
-            tempFly.transform.localPosition = Vector3.zero;
+            tempFly.transform.localPosition = predator.transform.localPosition;
             tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() =>
             {
                 predator.MeatResource.flyModelPool.Return(tempFly);
@@ -45,13 +47,14 @@ public class HuntingField : SaveDataElement
                 });
             });
         }
+        Deactivate();
     } 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<IHunter>(out var hunter))
         {
-            hunter.TriggerActionHunting(predator.gameObject);
+            hunter.TriggerActionHunting(gameObject);
             predator.PlayerInSight(true);
         }
     }

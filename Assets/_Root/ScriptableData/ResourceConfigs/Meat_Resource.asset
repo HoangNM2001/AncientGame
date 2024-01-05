@@ -18,8 +18,8 @@ MonoBehaviour:
   smallTreePool: {fileID: 0}
   bigTreePool: {fileID: 0}
   treeColor: {r: 0, g: 0, b: 0, a: 0}
-  flyModelPool: {fileID: 0}
-  flyUIPool: {fileID: 0}
+  flyModelPool: {fileID: 11400000, guid: 8fba07d3964420148873a7d5eebc96d7, type: 2}
+  flyUIPool: {fileID: 11400000, guid: 777b2101679d80a4fbcecb9e77c8ba9b, type: 2}
   resourceQuantity: {fileID: 11400000, guid: d0a32a23fa5bf6748b633931b0932aa1, type: 2}
   price: 10
   grownTime: 20

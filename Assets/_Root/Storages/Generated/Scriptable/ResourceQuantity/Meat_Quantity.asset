@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cdb8ad39a5bdd4f8ed3d18fae14a63, type: 3}
   m_Name: Meat_Quantity
   m_EditorClassIdentifier: 
-  guid: 
+  guid: d0a32a23fa5bf6748b633931b0932aa1
   value: 0
   debugLogEnabled: 0
   saved: 0

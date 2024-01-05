@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class EnumPack
 {
+    public enum LandType
+    {
+        Type1,
+        Type2,
+        Type3,
+        Type4,
+        Type5
+    }
+
     public enum PredatorType
     {
         Elephant,

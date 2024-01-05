@@ -7,7 +7,7 @@ using Pancake.SceneFlow;
 using UnityEditor;
 using UnityEngine;
 
-public class ShopResources : GameComponent
+public class ShopResources : SaveDataElement
 {
     [SerializeField] private List<ResourceConfig> buyAbleResourceList;
     [SerializeField] private Animator shopKeeperAnimator;
@@ -18,11 +18,15 @@ public class ShopResources : GameComponent
     [SerializeField] private Trigger triggerTalk;
 
     private CharacterHandleTrigger characterHandleTrigger;
-    private Vector3 defaultUIScale;
 
     public Vector3 ShopPos => shopKeeperAnimator.transform.position;
     public List<ResourceConfig> BuyAbleResourceList => buyAbleResourceList;
-    
+
+    private void Awake()
+    {
+        Initialize();
+    }
+
     private void Start()
     {
         foreach (var resource in buyAbleResourceList)
@@ -63,7 +67,7 @@ public class ShopResources : GameComponent
     {
         if (characterHandleTrigger == null) characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(obj);
         characterHandleTrigger.TriggerActionShopNear(gameObject);
-        
+
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_TALKING, 0.1f);
     }
 
@@ -71,7 +75,7 @@ public class ShopResources : GameComponent
     {
         if (characterHandleTrigger == null) characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(obj);
         characterHandleTrigger.ExitTriggerAction();
-        
+
         shopKeeperAnimator.CrossFade(Constant.SHOPKEEPER_IDLE, 0.1f);
     }
 }
