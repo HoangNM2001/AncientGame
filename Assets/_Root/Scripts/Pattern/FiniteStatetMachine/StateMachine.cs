@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class StateMachine
     {
-        public State CurrentState { get; private set; }
+        private State CurrentState { get; set; }
 
-        public State[] States { get; private set; }
+        private State[] States { get; set; }
 
         public void InitStates(params State[] states)
         {

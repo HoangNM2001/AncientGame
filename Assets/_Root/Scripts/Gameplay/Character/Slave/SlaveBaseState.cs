@@ -6,7 +6,7 @@ public class SlaveBaseState : State
 {
     protected SlaveController SlaveController;
 
-    public SlaveBaseState(SlaveController slaveController) : base()
+    protected SlaveBaseState(SlaveController slaveController)
     {
         SlaveController = slaveController;
     }

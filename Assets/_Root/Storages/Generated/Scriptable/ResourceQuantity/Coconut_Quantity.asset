@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Coconut_Quantity
   m_EditorClassIdentifier: 
   guid: 95759e4a79215e24396109e2e1d50992
-  value: 0
+  value: 16
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

@@ -53,7 +53,6 @@ public class Tile : SaveDataElement
 
     public override void Activate(bool restore = true)
     {
-        Debug.LogError(uniqueId + " - " + IsUnlocked + " + ");
         UpdateTextRequireLv();
 
         isUnlockable = IsUnlockable();
@@ -102,7 +101,6 @@ public class Tile : SaveDataElement
         if (IsUnlocked) return;
 
         IsUnlocked = true;
-        Debug.LogError(uniqueId + " - " + IsUnlocked);
 
         ToggleUnlockUI(false);
         ToggleTrigger(false);
