@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -46,7 +47,38 @@ public class ExtendField : SaveDataElement
         InitCount();
     }
 
-    private void Initialize()
+    public override void Activate(bool restore = true)
+    {
+        gameObject.SetActive(true);
+
+        foreach (var field in fieldList)
+        {
+            field.gameObject.SetActive(false);
+        }
+
+        if (restore)
+        {
+            foreach (var field in fieldList)
+            {
+                field.Activate();
+            }
+        }
+        else
+        {
+            StartCoroutine(IEShowField());
+        }
+    }
+
+    IEnumerator IEShowField()
+    {
+        foreach (var field in fieldList)
+        {
+            yield return new WaitForSeconds(0.5f);
+            field.Activate(false);
+        }
+    }
+
+    protected override void Initialize()
     {
         foreach (var resource in resourceConfigList.Where(resource => ResourceType == resource.resourceType))
         {

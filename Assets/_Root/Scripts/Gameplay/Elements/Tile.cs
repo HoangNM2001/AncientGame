@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 using System.Linq;
 using UnityEngine.UI;
 using System;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 
 public class Tile : SaveDataElement
@@ -25,14 +26,14 @@ public class Tile : SaveDataElement
     [SerializeField] private int unlockCost = 100;
     [SerializeField] private bool isUnlocked = false;
 
-    private bool isShowUI;
-    private bool isUnlockable;
-    private MapController map;
-    private List<Tile> tilesAroundList = new List<Tile>();
+    private bool _isShowUI;
+    private bool _isUnlockAble;
+    private MapController _map;
+    private readonly List<Tile> _tilesAroundList = new List<Tile>();
     private bool IsMeetRequiredLevel => playerLevel.Level >= requireLevel;
-    private bool IsAnyTileAroundUnlocked => tilesAroundList.Any(t => t.IsUnlocked);
+    private bool IsAnyTileAroundUnlocked => _tilesAroundList.Any(t => t.IsUnlocked);
 
-    public Action OnUnlocked;
+    private Action _onUnlocked;
     public Vector2Int Coord { get; private set; }
     public List<SaveDataElement> Elements { get; set; }
 
@@ -55,18 +56,18 @@ public class Tile : SaveDataElement
     {
         UpdateTextRequireLv();
 
-        isUnlockable = IsUnlockable();
-        isShowUI = IsShowUI();
+        _isUnlockAble = IsUnlockable();
+        _isShowUI = IsShowUI();
 
-        ToggleUnlockUI(isShowUI);
+        ToggleUnlockUI(_isShowUI);
         ToggleTrigger(!IsUnlocked);
-        ToggleObstacle(!IsUnlocked || !isUnlockable);
+        ToggleObstacle(!IsUnlocked || !_isUnlockAble);
 
-        if (!isUnlockable)
+        if (!_isUnlockAble)
         {
             playerLevel.LevelChangedEvent += OnLevelChanged;
-            if (requiredTile) requiredTile.OnUnlocked += CheckUnlockable;
-            foreach (var tile in tilesAroundList) tile.OnUnlocked += CheckUnlockable;
+            if (requiredTile) requiredTile._onUnlocked += CheckUnlockable;
+            foreach (var tile in _tilesAroundList) tile._onUnlocked += CheckUnlockable;
         }
 
         if (IsUnlocked)
@@ -114,7 +115,7 @@ public class Tile : SaveDataElement
             }
         });
 
-        OnUnlocked?.Invoke();
+        _onUnlocked?.Invoke();
     }
 
     public void UpdateLandModel()
@@ -126,22 +127,22 @@ public class Tile : SaveDataElement
     {
         if (!IsUnlocked)
         {
-            isUnlockable = IsUnlockable();
-            isShowUI = IsShowUI();
+            _isUnlockAble = IsUnlockable();
+            _isShowUI = IsShowUI();
 
-            if (isUnlockable)
+            if (_isUnlockAble)
             {
                 ToggleTrigger(true);
                 ToggleObstacle(true);
             }
 
-            if (isShowUI) ToggleUnlockUI(true);
+            if (_isShowUI) ToggleUnlockUI(true);
 
-            if (isUnlockable)
+            if (_isUnlockAble)
             {
                 playerLevel.LevelChangedEvent -= OnLevelChanged;
-                if (requiredTile) requiredTile.OnUnlocked -= CheckUnlockable;
-                foreach (var tile in tilesAroundList) tile.OnUnlocked -= CheckUnlockable;
+                if (requiredTile) requiredTile._onUnlocked -= CheckUnlockable;
+                foreach (var tile in _tilesAroundList) tile._onUnlocked -= CheckUnlockable;
             }
         }
     }
@@ -175,15 +176,15 @@ public class Tile : SaveDataElement
 
     private void GetTilesAround()
     {
-        if (map.TileDict.TryGetValue(Coord + Vector2Int.up, out var upTile)) tilesAroundList.Add(upTile);
-        if (map.TileDict.TryGetValue(Coord + Vector2Int.down, out var downTile)) tilesAroundList.Add(downTile);
-        if (map.TileDict.TryGetValue(Coord + Vector2Int.left, out var leftTile)) tilesAroundList.Add(leftTile);
-        if (map.TileDict.TryGetValue(Coord + Vector2Int.right, out var rightTile)) tilesAroundList.Add(rightTile);
+        if (_map.TileDict.TryGetValue(Coord + Vector2Int.up, out var upTile)) _tilesAroundList.Add(upTile);
+        if (_map.TileDict.TryGetValue(Coord + Vector2Int.down, out var downTile)) _tilesAroundList.Add(downTile);
+        if (_map.TileDict.TryGetValue(Coord + Vector2Int.left, out var leftTile)) _tilesAroundList.Add(leftTile);
+        if (_map.TileDict.TryGetValue(Coord + Vector2Int.right, out var rightTile)) _tilesAroundList.Add(rightTile);
     }
 
     public void CalculateCoord(MapController mapController, float tileSize)
     {
-        map = mapController;
+        _map = mapController;
         Coord = new Vector2Int(Mathf.RoundToInt(transform.position.x / tileSize), Mathf.RoundToInt(transform.position.z / tileSize));
     }
 
@@ -196,4 +197,15 @@ public class Tile : SaveDataElement
     {
         return IsUnlocked && IsAnyTileAroundUnlocked && IsMeetRequiredLevel && (requiredTile == null || requiredTile.IsUnlocked);
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Handles.color = Color.red;
+        var guiStyle = new GUIStyle();
+        guiStyle.normal.textColor = Color.blue;
+        
+        Handles.Label(transform.position + Vector3.up * 0.5f + Vector3.forward * 0.75f, gameObject.name, guiStyle);
+    }
+#endif
 }

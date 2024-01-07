@@ -1,8 +1,10 @@
 using System;
 using DG.Tweening;
 using Pancake;
+using Pancake.Apex;
 using Pancake.Scriptable;
 using UnityEngine;
+using UnityEngine.Experimental.Playables;
 using Random = UnityEngine.Random;
 
 public class Field : SaveDataElement
@@ -14,14 +16,15 @@ public class Field : SaveDataElement
     [SerializeField] private GameObjectPool leavesParticlePool;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
-    private ExtendField parentField;
-    private ResourceConfig resourceConfig;
-    private MaterialPropertyBlock fieldMaterialBlock;
-    private GameObject smallTree;
-    private GameObject bigTree;
-    private GameObjectPool smallTreePool;
-    private GameObjectPool bigTreePool;
-    private GameObjectPool flyModelPool;
+    private Collider _collider;
+    private ExtendField _parentField;
+    private ResourceConfig _resourceConfig;
+    private MaterialPropertyBlock _fieldMaterialBlock;
+    private GameObject _smallTree;
+    private GameObject _bigTree;
+    private GameObjectPool _smallTreePool;
+    private GameObjectPool _bigTreePool;
+    private GameObjectPool _flyModelPool;
     private static readonly int ShaderColor = Shader.PropertyToID("_Color");
     private const float SeedDuration = 0.5f;
     private const float WaterDuration = 0.8f;
@@ -36,18 +39,20 @@ public class Field : SaveDataElement
 
     private void Awake()
     {
-        fieldMaterialBlock = new MaterialPropertyBlock();
-        fieldRenderer.GetPropertyBlock(fieldMaterialBlock);
+        _collider = GetComponent<Collider>();
+        _collider.enabled = false;
+        _fieldMaterialBlock = new MaterialPropertyBlock();
+        fieldRenderer.GetPropertyBlock(_fieldMaterialBlock);
     }
 
     public void Initialize(ExtendField extendField, ResourceConfig newResource)
     {
-        parentField = extendField;
-        resourceConfig = newResource;
+        _parentField = extendField;
+        _resourceConfig = newResource;
 
-        smallTreePool = resourceConfig.smallTreePool;
-        bigTreePool = resourceConfig.bigTreePool;
-        flyModelPool = resourceConfig.flyModelPool;
+        _smallTreePool = _resourceConfig.smallTreePool;
+        _bigTreePool = _resourceConfig.bigTreePool;
+        _flyModelPool = _resourceConfig.flyModelPool;
 
         InitFieldState();
     }
@@ -90,15 +95,15 @@ public class Field : SaveDataElement
         if (FieldState != EnumPack.FieldState.Seedale) return;
         FieldState = EnumPack.FieldState.Waterable;
 
-        smallTree = smallTreePool.Request();
-        smallTree.transform.SetParent(transform);
-        smallTree.transform.localPosition = Vector3.zero;
-        smallTree.transform.RandomLocalRotation(true);
-        smallTree.transform.localScale = Vector3.zero;
-        smallTree.transform.DOScale(Vector3.one, SeedDuration).SetTarget(smallTree);
+        _smallTree = _smallTreePool.Request();
+        _smallTree.transform.SetParent(transform);
+        _smallTree.transform.localPosition = Vector3.zero;
+        _smallTree.transform.RandomLocalRotation(true);
+        _smallTree.transform.localScale = Vector3.zero;
+        _smallTree.transform.DOScale(Vector3.one, SeedDuration).SetTarget(_smallTree);
         ChangeFieldColor(soilColor, seededColor, SeedDuration);
 
-        parentField.DoSeed();
+        _parentField.DoSeed();
     }
 
     private void DoWater()
@@ -106,17 +111,17 @@ public class Field : SaveDataElement
         if (FieldState != EnumPack.FieldState.Waterable) return;
         FieldState = EnumPack.FieldState.Harvestable;
 
-        smallTreePool.Return(smallTree);
+        _smallTreePool.Return(_smallTree);
 
-        bigTree = bigTreePool.Request();
-        bigTree.transform.SetParent(transform);
-        bigTree.transform.localPosition = Vector3.zero;
-        bigTree.transform.RandomLocalRotation(true);
-        bigTree.transform.localScale = Vector3.zero;
-        bigTree.transform.DOScale(Vector3.one, WaterDuration).SetEase(Ease.OutBack).SetTarget(bigTree);
+        _bigTree = _bigTreePool.Request();
+        _bigTree.transform.SetParent(transform);
+        _bigTree.transform.localPosition = Vector3.zero;
+        _bigTree.transform.RandomLocalRotation(true);
+        _bigTree.transform.localScale = Vector3.zero;
+        _bigTree.transform.DOScale(Vector3.one, WaterDuration).SetEase(Ease.OutBack).SetTarget(_bigTree);
         ChangeFieldColor(seededColor, wateredColor, WaterDuration);
 
-        parentField.DoWater();
+        _parentField.DoWater();
     }
 
     private void DoHarvest(bool isPlayer)
@@ -124,13 +129,13 @@ public class Field : SaveDataElement
         if (FieldState != EnumPack.FieldState.Harvestable) return;
         FieldState = EnumPack.FieldState.Seedale;
 
-        bigTreePool.Return(bigTree);
+        _bigTreePool.Return(_bigTree);
 
         var tempLeaves = leavesParticlePool.Request();
         var tempYPos = tempLeaves.transform.localPosition.y;
         tempLeaves.transform.SetParent(transform);
         tempLeaves.transform.localPosition = new Vector3(0.0f, tempYPos, 0.0f);
-        tempLeaves.GetComponent<LeavesParticle>().ChangeParticleColor(resourceConfig.treeColor);
+        tempLeaves.GetComponent<LeavesParticle>().ChangeParticleColor(_resourceConfig.treeColor);
         DOTween.Sequence().AppendInterval(2.0f).AppendCallback(() => leavesParticlePool.Return(tempLeaves));
 
         ChangeFieldColor(wateredColor, soilColor, HarvestDuration);
@@ -139,46 +144,65 @@ public class Field : SaveDataElement
 
         for (var i = 1; i <= randomFlyModel; i++)
         {
-            var tempFly = flyModelPool.Request();
+            var tempFly = _flyModelPool.Request();
             tempFly.transform.SetParent(transform);
             tempFly.transform.localPosition = Vector3.zero;
             tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() =>
             {
-                flyModelPool.Return(tempFly);
+                _flyModelPool.Return(tempFly);
                 if (isPlayer)
                 {
                     flyUIEvent.Raise(new FlyEventData
                     {
-                        resourceType = resourceConfig.resourceType,
+                        resourceType = _resourceConfig.resourceType,
                         worldPos = tempFly.transform.position
                     });
                 }
             });
         }
 
-        parentField.DoHarvest();
+        _parentField.DoHarvest();
     }
 
     private void SetSeededState()
     {
-        smallTree = smallTreePool.Request();
-        smallTree.transform.SetParent(transform);
-        smallTree.transform.localPosition = Vector3.zero;
-        smallTree.transform.RandomLocalRotation(true);
+        _smallTree = _smallTreePool.Request();
+        _smallTree.transform.SetParent(transform);
+        _smallTree.transform.localPosition = Vector3.zero;
+        _smallTree.transform.RandomLocalRotation(true);
 
-        fieldMaterialBlock.SetColor(ShaderColor, seededColor);
-        fieldRenderer.SetPropertyBlock(fieldMaterialBlock);
+        _fieldMaterialBlock.SetColor(ShaderColor, seededColor);
+        fieldRenderer.SetPropertyBlock(_fieldMaterialBlock);
     }
 
     private void SetWateredState()
     {
-        bigTree = bigTreePool.Request();
-        bigTree.transform.SetParent(transform);
-        bigTree.transform.localPosition = Vector3.zero;
-        bigTree.transform.RandomLocalRotation(true);
+        _bigTree = _bigTreePool.Request();
+        _bigTree.transform.SetParent(transform);
+        _bigTree.transform.localPosition = Vector3.zero;
+        _bigTree.transform.RandomLocalRotation(true);
 
-        fieldMaterialBlock.SetColor(ShaderColor, wateredColor);
-        fieldRenderer.SetPropertyBlock(fieldMaterialBlock);
+        _fieldMaterialBlock.SetColor(ShaderColor, wateredColor);
+        fieldRenderer.SetPropertyBlock(_fieldMaterialBlock);
+    }
+
+    public override void Activate(bool restore = true)
+    {
+        gameObject.SetActive(true);
+        DOTween.Kill(transform);
+        if (restore)
+        {
+            OnActivated();
+        }
+        else
+        {
+            transform.DOMoveY(0.5f, 0.15f).From().SetTarget(transform).OnComplete(OnActivated);
+        }
+    }
+
+    private void OnActivated()
+    {
+        _collider.enabled = true;
     }
 
     private void ChangeFieldColor(Color fromColor, Color toColor, float duration)
@@ -186,8 +210,8 @@ public class Field : SaveDataElement
         DOTween.Kill(fieldRenderer);
         DOTween.To(() => 0, x =>
         {
-            fieldMaterialBlock.SetColor(ShaderColor, Color.Lerp(fromColor, toColor, x));
-            fieldRenderer.SetPropertyBlock(fieldMaterialBlock);
+            _fieldMaterialBlock.SetColor(ShaderColor, Color.Lerp(fromColor, toColor, x));
+            fieldRenderer.SetPropertyBlock(_fieldMaterialBlock);
         }, 1.0f, duration).SetTarget(fieldRenderer);
     }
 }

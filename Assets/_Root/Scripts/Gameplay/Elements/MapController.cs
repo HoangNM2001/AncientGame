@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Pancake;
+using UnityEditor;
 using UnityEngine;
 
 public class MapController : GameComponent
@@ -27,7 +29,7 @@ public class MapController : GameComponent
 
         foreach (var element in Elements)
         {
-            if (element as Tile) continue;
+            if (element as Tile || element as Field) continue;
             var elementPos = element.transform.position;
             elementPos.y = 0;
 
@@ -41,6 +43,11 @@ public class MapController : GameComponent
         }
     }
 
+    private void Start()
+    {
+        Activate();
+    }
+
     [ContextMenu("Activate")]
     public void Activate()
     {
@@ -52,6 +59,37 @@ public class MapController : GameComponent
         foreach (var tile in Tiles)
         {
             tile.UpdateLandModel();
+        }
+    }
+
+#if  UNITY_EDITOR
+    public void RenameAllTiles()
+    {
+        Tiles = GetComponentsInChildren<Tile>().ToList();
+
+        for (var i = 0; i < Tiles.Count; i++)
+        {
+            Tiles[i].gameObject.name = $"Tile: {i}";
+        }
+    }
+#endif
+}
+
+[CustomEditor(typeof(MapController))]
+public class MapControllerEditor : Editor
+{
+    private MapController _mapController;
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        _mapController = (MapController)target;
+
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("ChangeTileName"))
+        {
+            _mapController.RenameAllTiles();
         }
     }
 }
