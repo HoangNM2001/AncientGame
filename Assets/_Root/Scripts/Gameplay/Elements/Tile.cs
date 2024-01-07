@@ -10,13 +10,13 @@ using UnityEngine.UI;
 using System;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using Pancake.SceneFlow;
 
 public class Tile : SaveDataElement
 {
     [SerializeField] private PlayerLevel playerLevel;
     [SerializeField] private TileLand land;
     [SerializeField] private GameObject unlockGroup;
-    [SerializeField] private GameObject buildFx;
     [SerializeField] private NavMeshObstacle navMeshObstacle;
     [SerializeField] private Trigger trigger;
     [SerializeField] private TextMeshPro unlockCostText;
@@ -32,9 +32,10 @@ public class Tile : SaveDataElement
     private readonly List<Tile> _tilesAroundList = new List<Tile>();
     private bool IsMeetRequiredLevel => playerLevel.Level >= requireLevel;
     private bool IsAnyTileAroundUnlocked => _tilesAroundList.Any(t => t.IsUnlocked);
-
     private Action _onUnlocked;
+
     public Vector2Int Coord { get; private set; }
+    public int UnlockCost => unlockCost;
     public List<SaveDataElement> Elements { get; set; }
 
     public override bool IsUnlocked
@@ -160,12 +161,38 @@ public class Tile : SaveDataElement
 
     private void ToggleTrigger(bool status)
     {
+        trigger.EnterTriggerEvent -= OnTriggerEnterEvent;
+        trigger.ExitTriggerEvent -= OnTriggerExitEvent;
+        trigger.gameObject.SetActive(false);
 
+        if (status)
+        {
+            trigger.gameObject.SetActive(true);
+            trigger.EnterTriggerEvent += OnTriggerEnterEvent;
+            trigger.ExitTriggerEvent += OnTriggerExitEvent;
+        }
     }
 
     private void ToggleObstacle(bool status)
     {
         navMeshObstacle.gameObject.SetActive(status);
+    }
+
+    private void OnTriggerEnterEvent(Collider collider)
+    {
+        Debug.LogError("Enter");
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(collider);
+        if (characterHandleTrigger) 
+        {
+            characterHandleTrigger.TriggerBuilding(gameObject);
+        }
+    }
+
+    private void OnTriggerExitEvent(Collider collider)
+    {
+        Debug.LogError("?");
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(collider);
+        if (characterHandleTrigger) characterHandleTrigger.ExitTriggerAction();
     }
 
     private void UpdateTextRequireLv()
@@ -204,7 +231,7 @@ public class Tile : SaveDataElement
         Handles.color = Color.red;
         var guiStyle = new GUIStyle();
         guiStyle.normal.textColor = Color.blue;
-        
+
         Handles.Label(transform.position + Vector3.up * 0.5f + Vector3.forward * 0.75f, gameObject.name, guiStyle);
     }
 #endif

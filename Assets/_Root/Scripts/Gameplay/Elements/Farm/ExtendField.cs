@@ -73,7 +73,7 @@ public class ExtendField : SaveDataElement
     {
         foreach (var field in fieldList)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.05f);
             field.Activate(false);
         }
     }

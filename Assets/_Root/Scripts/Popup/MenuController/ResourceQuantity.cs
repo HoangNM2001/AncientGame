@@ -22,7 +22,7 @@ public class ResourceQuantity : GameComponent
 
     public EnumPack.ResourceType ResourceType { get; private set; }
     public IntVariable QuantityVariable { get; private set; }
-    
+
     public Vector3 IconPosition => resourceIcon.transform.position;
     public TextMeshProUGUI QuantityText => quantityText;
     public int CurrentValue => int.Parse(quantityText.text);
@@ -34,6 +34,7 @@ public class ResourceQuantity : GameComponent
         QuantityVariable = variable;
         resourceIcon.SetNativeSize();
         quantityText.SetText(QuantityVariable.Value.ToString());
+        QuantityVariable.OnValueChanged += ChangeValueTxtEffect;
     }
 
     public void UpdateValue()
@@ -45,14 +46,24 @@ public class ResourceQuantity : GameComponent
 
     public void UpdateResourcesValue(int changeValue)
     {
-        ChangeValueTxtEffect(QuantityVariable.Value += changeValue);
+        QuantityVariable.Value += changeValue;
     }
 
-    public void ChangeValueTxtEffect(int targetValue, Action completeAction = null)
+    public void ChangeValueTxtEffect(int targetValue)
     {
+        if (targetValue > 0 && !gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(true);
+        }
         DOVirtual.Int(int.Parse(quantityText.text), targetValue, 1.0f,
                 value => { quantityText.text = value.ToString(); })
-            .SetEase(Ease.InOutQuad).OnComplete(() => completeAction?.Invoke());
+            .SetEase(Ease.InOutQuad).OnComplete(() =>
+            {
+                if (QuantityVariable.Value == 0)
+                {
+                    gameObject.SetActive(false);
+                }
+            });
     }
 
     public void ScaleEffect()

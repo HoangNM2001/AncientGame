@@ -101,12 +101,6 @@ public class HMenuController : GameComponent
         }
 
         coinQuantity.UpdateResourcesValue(coinFlyEventData.changeValue);
-
-        foreach (var resourceQuantity in resourceQuantityDict.Values.Where(resourceQuantity =>
-                     resourceQuantity.QuantityVariable.Value == 0))
-        {
-            resourceQuantity.ChangeValueTxtEffect(0, () => resourceQuantity.gameObject.SetActive(false));
-        }
     }
 
     private void flyUIEvent_OnRaised(FlyEventData flyEventData)

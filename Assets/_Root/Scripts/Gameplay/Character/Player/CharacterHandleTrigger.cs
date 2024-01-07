@@ -5,6 +5,7 @@ using Pancake;
 using Pancake.SceneFlow;
 using Pancake.Scriptable;
 using Pancake.UI;
+using RedBlueGames.MulliganRenamer;
 using UnityEngine;
 
 public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher, IHunter
@@ -24,9 +25,12 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     [SerializeField, PopupPickup] private string saveSlaveActionPopup;
     [SerializeField, PopupPickup] private string caveActionPopup;
     [SerializeField, PopupPickup] private string henHouseActionPopup;
+    [SerializeField, PopupPickup] private string buildingActionPopup;
 
     private Transform popupParentTrans;
     private GameObject currentInteract;
+
+    public GameObject CurrentInteract => currentInteract;
 
     protected override void OnEnabled()
     {
@@ -101,6 +105,12 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     {
         currentInteract = henHouse;
         popupShowEvent.Raise(henHouseActionPopup, popupParentTrans);
+    }
+
+    public void TriggerBuilding(GameObject tile)
+    {
+        currentInteract = tile;
+        popupShowEvent.Raise(buildingActionPopup, popupParentTrans);
     }
 
     public void ExitTriggerAction()

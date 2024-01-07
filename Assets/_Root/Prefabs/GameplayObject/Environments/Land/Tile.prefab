@@ -1,5 +1,72 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &174950346654624956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1226869127475714763}
+  - component: {fileID: 5761656729903205066}
+  - component: {fileID: 5407504527731689503}
+  m_Layer: 8
+  m_Name: TriggerUnlock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1226869127475714763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174950346654624956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 217619131458104458}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5761656729903205066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174950346654624956}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7, y: 5, z: 7}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5407504527731689503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174950346654624956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa8aa4741b116b42ade0c79ad12544e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &1989120071332604723
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +184,7 @@ Transform:
   - {fileID: 595543772515597708}
   - {fileID: 351282069347826334}
   - {fileID: 795103644480586970}
+  - {fileID: 1226869127475714763}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4020247731022953347
@@ -131,19 +199,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68e554cf330c1446b9de508b8db2d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: e392bd34-9db5-4e5c-9a74-7cc79c18d6b0
+  uniqueId: 673acae1-b652-4e6e-ab12-a354953ef28a
   playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
   land: {fileID: 1104857511817875172}
   unlockGroup: {fileID: 6097878095900751335}
-  buildFx: {fileID: 5871362227583284045, guid: 52e48c04f00bc2a4ea2077333e93fcbd, type: 3}
   navMeshObstacle: {fileID: 3361929203401347442}
-  trigger: {fileID: 0}
+  trigger: {fileID: 5407504527731689503}
   unlockCostText: {fileID: 4912942815054135006}
   requireText: {fileID: 1159665554828132965}
   requiredTile: {fileID: 0}
   requireLevel: 1
   unlockCost: 100
-  isUnlocked: 0
+  isUnlocked: 1
 --- !u!1 &4123558449139926830
 GameObject:
   m_ObjectHideFlags: 0

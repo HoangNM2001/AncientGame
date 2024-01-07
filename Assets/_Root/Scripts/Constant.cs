@@ -32,6 +32,8 @@ namespace Pancake.SceneFlow
         public const string HUNTING_ATTACK = "Attack";
         public const string HUNTING_DIE = "DeathHunt";
 
+        public const string BUIDLING = "Building";
+
         public const string SHOPKEEPER_IDLE = "Idle";
         public const string SHOPKEEPER_WAVE = "WavePlayer";
         public const string SHOPKEEPER_AFTERSELL = "AfterSell";
