@@ -33,7 +33,6 @@ public class Tile : SaveDataElement
     private bool IsMeetRequiredLevel => playerLevel.Level >= requireLevel;
     private bool IsAnyTileAroundUnlocked => _tilesAroundList.Any(t => t.IsUnlocked);
     private Action _onUnlocked;
-    private bool _isFieldTile;
 
     public Vector2Int Coord { get; private set; }
     public int UnlockCost => unlockCost;
@@ -98,7 +97,6 @@ public class Tile : SaveDataElement
         }
     }
 
-    [ContextMenu("Unlock")]
     public void Unlock()
     {
         if (IsUnlocked) return;
