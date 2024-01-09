@@ -10,12 +10,12 @@ public class SaveDataElement : GameComponent
 {
     [SerializeField, UniqueID] protected string uniqueId;
 
-    private Vector3 defaultScale;
-    private const float animDuration = 0.7f;
+    protected Vector3 DefaultScale;
+    protected const float AnimDuration = 0.7f;
 
     public Tile Tile { get; set; }
 
-    public virtual bool IsUnlocked
+    protected virtual bool IsUnlocked
     {
         get => Data.Load(uniqueId + "isUnlocked", false);
         set => Data.Save(uniqueId + "isUnlocked", value);
@@ -23,7 +23,7 @@ public class SaveDataElement : GameComponent
 
     protected virtual void Initialize()
     {
-        defaultScale = transform.localScale;
+        DefaultScale = transform.localScale;
     }
 
     public virtual void Activate(bool restore = true)
@@ -33,12 +33,12 @@ public class SaveDataElement : GameComponent
 
         if (restore)
         {
-            transform.localScale = defaultScale;
+            transform.localScale = DefaultScale;
         }
         else
         {
             transform.localScale = Vector3.zero;
-            transform.DOScale(defaultScale, animDuration).SetEase(Ease.OutBack).SetTarget(transform);
+            transform.DOScale(DefaultScale, AnimDuration).SetEase(Ease.OutBack).SetTarget(transform);
         }
     }
 

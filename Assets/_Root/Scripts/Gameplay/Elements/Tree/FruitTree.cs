@@ -138,6 +138,7 @@ public class FruitTree : SaveDataElement
             });
         }
 
+        fruitResource.resourceQuantity.Value += droppedFruitList.Count;
         droppedFruitList.Clear();
     }
 

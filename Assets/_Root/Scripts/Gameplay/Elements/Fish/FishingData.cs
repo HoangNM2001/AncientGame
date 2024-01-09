@@ -13,7 +13,7 @@ public class FishingData : ScriptableObject
     public List<Fish> FishList;
 
     public Action<FishingData> OnFishCountCaught;
-    [HideInInspector] public List<ResourceConfig> caughtList = new List<ResourceConfig>();
+    [HideInInspector] public List<ResourceConfig> caughtList = new();
 
     public void Reset()
     {

@@ -13,31 +13,57 @@ public class FishingField : SaveDataElement
     [SerializeField] private Trigger triggerAround;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
-    private List<Fish> fishList = new List<Fish>();
-    private List<Fish> fishInstanceList = new List<Fish>();
+    private List<Fish> _fishList = new();
+    private List<Fish> _fishInstanceList = new();
+
+    private void Awake()
+    {
+        Initialize();
+    }
 
     private void Start()
     {
-        fishList = fishingData.FishList;
-
-        Activate();
+        _fishList = fishingData.FishList;
     }
 
-    private void Activate()
+    public override void Activate(bool restore = true)
     {
-        fishInstanceList = new List<Fish>(fishList.Count);
-
-        foreach (var fish in fishList)
-        {
-            var newFish = Instantiate(fish, transform);
-            newFish.SetView();
-            fishInstanceList.Add(newFish);
-        }
-
-        gameObject.SetActive(true);
         DOTween.Kill(transform);
-        OnActivated();
+        gameObject.SetActive(true);
+
+        if (restore)
+        {
+            transform.localScale = DefaultScale;
+            OnActivated();
+        }
+        else
+        {
+            transform.localScale = Vector3.zero;
+            transform.DOScale(DefaultScale, AnimDuration).SetEase(Ease.OutBack).SetTarget(transform).OnComplete(OnActivated);
+        }
     }
+
+    public override void Deactivate()
+    {
+        base.Deactivate();
+        OnDeactivated();
+    }
+
+    // private void Activate()
+    // {
+    //     _fishInstanceList = new List<Fish>(_fishList.Count);
+    //
+    //     foreach (var fish in _fishList)
+    //     {
+    //         var newFish = Instantiate(fish, transform);
+    //         newFish.SetView();
+    //         _fishInstanceList.Add(newFish);
+    //     }
+    //
+    //     gameObject.SetActive(true);
+    //     DOTween.Kill(transform);
+    //     OnActivated();
+    // }
 
     public void HarvestFish()
     {
@@ -55,6 +81,7 @@ public class FishingField : SaveDataElement
                     worldPos = tempFly.transform.position
                 });
             });
+            fish.resourceQuantity.Value++;
         }
 
         fishingData.caughtList.Clear();
@@ -62,6 +89,15 @@ public class FishingField : SaveDataElement
 
     private void OnActivated()
     {
+        _fishInstanceList = new List<Fish>(_fishList.Count);
+
+        foreach (var fish in _fishList)
+        {
+            var newFish = Instantiate(fish, transform);
+            newFish.SetView();
+            _fishInstanceList.Add(newFish);
+        }
+        
         triggerAround.EnterTriggerEvent += OnTriggerAroundEnterEvent;
         triggerAround.ExitTriggerEvent += OnTriggerAroundExitEvent;
     }
@@ -86,7 +122,7 @@ public class FishingField : SaveDataElement
     {
         if (collider.TryGetComponent<IFisher>(out var fisher))
         {
-            foreach (var fish in fishInstanceList)
+            foreach (var fish in _fishInstanceList)
             {
                 fish.MoveAround();
             }
@@ -97,7 +133,7 @@ public class FishingField : SaveDataElement
     {
         if (collider.TryGetComponent<IFisher>(out var fisher))
         {
-            foreach (var fish in fishInstanceList)
+            foreach (var fish in _fishInstanceList)
             {
                 fish.StopMoveAround();
             }

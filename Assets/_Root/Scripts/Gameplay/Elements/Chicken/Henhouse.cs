@@ -50,6 +50,8 @@ public class Henhouse : SaveDataElement
 
     private void Awake()
     {
+        Initialize();
+        
         chickenList = new List<Chicken>();
         eggList = new List<Egg>();
 
@@ -120,7 +122,8 @@ public class Henhouse : SaveDataElement
             resourceType = eggsResourceConfig.resourceType,
             worldPos = egg.transform.position
         });
-
+        eggsResourceConfig.resourceQuantity.Value++;
+        
         EggCount--;
     }
 

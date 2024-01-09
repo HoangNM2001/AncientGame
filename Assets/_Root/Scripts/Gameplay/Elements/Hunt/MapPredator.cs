@@ -57,6 +57,11 @@ public class MapPredator : GameComponent
         }
     }
 
+    public void DropMeat()
+    {
+        meatResource.resourceQuantity.Value += numberOfMeat;
+    }
+
     private Vector3 GetRandomPos(float radius)
     {
         return SimpleMath.RandomVector3(true) * radius;

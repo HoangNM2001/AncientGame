@@ -12,7 +12,7 @@ public class ResetUniqueID : MonoBehaviour
     {
         saveDataElements = GetComponentsInChildren<SaveDataElement>().ToList();
 
-        foreach (var element in saveDataElements)
+        foreach (var element in saveDataElements.Where(element => element is not (Deco or Road)))
         {
             element.ResetUniqueID();
         }

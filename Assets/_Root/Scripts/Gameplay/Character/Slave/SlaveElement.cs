@@ -20,7 +20,7 @@ public class SlaveElement : SaveDataElement
 
     private void Awake()
     {
-        IsUnlock = false;
+        Initialize();
     }
 
     protected override void OnEnabled()

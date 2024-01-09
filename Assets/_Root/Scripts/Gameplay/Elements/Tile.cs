@@ -29,16 +29,17 @@ public class Tile : SaveDataElement
     private bool _isShowUI;
     private bool _isUnlockAble;
     private MapController _map;
-    private readonly List<Tile> _tilesAroundList = new List<Tile>();
+    private readonly List<Tile> _tilesAroundList = new();
     private bool IsMeetRequiredLevel => playerLevel.Level >= requireLevel;
     private bool IsAnyTileAroundUnlocked => _tilesAroundList.Any(t => t.IsUnlocked);
     private Action _onUnlocked;
+    private bool _isFieldTile;
 
     public Vector2Int Coord { get; private set; }
     public int UnlockCost => unlockCost;
     public List<SaveDataElement> Elements { get; set; }
 
-    public override bool IsUnlocked
+    protected override bool IsUnlocked
     {
         get => Data.Load(uniqueId + "_isUnlocked", isUnlocked);
         set
@@ -180,9 +181,8 @@ public class Tile : SaveDataElement
 
     private void OnTriggerEnterEvent(Collider collider)
     {
-        Debug.LogError("Enter");
         var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(collider);
-        if (characterHandleTrigger) 
+        if (characterHandleTrigger && _isUnlockAble)
         {
             characterHandleTrigger.TriggerBuilding(gameObject);
         }
@@ -190,7 +190,6 @@ public class Tile : SaveDataElement
 
     private void OnTriggerExitEvent(Collider collider)
     {
-        Debug.LogError("?");
         var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(collider);
         if (characterHandleTrigger) characterHandleTrigger.ExitTriggerAction();
     }
@@ -212,7 +211,8 @@ public class Tile : SaveDataElement
     public void CalculateCoord(MapController mapController, float tileSize)
     {
         _map = mapController;
-        Coord = new Vector2Int(Mathf.RoundToInt(transform.position.x / tileSize), Mathf.RoundToInt(transform.position.z / tileSize));
+        Coord = new Vector2Int(Mathf.RoundToInt(transform.position.x / tileSize),
+            Mathf.RoundToInt(transform.position.z / tileSize));
     }
 
     private bool IsShowUI()
@@ -222,7 +222,8 @@ public class Tile : SaveDataElement
 
     private bool IsUnlockable()
     {
-        return IsUnlocked && IsAnyTileAroundUnlocked && IsMeetRequiredLevel && (requiredTile == null || requiredTile.IsUnlocked);
+        return IsUnlocked || (IsAnyTileAroundUnlocked && IsMeetRequiredLevel &&
+                              (requiredTile == null || requiredTile.IsUnlocked));
     }
 
 #if UNITY_EDITOR
@@ -232,7 +233,15 @@ public class Tile : SaveDataElement
         var guiStyle = new GUIStyle();
         guiStyle.normal.textColor = Color.blue;
 
-        Handles.Label(transform.position + Vector3.up * 0.5f + Vector3.forward * 0.75f, gameObject.name, guiStyle);
+        var position = transform.position;
+
+        Handles.Label(position + Vector3.up * 0.5f + Vector3.forward * 0.75f, gameObject.name, guiStyle);
+
+        if (requiredTile)
+        {
+            var dir = requiredTile.transform.position - position;
+            GizmosUtils.GizmosArrow(position + Vector3.up, dir, Color.red, 1);
+        }
     }
 #endif
 }

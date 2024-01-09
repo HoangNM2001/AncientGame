@@ -5,23 +5,26 @@ using System.Linq;
 using DG.Tweening;
 using Pancake;
 using UnityEditor;
+using UnityEditor.AssetImporters;
 using UnityEngine;
 
 public class ExtendField : SaveDataElement
 {
+    [SerializeField] private ExtendField mainField;
     [SerializeField] private ScriptableListInt fieldStateList;
-    [SerializeField] private List<Field> fieldList = new List<Field>();
-    [SerializeField] private List<ResourceConfig> resourceConfigList = new List<ResourceConfig>();
+    [SerializeField] private List<Field> fieldList = new();
+    [SerializeField] private List<ResourceConfig> resourceConfigList = new();
 
-    private int canSeedCount;
-    private int canWaterCount;
-    private int canHarvestCount;
-    private ResourceConfig resourceConfig;
+    private BoxCollider _collider;
+    private int _canSeedCount;
+    private int _canWaterCount;
+    private int _canHarvestCount;
+    private ResourceConfig _resourceConfig;
 
     public Action OnStateChange;
     public Action<bool> OnHarvest;
 
-    public ResourceConfig ResourceConfig => resourceConfig;
+    public ResourceConfig ResourceConfig => _resourceConfig;
 
     private EnumPack.ResourceType ResourceType
     {
@@ -34,21 +37,27 @@ public class ExtendField : SaveDataElement
     {
         get
         {
-            if (canHarvestCount > 0) return EnumPack.FieldState.Harvestable;
-            if (canSeedCount > 0) return EnumPack.FieldState.Seedale;
-            if (canWaterCount > 0) return EnumPack.FieldState.Waterable;
+            if (_canHarvestCount > 0) return EnumPack.FieldState.Harvestable;
+            if (_canSeedCount > 0) return EnumPack.FieldState.Seedale;
+            if (_canWaterCount > 0) return EnumPack.FieldState.Waterable;
             return EnumPack.FieldState.Seedale;
         }
+    }
+
+    private void Awake()
+    {
+        _collider = GetComponent<BoxCollider>();
+        InitCount();
     }
 
     private void Start()
     {
         if (ResourceType != EnumPack.ResourceType.None) Initialize();
-        InitCount();
     }
 
     public override void Activate(bool restore = true)
     {
+        IsUnlocked = true;
         gameObject.SetActive(true);
 
         foreach (var field in fieldList)
@@ -62,6 +71,8 @@ public class ExtendField : SaveDataElement
             {
                 field.Activate();
             }
+            
+            OnActivated();
         }
         else
         {
@@ -76,19 +87,51 @@ public class ExtendField : SaveDataElement
             yield return new WaitForSeconds(0.05f);
             field.Activate(false);
         }
+        OnActivated();
+    }
+
+    private void OnActivated()
+    {
+        if (mainField == null) return;
+        if (!mainField.IsUnlocked) return;
+        mainField.AppendExtendField(this);
+        _collider.enabled = false;
+    }
+
+    private void AppendExtendField(ExtendField sideExtendField)
+    {
+        var bounds = _collider.bounds;
+        bounds.Encapsulate(sideExtendField._collider.bounds);
+
+        _collider.center = bounds.center - transform.position;
+        _collider.size = bounds.size;
+
+        fieldList.AddRange(sideExtendField.fieldList);
+
+        if (ResourceType != EnumPack.ResourceType.None)
+        {
+            foreach (var field in sideExtendField.fieldList)
+            {
+                field.Initialize(this, _resourceConfig);
+            }   
+        }
+
+        _canSeedCount += sideExtendField._canSeedCount;
+        _canWaterCount += sideExtendField._canWaterCount;
+        _canHarvestCount += sideExtendField._canHarvestCount;
     }
 
     protected override void Initialize()
     {
         foreach (var resource in resourceConfigList.Where(resource => ResourceType == resource.resourceType))
         {
-            resourceConfig = resource;
+            _resourceConfig = resource;
             break;
         }
 
         foreach (var field in fieldList)
         {
-            field.Initialize(this, resourceConfig);
+            field.Initialize(this, _resourceConfig);
         }
     }
 
@@ -99,13 +142,13 @@ public class ExtendField : SaveDataElement
             switch (field.FieldState)
             {
                 case EnumPack.FieldState.Seedale:
-                    canSeedCount++;
+                    _canSeedCount++;
                     break;
                 case EnumPack.FieldState.Waterable:
-                    canWaterCount++;
+                    _canWaterCount++;
                     break;
                 case EnumPack.FieldState.Harvestable:
-                    canHarvestCount++;
+                    _canHarvestCount++;
                     break;
             }
         }
@@ -121,9 +164,9 @@ public class ExtendField : SaveDataElement
     {
         fieldStateList.Reset();
 
-        if (canSeedCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Seedale);
-        if (canWaterCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Waterable);
-        if (canHarvestCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Harvestable);
+        if (_canSeedCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Seedale);
+        if (_canWaterCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Waterable);
+        if (_canHarvestCount > 0) fieldStateList.Add((int)EnumPack.FieldState.Harvestable);
     }
 
     public Field GetNearestFieldWithState(Vector3 pos, EnumPack.FieldState fieldState)
@@ -149,20 +192,20 @@ public class ExtendField : SaveDataElement
 
     public void DoSeed()
     {
-        CheckChangeState(ref canSeedCount, ref canWaterCount);
-        if (canSeedCount == 0) OnStateChange?.Invoke();
+        CheckChangeState(ref _canSeedCount, ref _canWaterCount);
+        if (_canSeedCount == 0) OnStateChange?.Invoke();
     }
 
     public void DoWater()
     {
-        CheckChangeState(ref canWaterCount, ref canHarvestCount);
-        if (canWaterCount == 0) OnStateChange?.Invoke();
+        CheckChangeState(ref _canWaterCount, ref _canHarvestCount);
+        if (_canWaterCount == 0) OnStateChange?.Invoke();
     }
 
     public void DoHarvest()
     {
-        CheckChangeState(ref canHarvestCount, ref canSeedCount);
-        OnHarvest?.Invoke(canHarvestCount == 0);
+        CheckChangeState(ref _canHarvestCount, ref _canSeedCount);
+        OnHarvest?.Invoke(_canHarvestCount == 0);
         // if (canHarvestCount == 0) OnStateChange?.Invoke();
     }
 

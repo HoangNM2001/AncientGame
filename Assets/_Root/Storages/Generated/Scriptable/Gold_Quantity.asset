@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Gold_Quantity
   m_EditorClassIdentifier: 
   guid: 1d4b77d15290c5840933bfb3884dc4b9
-  value: 100
+  value: 4000
   debugLogEnabled: 0
   saved: 1
-  defaultValue: 0
+  defaultValue: 5000
   resetOn: 0
   isClamped: 0
   minMax: {x: -2147483648, y: 2147483647}

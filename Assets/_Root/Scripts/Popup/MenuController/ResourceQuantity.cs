@@ -39,9 +39,9 @@ public class ResourceQuantity : GameComponent
 
     public void UpdateValue()
     {
-        QuantityVariable.Value++;
-        quantityText.SetText(QuantityVariable.Value.ToString());
-        ScaleEffect();
+        // QuantityVariable.Value++;
+        // quantityText.SetText(QuantityVariable.Value.ToString());
+        // ScaleEffect();
     }
 
     public void UpdateResourcesValue(int changeValue)
@@ -49,7 +49,7 @@ public class ResourceQuantity : GameComponent
         QuantityVariable.Value += changeValue;
     }
 
-    public void ChangeValueTxtEffect(int targetValue)
+    private void ChangeValueTxtEffect(int targetValue)
     {
         if (targetValue > 0 && !gameObject.activeInHierarchy)
         {

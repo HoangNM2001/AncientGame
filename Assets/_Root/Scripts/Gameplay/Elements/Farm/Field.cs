@@ -160,6 +160,8 @@ public class Field : SaveDataElement
                 }
             });
         }
+        
+        _resourceConfig.resourceQuantity.Value += randomFlyModel;
 
         _parentField.DoHarvest();
     }

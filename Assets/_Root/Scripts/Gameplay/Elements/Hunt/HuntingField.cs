@@ -47,6 +47,8 @@ public class HuntingField : SaveDataElement
                 });
             });
         }
+        
+        predator.DropMeat();
         Deactivate();
     } 
 
