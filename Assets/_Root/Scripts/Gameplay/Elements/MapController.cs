@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Pancake;
 using UnityEditor;
 using UnityEngine;
@@ -59,6 +60,11 @@ public class MapController : GameComponent
         foreach (var tile in Tiles)
         {
             tile.UpdateLandModel();
+        }
+
+        if (LoadingScreen.IsExist)
+        {
+            DOTween.Sequence().AppendInterval(2.0f).AppendCallback(() => LoadingScreen.Instance.OnLoadingFinished());
         }
     }
 

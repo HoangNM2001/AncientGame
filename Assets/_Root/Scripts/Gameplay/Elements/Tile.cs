@@ -40,11 +40,13 @@ public class Tile : SaveDataElement
 
     protected override bool IsUnlocked
     {
-        get => Data.Load(uniqueId + "_isUnlocked", isUnlocked);
+        get => Data.Load($"{uniqueId}_isUnlocked", isUnlocked);
         set
         {
-            Data.Save(uniqueId + "_isUnlocked", value);
+            Data.Save($"{uniqueId}_isUnlocked", value);
             Data.SaveAll();
+            // Debug.LogError($"{uniqueId}_isUnlocked");
+            // Debug.LogError(Data.Load($"{uniqueId}_isUnlocked", isUnlocked));
         }
     }
 
@@ -55,6 +57,8 @@ public class Tile : SaveDataElement
 
     public override void Activate(bool restore = true)
     {
+        IsUnlocked = true;
+
         UpdateTextRequireLv();
 
         _isUnlockAble = IsUnlockable();

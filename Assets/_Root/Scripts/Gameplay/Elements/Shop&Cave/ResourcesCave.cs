@@ -32,8 +32,8 @@ public class ResourcesCave : SaveDataElement
 
     private string ResourceCapacityJson
     {
-        get => Data.Load(uniqueId, "");
-        set => Data.Save(uniqueId, value);
+        get => Data.Load($"{uniqueId}_dict", "");
+        set => Data.Save($"{uniqueId}_dict", value);
     }
 
     public bool IsCaveAvailable => resourceCapacityDict.Count < MaxNumberOfResources ||
@@ -44,16 +44,7 @@ public class ResourcesCave : SaveDataElement
 
     private void Awake()
     {
-        caveResourceUIDict = new Dictionary<EnumPack.ResourceType, CaveResourcesUI>();
-        resourceCapacityDict =
-            JsonConvert.DeserializeObject<Dictionary<EnumPack.ResourceType, int>>(ResourceCapacityJson) ??
-            new Dictionary<EnumPack.ResourceType, int>();
-        resourceDict = new Dictionary<EnumPack.ResourceType, ResourceConfig>();
-
-        foreach (var resource in caveResourceList)
-        {
-            resourceDict[resource.resourceType] = resource;
-        }
+        Initialize();
     }
 
     private void Start()
@@ -64,6 +55,21 @@ public class ResourcesCave : SaveDataElement
             caveResourceUIDict[pair.Key] = newResourceUI;
             newResourceUI.Setup(resourceDict[pair.Key].resourceIcon, CaveMaxCapacity);
             // newResourceUI.SetCapacity(pair.Value);
+        }
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+        caveResourceUIDict = new Dictionary<EnumPack.ResourceType, CaveResourcesUI>();
+        resourceCapacityDict =
+            JsonConvert.DeserializeObject<Dictionary<EnumPack.ResourceType, int>>(ResourceCapacityJson) ??
+            new Dictionary<EnumPack.ResourceType, int>();
+        resourceDict = new Dictionary<EnumPack.ResourceType, ResourceConfig>();
+
+        foreach (var resource in caveResourceList)
+        {
+            resourceDict[resource.resourceType] = resource;
         }
     }
 
@@ -165,7 +171,7 @@ public class ResourcesCave : SaveDataElement
     {
         if (!other.TryGetComponent<ICaveMan>(out var caveMan)) return;
         showableUI.Show(true);
-        
+
         foreach (var resourceCapacity in resourceCapacityDict)
         {
             caveResourceUIDict[resourceCapacity.Key].SetCapacity(resourceCapacity.Value);

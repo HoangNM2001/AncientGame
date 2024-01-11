@@ -2,14 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using Pancake;
+using Pancake.Scriptable;
 using UnityEditor;
-using UnityEditor.AssetImporters;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExtendField : SaveDataElement
 {
+    [SerializeField] private ScriptableListExtendField extendFieldList;
     [SerializeField] private ExtendField mainField;
     [SerializeField] private ScriptableListInt fieldStateList;
     [SerializeField] private List<Field> fieldList = new();
@@ -24,13 +25,14 @@ public class ExtendField : SaveDataElement
     public Action OnStateChange;
     public Action<bool> OnHarvest;
 
+    public List<Field> FieldList => fieldList;
     public ResourceConfig ResourceConfig => _resourceConfig;
 
     private EnumPack.ResourceType ResourceType
     {
-        get => Data.Load(uniqueId, EnumPack.ResourceType.None);
+        get => Data.Load($"{uniqueId}_resourceType", EnumPack.ResourceType.None);
 
-        set => Data.Save(uniqueId, value);
+        set => Data.Save($"{uniqueId}_resourceType", value);
     }
 
     public EnumPack.FieldState TransferFarmState
@@ -57,6 +59,7 @@ public class ExtendField : SaveDataElement
 
     public override void Activate(bool restore = true)
     {
+        extendFieldList.Add(this);
         IsUnlocked = true;
         gameObject.SetActive(true);
 
@@ -71,7 +74,7 @@ public class ExtendField : SaveDataElement
             {
                 field.Activate();
             }
-            
+
             OnActivated();
         }
         else
@@ -113,12 +116,14 @@ public class ExtendField : SaveDataElement
             foreach (var field in sideExtendField.fieldList)
             {
                 field.Initialize(this, _resourceConfig);
-            }   
+            }
         }
 
         _canSeedCount += sideExtendField._canSeedCount;
         _canWaterCount += sideExtendField._canWaterCount;
         _canHarvestCount += sideExtendField._canHarvestCount;
+
+        extendFieldList.Remove(sideExtendField);
     }
 
     protected override void Initialize()
@@ -135,8 +140,10 @@ public class ExtendField : SaveDataElement
         }
     }
 
-    private void InitCount()
+    public void InitCount()
     {
+        _canSeedCount = _canWaterCount = _canHarvestCount = 0;
+
         foreach (var field in fieldList)
         {
             switch (field.FieldState)
@@ -202,11 +209,11 @@ public class ExtendField : SaveDataElement
         if (_canWaterCount == 0) OnStateChange?.Invoke();
     }
 
-    public void DoHarvest()
+    public void DoHarvest(bool isPlayer)
     {
         CheckChangeState(ref _canHarvestCount, ref _canSeedCount);
-        OnHarvest?.Invoke(_canHarvestCount == 0);
-        // if (canHarvestCount == 0) OnStateChange?.Invoke();
+        if (!isPlayer) OnHarvest?.Invoke(_canHarvestCount == 0);
+        // if (_canHarvestCount == 0) OnStateChange?.Invoke();
     }
 
     private void CheckChangeState(ref int previousStateCount, ref int newStateCount)
@@ -250,7 +257,7 @@ public class ExtendField : SaveDataElement
     [ContextMenu("Get Farm Resources")]
     public void GetFarmResources()
     {
-        const string resourcesFolderPath = "Assets/_Root/ScriptableData/Resources/FarmResources";
+        const string resourcesFolderPath = "Assets/_Root/ScriptableData/ResourceConfigs/FarmResources";
 
         var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
 

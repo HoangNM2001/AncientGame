@@ -33,8 +33,8 @@ public class Field : SaveDataElement
 
     public EnumPack.FieldState FieldState
     {
-        get => Data.Load(uniqueId + "FieldState", EnumPack.FieldState.Seedale);
-        private set => Data.Save(uniqueId + "FieldState", value);
+        get => Data.Load($"{uniqueId}_fieldState", EnumPack.FieldState.Seedale);
+        private set => Data.Save($"{uniqueId}_fieldState", value);
     }
 
     private void Awake()
@@ -160,10 +160,10 @@ public class Field : SaveDataElement
                 }
             });
         }
-        
-        _resourceConfig.resourceQuantity.Value += randomFlyModel;
 
-        _parentField.DoHarvest();
+        if (isPlayer) _resourceConfig.resourceQuantity.Value += randomFlyModel;
+
+        _parentField.DoHarvest(isPlayer);
     }
 
     private void SetSeededState()
@@ -186,6 +186,22 @@ public class Field : SaveDataElement
 
         _fieldMaterialBlock.SetColor(ShaderColor, wateredColor);
         fieldRenderer.SetPropertyBlock(_fieldMaterialBlock);
+    }
+
+    public void ForceGrow()
+    {
+        if (FieldState == EnumPack.FieldState.Harvestable) return;
+        if (FieldState == EnumPack.FieldState.Waterable) _smallTreePool.Return(_smallTree);
+
+        FieldState = EnumPack.FieldState.Harvestable;
+
+        _bigTree = _bigTreePool.Request();
+        _bigTree.transform.SetParent(transform);
+        _bigTree.transform.localPosition = Vector3.zero;
+        _bigTree.transform.RandomLocalRotation(true);
+        _bigTree.transform.localScale = Vector3.zero;
+        _bigTree.transform.DOScale(Vector3.one, WaterDuration).SetEase(Ease.OutBack).SetTarget(_bigTree);
+        ChangeFieldColor(seededColor, wateredColor, WaterDuration);
     }
 
     public override void Activate(bool restore = true)

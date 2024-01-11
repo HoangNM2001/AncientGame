@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Carrot_Quantity
   m_EditorClassIdentifier: 
   guid: fefe49df27e075445889cc6d0c8b842c
-  value: 0
+  value: 32
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

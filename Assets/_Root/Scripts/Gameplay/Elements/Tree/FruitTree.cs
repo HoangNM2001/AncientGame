@@ -33,8 +33,8 @@ public class FruitTree : SaveDataElement
 
     public int CurrentFruitQuantity
     {
-        get => Data.Load(uniqueId, fruitList.Count);
-        private set => Data.Save(uniqueId, value);
+        get => Data.Load($"{uniqueId}_fruitCount", fruitList.Count);
+        private set => Data.Save($"{uniqueId}_fruitCount", value);
     }
 
     public int MaxFruitQuantity => fruitList.Count;

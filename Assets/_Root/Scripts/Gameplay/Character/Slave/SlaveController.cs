@@ -1,5 +1,7 @@
 using System;
+using System.Transactions;
 using DG.Tweening;
+using JetBrains.Annotations;
 using Pancake;
 using Pancake.SceneFlow;
 using UnityEngine;
@@ -8,10 +10,12 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 {
     [SerializeField] private ExtendField extendField;
     [SerializeField] private ResourcesCave cave;
+    [SerializeField] private Transform relaxPosition;
     [SerializeField] private CharacterAnimController characterAnimController;
     [SerializeField] private CharacterActionList characterActionList;
     [SerializeField] private CharacterStat characterStat;
     [SerializeField] private Transform staffBackpack;
+    [SerializeField] private SpriteRenderer resourceImage;
 
     private NavmeshController navmeshController;
     private StateMachine stateMachine;
@@ -21,12 +25,27 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     // Test Variables
     private EnumPack.ResourceType currentResourceType = EnumPack.ResourceType.None;
+    private Sprite resourceSprite;
     private int currentCapacity;
     private const int MAX_CAPACITY = 10;
 
     public SphereCollider SphereCollider => sphereCollider;
     public CharacterActionList ActionList => characterActionList;
     private bool IsBackpackFull => currentCapacity >= MAX_CAPACITY;
+    private EnumPack.ResourceType CurrentResourceType
+    {
+        get => currentResourceType;
+        set
+        {
+            currentResourceType = value;
+            // if (value == EnumPack.ResourceType.None) resourceImage.gameObject.SetActive(false);
+            // else 
+            // {
+            //     resourceImage.sprite = resourceSprite;
+            //     resourceImage.gameObject.SetActive(true);
+            // }
+        }
+    }
 
     private void Awake()
     {
@@ -34,29 +53,43 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         navmeshController = GetComponent<NavmeshController>();
 
         stateMachine = new StateMachine();
-        stateMachine.InitStates(new RelaxState(this), new MovingState(this), new FarmingState(this));
+        stateMachine.InitStates(new RelaxState(this), new MovingState(this), new FarmingState(this), new EmptyState(this));
+    }
+
+    private void Start()
+    {
         stateMachine.ChangeState<RelaxState>();
     }
 
     protected override void Tick()
     {
         stateMachine.Tick();
+        characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
+    }
+
+    public void MoveToRelaxPos()
+    {
+        navmeshController.MoveByPosition(relaxPosition.position, 0.0f, characterStat.moveSpeed, characterStat.rotateSpeed, 0.1f,
+        Time.deltaTime);
     }
 
     public void Relaxing()
     {
-        if (!cave.IsCaveAvailable || !cave.IsAddable(currentResourceType))
+        // Debug.LogError(cave.IsCaveAvailable + "?" + cave.IsAddable(CurrentResourceType));
+        if (navmeshController.IsReachDestination())
         {
+            // Debug.LogError("Wtf");
             navmeshController.Stop();
-            characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
 
             if (characterAnimController.AnimationName != Constant.SLAVE_RELAX)
             {
                 characterAnimController.Play(Constant.SLAVE_RELAX, 1);
             }
         }
-        else
+
+        if (cave.IsCaveAvailable && cave.IsAddable(CurrentResourceType))
         {
+            // Debug.LogError("Gg");
             if (currentCapacity > 0)
             {
                 GoToCave();
@@ -66,11 +99,32 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
                 GoToField();
             }
         }
+        // if (!cave.IsCaveAvailable || !cave.IsAddable(CurrentResourceType))
+        // {
+        //     navmeshController.Stop();
+        //     characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
+
+        //     if (characterAnimController.AnimationName != Constant.SLAVE_RELAX)
+        //     {
+        //         characterAnimController.Play(Constant.SLAVE_RELAX, 1);
+        //     }
+        // }
+        // else
+        // {
+        //     if (currentCapacity > 0)
+        //     {
+        //         GoToCave();
+        //     }
+        //     else
+        //     {
+        //         GoToField();
+        //     }
+        // }
     }
 
-    public void Moving()
+    public void MoveToTargetPos()
     {
-        characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
+        // characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
         navmeshController.MoveByPosition(targetPosition, 0.0f, characterStat.moveSpeed, characterStat.rotateSpeed, 0.1f,
             Time.deltaTime);
     }
@@ -125,7 +179,8 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     public void TriggerActionCave(GameObject interactCave)
     {
-        if (!cave.IsAddable(currentResourceType))
+        stateMachine.ChangeState<EmptyState>();
+        if (!cave.IsAddable(CurrentResourceType))
         {
             stateMachine.ChangeState<RelaxState>();
         }
@@ -133,8 +188,9 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         {
             DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
             {
-                currentCapacity = cave.AddStorage(currentResourceType, currentCapacity, GoToField);
-                if (currentCapacity == 0) currentResourceType = EnumPack.ResourceType.None;
+                currentCapacity = cave.AddStorage(CurrentResourceType, currentCapacity, GoToField);
+                if (currentCapacity == 0) CurrentResourceType = EnumPack.ResourceType.None;
+                Debug.LogError("Done Storage");
             });
         }
     }
@@ -171,8 +227,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         }
         else
         {
-            if (currentResourceType != extendField.ResourceConfig.resourceType &&
-                !cave.IsAddable(extendField.ResourceConfig.resourceType))
+            if (CurrentResourceType != extendField.ResourceConfig.resourceType && !cave.IsAddable(CurrentResourceType))
             {
                 stateMachine.ChangeState<RelaxState>();
                 return;
@@ -189,28 +244,34 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     private void ActiveHarvest()
     {
-        currentResourceType = extendField.ResourceConfig.resourceType;
+        CurrentResourceType = extendField.ResourceConfig.resourceType;
+        resourceSprite = extendField.ResourceConfig.resourceIcon;
         characterActionList.StartActionEvent((int)EnumPack.CharacterActionType.HarvestFarm);
     }
 
     private void GoToField()
     {
+        currentFarmState = extendField.TransferFarmState;
         var nearestField =
             extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
-
         targetPosition = nearestField ? nearestField.transform.position : extendField.transform.position;
-
+        // Debug.LogError(targetPosition);
+        // Debug.LogError("GoToField");
+        // targetPosition = extendField.transform.position;
+        // Debug.LogError("GoToField1");
+        // Debug.LogError((targetPosition));
         stateMachine.ChangeState<MovingState>();
     }
 
     private void GoToCave()
     {
+        Debug.LogError("GoToCave");
         targetPosition = cave.GoToPos.position;
         stateMachine.ChangeState<MovingState>();
     }
 
     public void EmptyLayer1()
     {
-        characterAnimController.Play(Constant.EMPTY, 1);
+        characterAnimController.Play(Constant.EMPTY, 1, false);
     }
 }

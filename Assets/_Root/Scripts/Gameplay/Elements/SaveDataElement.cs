@@ -17,8 +17,8 @@ public class SaveDataElement : GameComponent
 
     protected virtual bool IsUnlocked
     {
-        get => Data.Load(uniqueId + "isUnlocked", false);
-        set => Data.Save(uniqueId + "isUnlocked", value);
+        get => Data.Load($"{uniqueId}_isUnlocked", false);
+        set => Data.Save($"{uniqueId}_isUnlocked", value);
     }
 
     protected virtual void Initialize()

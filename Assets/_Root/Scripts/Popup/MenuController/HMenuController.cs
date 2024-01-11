@@ -2,15 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using Pancake;
 using Pancake.Scriptable;
-using Pancake.Threading.Tasks.Triggers;
 using Pancake.UI;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using Math = System.Math;
 
 public class HMenuController : GameComponent
 {

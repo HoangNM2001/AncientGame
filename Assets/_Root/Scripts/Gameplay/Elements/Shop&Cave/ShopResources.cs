@@ -31,7 +31,7 @@ public class ShopResources : SaveDataElement
     {
         foreach (var resource in buyAbleResourceList)
         {
-            Instantiate(buyAbleResourcePrefab, buyAbleParent).Initialize(resource.resourceIcon);
+            Instantiate(buyAbleResourcePrefab, buyAbleParent).Initialize(resource.resourceIcon, resource.price);
         }
     }
 

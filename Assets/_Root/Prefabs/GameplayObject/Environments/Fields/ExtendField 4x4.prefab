@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueId: 0d8133b5-37f8-4030-84b1-bb2eea0f9f91
+  extendFieldList: {fileID: 11400000, guid: dd8862d083fecec4c948732cc5cae4f0, type: 2}
   mainField: {fileID: 0}
   fieldStateList: {fileID: 11400000, guid: f183e1a369e07e0438debf71bea482cd, type: 2}
   fieldList:
