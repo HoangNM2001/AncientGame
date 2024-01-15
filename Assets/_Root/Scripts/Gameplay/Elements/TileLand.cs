@@ -27,7 +27,6 @@ public class TileLand : GameComponent
         if (model) modelDefaultEuler = model.transform.eulerAngles;
     }
 
-    [ContextMenu("TestActivate")]
     public void Activate(bool restore = true, Action callback = null)
     {
         gameObject.SetActive(true);
@@ -58,7 +57,6 @@ public class TileLand : GameComponent
         }
     }
 
-    [ContextMenu("TestAnim")]
     public void Unlock()
     {
         model.transform.localScale = Vector3.zero;

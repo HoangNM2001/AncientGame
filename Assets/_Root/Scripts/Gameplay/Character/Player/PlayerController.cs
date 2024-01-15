@@ -14,6 +14,7 @@ public class PlayerController : GameComponent
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
     [SerializeField] private ScriptableEventInt changeInputEvent;
     [SerializeField] private CharacterStat characterStat;
+    [SerializeField] private PlayerLevel playerLevel;
     [SerializeField] private CharacterAnimController characterAnimController;
     [SerializeField] private PlayerActionList playerActionList;
     [SerializeField] private CharacterHandleTrigger characterHandleTrigger;
@@ -21,6 +22,7 @@ public class PlayerController : GameComponent
     [SerializeField] private Vector3Variable playerRotation;
     [SerializeField] private GameObject buildHammer;
     [SerializeField] private GameObject buildFx;
+    [SerializeField] private GameObjectPool flyTextPool;
 
     private NavmeshController navmeshController;
     private PlayerHandleInput playerHandleInput;
@@ -47,6 +49,7 @@ public class PlayerController : GameComponent
     {
         getCharacterEvent.OnRaised += getCharacterEvent_OnRaised;
         changeInputEvent.OnRaised += changeInputEvent_OnRaised;
+        // playerLevel.OnExpChangedEvent += playerLevel_OnExpChangedEvent;
     }
 
     private GameObject getCharacterEvent_OnRaised()
@@ -60,10 +63,16 @@ public class PlayerController : GameComponent
         navmeshController.ResetPath();
     }
 
+    private void playerLevel_OnExpChangedEvent(float value)
+    {
+        ShowFlyText($"+ {playerLevel.ExpUp} Exp");
+    }
+
     protected override void OnDisabled()
     {
         getCharacterEvent.OnRaised -= getCharacterEvent_OnRaised;
         changeInputEvent.OnRaised -= changeInputEvent_OnRaised;
+        // playerLevel.OnExpChangedEvent -= playerLevel_OnExpChangedEvent;
     }
 
     private void Start()
@@ -82,6 +91,14 @@ public class PlayerController : GameComponent
 
         // playerPosition.Value = transform.position;
         // playerRotation.Value = transform.rotation.eulerAngles;
+    }
+
+    private void ShowFlyText(string text, Action completeAction = null)
+    {
+        var flyText = flyTextPool.Request().GetComponent<FlyText>();
+        flyText.transform.position = transform.localPosition + Vector3.up * 3.0f;
+        flyText.Initialize(text);
+        flyText.Show(false, completeAction);
     }
 
     public void CheckToBuild()

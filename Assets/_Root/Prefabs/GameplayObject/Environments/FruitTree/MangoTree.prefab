@@ -882,6 +882,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueId: e5d1d403-8414-49ff-aff6-d5326afb2b93
+  flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
+  playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
   fruitResource: {fileID: 11400000, guid: 76a4ff3daf927384eb6e2fe6566daa17, type: 2}
   treeAnimator: {fileID: 1902642479775968066}
   standPosition: {fileID: 6979451835653062871}

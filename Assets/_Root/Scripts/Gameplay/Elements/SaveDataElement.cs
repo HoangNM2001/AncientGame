@@ -9,6 +9,7 @@ using UnityEngine;
 public class SaveDataElement : GameComponent
 {
     [SerializeField, UniqueID] protected string uniqueId;
+    [SerializeField] private GameObjectPool flyTextPool;
 
     protected Vector3 DefaultScale;
     protected const float AnimDuration = 0.7f;
@@ -45,6 +46,14 @@ public class SaveDataElement : GameComponent
     public virtual void Deactivate()
     {
         gameObject.SetActive(false);
+    }
+
+    protected void ShowFlyText(Vector3 showPos, string text, Action completeAction = null)
+    {
+        var flyText = flyTextPool.Request().GetComponent<FlyText>();
+        flyText.transform.position = showPos + Vector3.up * 3.0f;
+        flyText.Initialize(text);
+        flyText.Show(false, completeAction);
     }
 
 #if UNITY_EDITOR

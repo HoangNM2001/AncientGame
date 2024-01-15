@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -49,7 +47,6 @@ public class MapController : GameComponent
         Activate();
     }
 
-    [ContextMenu("Activate")]
     public void Activate()
     {
         foreach (var tile in Tiles)
@@ -73,14 +70,17 @@ public class MapController : GameComponent
     {
         Tiles = GetComponentsInChildren<Tile>().ToList();
 
-        for (var i = 0; i < Tiles.Count; i++)
+        foreach (var tile in Tiles)
         {
-            Tiles[i].gameObject.name = $"Tile: {i}";
+            var coords = new Vector2Int(Mathf.RoundToInt(tile.transform.position.x / tileSize),
+                                        Mathf.RoundToInt(tile.transform.position.z / tileSize));
+            tile.gameObject.name = $"Tile {coords}";
         }
     }
 #endif
 }
 
+#if  UNITY_EDITOR
 [CustomEditor(typeof(MapController))]
 public class MapControllerEditor : Editor
 {
@@ -99,3 +99,4 @@ public class MapControllerEditor : Editor
         }
     }
 }
+#endif

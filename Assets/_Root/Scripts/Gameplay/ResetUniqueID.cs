@@ -15,6 +15,7 @@ public class ResetUniqueID : MonoBehaviour
         foreach (var element in saveDataElements.Where(element => element is not (Deco or Road)))
         {
             element.ResetUniqueID();
+            EditorUtility.SetDirty(this);
         }
     }
 }

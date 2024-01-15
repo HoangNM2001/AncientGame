@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EnumPack
 {
+    public enum CostType
+    {
+        Coin, 
+        SkillPoint
+    }
+
     public enum LandType
     {
         Type1,

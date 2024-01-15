@@ -57,7 +57,7 @@ public class Tile : SaveDataElement
 
     public override void Activate(bool restore = true)
     {
-        IsUnlocked = true;
+        // IsUnlocked = true;
 
         UpdateTextRequireLv();
 
@@ -70,7 +70,7 @@ public class Tile : SaveDataElement
 
         if (!_isUnlockAble)
         {
-            playerLevel.LevelChangedEvent += OnLevelChanged;
+            playerLevel.OnLevelChangedEvent += OnLevelChanged;
             if (requiredTile) requiredTile._onUnlocked += CheckUnlockable;
             foreach (var tile in _tilesAroundList) tile._onUnlocked += CheckUnlockable;
         }
@@ -144,14 +144,14 @@ public class Tile : SaveDataElement
 
             if (_isUnlockAble)
             {
-                playerLevel.LevelChangedEvent -= OnLevelChanged;
+                playerLevel.OnLevelChangedEvent -= OnLevelChanged;
                 if (requiredTile) requiredTile._onUnlocked -= CheckUnlockable;
                 foreach (var tile in _tilesAroundList) tile._onUnlocked -= CheckUnlockable;
             }
         }
     }
 
-    private void OnLevelChanged()
+    private void OnLevelChanged(int level)
     {
         UpdateTextRequireLv();
         CheckUnlockable();

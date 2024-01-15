@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 
 public class FruitTree : SaveDataElement
 {
+    [SerializeField] private PlayerLevel playerLevel;
     [SerializeField] private ResourceConfig fruitResource;
     [SerializeField] private Animator treeAnimator;
     [SerializeField] private Transform standPosition;
@@ -130,12 +131,16 @@ public class FruitTree : SaveDataElement
     {
         foreach (var droppedFruit in droppedFruitList)
         {
+            var dropPosition = droppedFruit.transform.position;
             fruitResource.flyModelPool.Return(droppedFruit);
             flyUIEvent.Raise(new FlyEventData
             {
                 resourceType = fruitResource.resourceType,
-                worldPos = droppedFruit.transform.position
+                worldPos = dropPosition
             });
+
+            playerLevel.AddExp(fruitResource.exp);
+            ShowFlyText(dropPosition, $"+ {playerLevel.ExpUp} Exp");
         }
 
         fruitResource.resourceQuantity.Value += droppedFruitList.Count;

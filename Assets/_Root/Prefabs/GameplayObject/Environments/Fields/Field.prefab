@@ -47,12 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueId: c5593ff2-4f1e-44a2-95c0-cafd92df5fbe
+  flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
   fieldRenderer: {fileID: 2131566640691398610}
   soilColor: {r: 0.7647059, g: 0.69411767, b: 0.50980395, a: 0}
   seededColor: {r: 0.65882355, g: 0.5411765, b: 0.24705882, a: 0}
   wateredColor: {r: 0.5294118, g: 0.34509805, b: 0.05882353, a: 0}
   leavesParticlePool: {fileID: 11400000, guid: 2e7997dc706ed51448b583e0b8df7c90, type: 2}
   flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}
+  playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
 --- !u!135 &8804489006909381113
 SphereCollider:
   m_ObjectHideFlags: 0

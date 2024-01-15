@@ -15,6 +15,7 @@ public class Field : SaveDataElement
     [SerializeField] private Color wateredColor;
     [SerializeField] private GameObjectPool leavesParticlePool;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
+    [SerializeField] private PlayerLevel playerLevel;
 
     private Collider _collider;
     private ExtendField _parentField;
@@ -161,7 +162,12 @@ public class Field : SaveDataElement
             });
         }
 
-        if (isPlayer) _resourceConfig.resourceQuantity.Value += randomFlyModel;
+        if (isPlayer)
+        {
+            _resourceConfig.resourceQuantity.Value += randomFlyModel;
+            playerLevel.AddExp(_resourceConfig.exp);
+            ShowFlyText(transform.position, $"+ {playerLevel.ExpUp} Exp");
+        }
 
         _parentField.DoHarvest(isPlayer);
     }

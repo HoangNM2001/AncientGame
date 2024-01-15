@@ -9,6 +9,7 @@ TagManager:
   - ExtendField
   - Cave
   - Main
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - UI_MASTER
   - FarmTarget
   - Interact
-  - 
-  - 
+  - BuildMap
+  - CInteract
   - 
   - 
   - 

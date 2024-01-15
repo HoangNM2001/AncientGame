@@ -21,7 +21,7 @@ public class ResourceConfig : ScriptableObject
     public GameObjectPool flyUIPool;
     public IntVariable resourceQuantity;
     public int price;
-    public int grownTime = 20;
+    public float exp;
 
 #if UNITY_EDITOR
     [ContextMenu("ResetId")]
