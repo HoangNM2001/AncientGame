@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
+  m_Name: Rice_Resource
+  m_EditorClassIdentifier: 
+  resourceId: rice__resource
+  resourceType: 8
+  resourceIcon: {fileID: 21300000, guid: de5081a01ae0b734182b7dcc95b3be5b, type: 3}
+  smallTreePool: {fileID: 11400000, guid: dae9ae3cf39aedd4c811cd5bbafb07de, type: 2}
+  bigTreePool: {fileID: 11400000, guid: 26dc0f24a3dcc014fa08aaabe561b606, type: 2}
+  treeColor: {r: 0.9137255, g: 0.8627451, b: 0.16078432, a: 0}
+  flyModelPool: {fileID: 11400000, guid: 478ca6d3ef3dc17448693fdd3ed8e6a6, type: 2}
+  flyUIPool: {fileID: 11400000, guid: 0ee34ebbfd1aad24e880b0ea33816eef, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: 81e66491873f45d42a0a87c3162726f9, type: 2}
+  price: 10
+  exp: 6

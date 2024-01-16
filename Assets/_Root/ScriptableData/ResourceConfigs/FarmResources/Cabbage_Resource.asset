@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
+  m_Name: Cabbage_Resource
+  m_EditorClassIdentifier: 
+  resourceId: cabbage__resource
+  resourceType: 22
+  resourceIcon: {fileID: 21300000, guid: f885022739cfe1346a2d75ef9edae8f7, type: 3}
+  smallTreePool: {fileID: 11400000, guid: 8fc67557387e734488d838b41648ba2b, type: 2}
+  bigTreePool: {fileID: 11400000, guid: f03a5bbffdd83354485bed92d07db664, type: 2}
+  treeColor: {r: 0.65882355, g: 0.73333335, b: 0.38039216, a: 0}
+  flyModelPool: {fileID: 11400000, guid: df86ac03567c93440bda2163bbb32141, type: 2}
+  flyUIPool: {fileID: 11400000, guid: 5b418376e7af3ea4aba7a8c8c165e881, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: fec4d354875f157449d1a9ad93b3cc95, type: 2}
+  price: 10
+  exp: 6

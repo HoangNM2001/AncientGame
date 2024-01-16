@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7228844710576510664}
   - component: {fileID: 8768856135244011130}
   - component: {fileID: 7422119415606528502}
+  - component: {fileID: 1873483448717274398}
   m_Layer: 0
   m_Name: BuyResource
   m_TagString: Untagged
@@ -108,6 +109,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceIcon: {fileID: 1480097620894029879}
   valueText: {fileID: 13356385406261806}
+--- !u!114 &1873483448717274398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2287973131682411764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082b7ded8c387a540ac8e7257319f22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3327138244330171018
 GameObject:
   m_ObjectHideFlags: 0

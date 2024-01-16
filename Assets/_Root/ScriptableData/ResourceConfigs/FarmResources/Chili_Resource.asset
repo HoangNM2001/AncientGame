@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
   m_Name: Chili_Resource
   m_EditorClassIdentifier: 
-  resourceId: chili_resource
+  resourceId: chili__resource
   resourceType: 14
   resourceIcon: {fileID: 21300000, guid: 850d9f345062c4947be1ebe66c8b28fe, type: 3}
   smallTreePool: {fileID: 11400000, guid: 11c30799d2fc1fe4896762534171d43d, type: 2}

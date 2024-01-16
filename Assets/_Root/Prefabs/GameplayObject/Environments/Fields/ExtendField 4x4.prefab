@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueId: 0d8133b5-37f8-4030-84b1-bb2eea0f9f91
+  flyTextPool: {fileID: 0}
   extendFieldList: {fileID: 11400000, guid: dd8862d083fecec4c948732cc5cae4f0, type: 2}
   mainField: {fileID: 0}
   fieldStateList: {fileID: 11400000, guid: f183e1a369e07e0438debf71bea482cd, type: 2}
@@ -83,9 +84,17 @@ MonoBehaviour:
   - {fileID: 5932524369913345804}
   - {fileID: 3488134025077672813}
   resourceConfigList:
+  - {fileID: 11400000, guid: 9618384257d2ede4fb741a8c99c80762, type: 2}
   - {fileID: 11400000, guid: 1fd41024a2972f74f9be3bdb18f45493, type: 2}
+  - {fileID: 11400000, guid: 0a9a6f1a39916504f90ed377c46962a5, type: 2}
   - {fileID: 11400000, guid: 570244483dd2a7d4cb1dc97b13926ab1, type: 2}
+  - {fileID: 11400000, guid: d4cf974ee92a91e4680ff09f25cadbc3, type: 2}
+  - {fileID: 11400000, guid: aeb183dd65e867843a129f8190ff5018, type: 2}
+  - {fileID: 11400000, guid: 59dd57e3d7b74e249a2e620c6ec2d771, type: 2}
+  - {fileID: 11400000, guid: c5877ab83cd23f64ca4665cbae567842, type: 2}
+  - {fileID: 11400000, guid: e2a32559289bf0b45947a21fe36f16af, type: 2}
   - {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
+  - {fileID: 11400000, guid: 61b3684a0c11ab047ad23f8d47da6513, type: 2}
   - {fileID: 11400000, guid: 62e48a472f4b2094883ca660b7d01649, type: 2}
 --- !u!65 &2800496864619489710
 BoxCollider:

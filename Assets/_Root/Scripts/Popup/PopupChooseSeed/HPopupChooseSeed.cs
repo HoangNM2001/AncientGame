@@ -33,10 +33,10 @@ public class HPopupChooseSeed : UIPopup
     }
 
 #if UNITY_EDITOR
-    [ContextMenu("Get Resources")]
-    public void GetResources()
+    [ContextMenu("Get Farm Resources")]
+    public void GetFarmResources()
     {
-        const string resourcesFolderPath = "Assets/_Root/Resources/ScriptableData/Resources/FarmResources";
+        const string resourcesFolderPath = "Assets/_Root/ScriptableData/ResourceConfigs/FarmResources";
 
         var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
 

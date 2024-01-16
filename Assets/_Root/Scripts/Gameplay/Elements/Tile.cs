@@ -77,7 +77,7 @@ public class Tile : SaveDataElement
 
         if (IsUnlocked)
         {
-            land.Activate();
+            if (land != null) land.Activate();
             foreach (var element in Elements)
             {
                 element.Activate();
@@ -85,7 +85,7 @@ public class Tile : SaveDataElement
         }
         else
         {
-            land.Deactivate();
+            if (land != null) land.Deactivate();
             foreach (var element in Elements)
             {
                 element.Deactivate();
@@ -111,19 +111,30 @@ public class Tile : SaveDataElement
         ToggleTrigger(false);
         ToggleObstacle(false);
 
-        land.Activate(false, () =>
+        if (land != null)
+        {
+            land.Activate(false, () =>
+            {
+                foreach (var element in Elements)
+                {
+                    element.Activate(false);
+                }
+            });
+        }
+        else
         {
             foreach (var element in Elements)
             {
                 element.Activate(false);
             }
-        });
+        }
 
         _onUnlocked?.Invoke();
     }
 
     public void UpdateLandModel()
     {
+        if (land == null) return;
         if (IsUnlocked) land.UpdateModel();
     }
 

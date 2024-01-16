@@ -1,4 +1,5 @@
-/* THIS CLASS IS AUTO-GENERATED! DO NOT MODIFY!  */ 
+/* THIS CLASS IS AUTO GENERATED. DO NOT MODIFY. */
+
 /* MIT License
 
 Copyright (c) 2016 Edward Rowe, RedBlueGames
@@ -26,6 +27,6 @@ namespace RedBlueGames.MulliganRenamer
 {
     public static class RBPackageSettings
     {
-        public static readonly bool IsGitHubRelease = true;
+        public static readonly bool IsGitHubRelease = false;
     }
 }

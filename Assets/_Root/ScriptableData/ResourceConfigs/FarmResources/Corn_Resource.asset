@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
+  m_Name: Corn_Resource
+  m_EditorClassIdentifier: 
+  resourceId: corn__resource
+  resourceType: 2
+  resourceIcon: {fileID: 21300000, guid: 8bc58591f07fec94d824cd41b983250f, type: 3}
+  smallTreePool: {fileID: 11400000, guid: be9f7bce789bc9d47a79d8d2c99686ee, type: 2}
+  bigTreePool: {fileID: 11400000, guid: 2f58976114578a045a220a66fd372a7d, type: 2}
+  treeColor: {r: 1, g: 0.8156863, b: 0, a: 0}
+  flyModelPool: {fileID: 11400000, guid: fe29f8050e022b5468c526f384806b13, type: 2}
+  flyUIPool: {fileID: 11400000, guid: e6e9c3a1fa4b38a41a1de6052e08dcd7, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: 7d29a8740bccfd44db41e2e0ad0d6f06, type: 2}
+  price: 10
+  exp: 6

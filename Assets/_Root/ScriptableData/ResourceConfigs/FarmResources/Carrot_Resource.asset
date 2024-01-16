@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
   m_Name: Carrot_Resource
   m_EditorClassIdentifier: 
-  resourceId: carrot_resource
+  resourceId: carrot__resource
   resourceType: 13
   resourceIcon: {fileID: 21300000, guid: 0d6f51037f4fbe74e94fe9eb6cfc021b, type: 3}
   smallTreePool: {fileID: 11400000, guid: fbe6d3c70e12c834d9ce194f63953770, type: 2}

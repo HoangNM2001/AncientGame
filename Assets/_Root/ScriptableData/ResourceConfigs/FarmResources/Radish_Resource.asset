@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
+  m_Name: Radish_Resource
+  m_EditorClassIdentifier: 
+  resourceId: radish__resource
+  resourceType: 23
+  resourceIcon: {fileID: 21300000, guid: a9aff193e07aca84bab930d99c5bf4d9, type: 3}
+  smallTreePool: {fileID: 11400000, guid: f811fd472bde1c345b173b2b1849516a, type: 2}
+  bigTreePool: {fileID: 11400000, guid: 6f6c00f0d8b21014d8024dad93501d00, type: 2}
+  treeColor: {r: 0.67058825, g: 0.32156864, b: 0.3019608, a: 0}
+  flyModelPool: {fileID: 11400000, guid: 7cb269d38fa5aae49830cc7fb812930f, type: 2}
+  flyUIPool: {fileID: 11400000, guid: d649756c5b8945644b949c57b92c5e9f, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: 1dccb1824ab9f2f4f970c4c333822e87, type: 2}
+  price: 10
+  exp: 6

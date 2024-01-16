@@ -151,7 +151,8 @@ namespace RedBlueGames.MulliganRenamer
             }
         }
 
-        private static MulliganRenamerWindow ShowWindow()
+        [MenuItem(WindowMenuPath, false)]
+        public static MulliganRenamerWindow ShowWindow()
         {
             return EditorWindow.GetWindow<MulliganRenamerWindow>(false, "Mulligan Renamer", true);
         }

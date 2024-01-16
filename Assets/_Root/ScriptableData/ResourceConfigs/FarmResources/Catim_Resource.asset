@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f622ecdf5b2e142b63870fb2d04808, type: 3}
+  m_Name: Catim_Resource
+  m_EditorClassIdentifier: 
+  resourceId: catim__resource
+  resourceType: 19
+  resourceIcon: {fileID: 21300000, guid: 7b5af972607f58346bdde5caeb813346, type: 3}
+  smallTreePool: {fileID: 11400000, guid: f5c3797b67c54c4449969de9e7c1d16e, type: 2}
+  bigTreePool: {fileID: 11400000, guid: 66b1f9d48bfb4ac408d886d2fbd33981, type: 2}
+  treeColor: {r: 0.8352941, g: 0.32941177, b: 0.56078434, a: 0}
+  flyModelPool: {fileID: 11400000, guid: 3d2c2785243920647922d45f7dcdd2b2, type: 2}
+  flyUIPool: {fileID: 11400000, guid: 1d1f365ec90bfa543a233c19b682ded7, type: 2}
+  resourceQuantity: {fileID: 11400000, guid: 2a1daa86abaa72c46b55dcb5ab47f032, type: 2}
+  price: 10
+  exp: 6
