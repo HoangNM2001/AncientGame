@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49597b5568839984e876c8a3d482c8dd, type: 3}
+  m_Name: PlayerStatistics
+  m_EditorClassIdentifier: 
+  rotateSpeed: 20
+  baseMoveSpeed: 5
+  baseWorkMoveSpeed: 3
+  baseWorkSpeed: 0.8
+  moveUpgradable: {fileID: 11400000, guid: 6eb7f3607552dc5448c59d79a28626d1, type: 2}
+  workUpgradable: {fileID: 11400000, guid: 8201db48d2d8b0049a53b4b49ffb1f76, type: 2}
+  MoveSpeed: 0

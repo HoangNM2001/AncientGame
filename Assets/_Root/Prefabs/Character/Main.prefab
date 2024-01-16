@@ -180,7 +180,7 @@ MonoBehaviour:
   characterActionType: 1
   farmTool: {fileID: 3824263543750212549}
   characterAnimController: {fileID: 113700460759581913}
-  characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
+  characterStat: {fileID: 11400000, guid: 277396c0120719247bfce2b24d318316, type: 2}
 --- !u!1 &2044203661557269111
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +446,7 @@ MonoBehaviour:
   goldVariable: {fileID: 11400000, guid: 1d4b77d15290c5840933bfb3884dc4b9, type: 2}
   getCharacterEvent: {fileID: 11400000, guid: 5f37ed4166e3d694c9b2d35cbc53d7fa, type: 2}
   changeInputEvent: {fileID: 11400000, guid: 3d68a3cc988281a4aa9c0ba528ec04c4, type: 2}
-  characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
+  playerStat: {fileID: 11400000, guid: 277396c0120719247bfce2b24d318316, type: 2}
   playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
   characterAnimController: {fileID: 113700460759581913}
   playerActionList: {fileID: 7348859458808853921}
@@ -674,7 +674,7 @@ MonoBehaviour:
   characterActionType: 2
   farmTool: {fileID: 6160986896621662054}
   characterAnimController: {fileID: 113700460759581913}
-  characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
+  characterStat: {fileID: 11400000, guid: 277396c0120719247bfce2b24d318316, type: 2}
 --- !u!1 &4231750416940161947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,7 +1175,7 @@ MonoBehaviour:
   characterActionType: 0
   farmTool: {fileID: 3122751840781543660}
   characterAnimController: {fileID: 113700460759581913}
-  characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
+  characterStat: {fileID: 11400000, guid: 277396c0120719247bfce2b24d318316, type: 2}
 --- !u!1001 &1690587994018085732
 PrefabInstance:
   m_ObjectHideFlags: 0

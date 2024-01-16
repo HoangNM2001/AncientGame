@@ -6,8 +6,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/Character/Statistics")]
 public class CharacterStat : ScriptableObject
 {
-    public float rotateSpeed = 20.0f;
-    public float moveSpeed = 5.0f;
-    public float workingMoveSpeed = 3.0f;
-    public float workingSpeed = 0.8f;
+    [SerializeField] protected float rotateSpeed = 20.0f;
+    [SerializeField] protected float baseMoveSpeed = 5.0f;
+    [SerializeField] protected float baseWorkMoveSpeed = 3.0f;
+    [SerializeField] protected float baseWorkSpeed = 0.8f;
+
+    public float RotateSpeed => rotateSpeed;
+    public virtual float MoveSpeed => baseMoveSpeed;
+    public virtual float WorkMoveSpeed => baseWorkMoveSpeed;
+    public virtual float WorkSpeed => baseWorkSpeed;
 }

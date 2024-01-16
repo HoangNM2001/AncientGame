@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pancake;
+using Pancake.Apex;
 using Pancake.Scriptable;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ public class Upgradable : ScriptableObject
 
     public Action<Upgradable> OnUpgrade;
 
+    public float Value => valFactor0 + valFactor1 * Level;
     public bool IsMaxLevel => Level >= maxLevel;
     public bool IsUpgradable
     {

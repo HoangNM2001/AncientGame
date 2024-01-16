@@ -69,7 +69,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     public void MoveToRelaxPos()
     {
-        navmeshController.MoveByPosition(relaxPosition.position, 0.0f, characterStat.moveSpeed, characterStat.rotateSpeed, 0.1f,
+        navmeshController.MoveByPosition(relaxPosition.position, 0.0f, characterStat.MoveSpeed, characterStat.RotateSpeed, 0.1f,
         Time.deltaTime);
     }
 
@@ -125,7 +125,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
     public void MoveToTargetPos()
     {
         // characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
-        navmeshController.MoveByPosition(targetPosition, 0.0f, characterStat.moveSpeed, characterStat.rotateSpeed, 0.1f,
+        navmeshController.MoveByPosition(targetPosition, 0.0f, characterStat.MoveSpeed, characterStat.RotateSpeed, 0.1f,
             Time.deltaTime);
     }
 
@@ -143,8 +143,8 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
             extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
         if (nearestField)
         {
-            navmeshController.MoveByPosition(nearestField.transform.position, 1.0f, characterStat.workingMoveSpeed,
-                characterStat.rotateSpeed, 0.1f, Time.deltaTime);
+            navmeshController.MoveByPosition(nearestField.transform.position, 1.0f, characterStat.MoveSpeed,
+                characterStat.RotateSpeed, 0.1f, Time.deltaTime);
         }
     }
 

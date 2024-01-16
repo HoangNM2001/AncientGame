@@ -10,7 +10,7 @@ using UnityEngine;
 public class FarmTool : GameComponent
 {
     [SerializeField] private bool isPlayer = false;
-    [SerializeField] private GameObject farmToolModel;
+    [SerializeField] private List<GameObject> farmToolList;
     [SerializeField] private List<ParticleSystem> particleList;
     [SerializeField] private List<Collider> colliderList;
 

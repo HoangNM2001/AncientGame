@@ -13,7 +13,7 @@ public class PlayerController : GameComponent
     [SerializeField] private IntVariable goldVariable;
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
     [SerializeField] private ScriptableEventInt changeInputEvent;
-    [SerializeField] private CharacterStat characterStat;
+    [SerializeField] private PlayerStat playerStat;
     [SerializeField] private PlayerLevel playerLevel;
     [SerializeField] private CharacterAnimController characterAnimController;
     [SerializeField] private PlayerActionList playerActionList;
@@ -32,7 +32,7 @@ public class PlayerController : GameComponent
     private bool moveByBike;
     private Tile currentTile;
 
-    public CharacterStat CharacterStat => characterStat;
+    public PlayerStat PlayerStat => playerStat;
     public CharacterAnimController CharacterAnimController => characterAnimController;
     private bool CanBuild => playerActionList.CurrentCharacterAction == null;
 
@@ -77,7 +77,7 @@ public class PlayerController : GameComponent
 
     private void Start()
     {
-        currentMoveSpeed = characterStat.moveSpeed;
+        currentMoveSpeed = playerStat.MoveSpeed;
         controlType = EnumPack.ControlType.Move;
     }
 
@@ -141,13 +141,13 @@ public class PlayerController : GameComponent
 
     private void MoveByDirection(Vector3 direction, float moveSpeed, float deltaTime)
     {
-        navmeshController.MoveByDirection(direction, moveSpeed, characterStat.rotateSpeed, deltaTime);
+        navmeshController.MoveByDirection(direction, moveSpeed, playerStat.RotateSpeed, deltaTime);
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
     }
 
     public void MoveToPosition(Vector3 position, float moveSpeed, float deltaTime)
     {
-        navmeshController.MoveByPosition(position, 0.0f, moveSpeed, characterStat.rotateSpeed, 0.1f, deltaTime);
+        navmeshController.MoveByPosition(position, 0.0f, moveSpeed, playerStat.RotateSpeed, 0.1f, deltaTime);
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
     }
 
@@ -155,17 +155,17 @@ public class PlayerController : GameComponent
     {
         var dir = pos - transform.position;
         dir.y = 0.0f;
-        navmeshController.MoveByDirection(dir, 0, characterStat.rotateSpeed, deltaTime);
+        navmeshController.MoveByDirection(dir, 0, playerStat.RotateSpeed, deltaTime);
         characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
     }
 
     public void ChangeToWorkingMoveSpeed()
     {
-        currentMoveSpeed = characterStat.workingMoveSpeed;
+        currentMoveSpeed = playerStat.WorkMoveSpeed;
     }
 
     public void ResetBackToMoveSpeed()
     {
-        currentMoveSpeed = characterStat.moveSpeed;
+        currentMoveSpeed = playerStat.MoveSpeed;
     }
 }

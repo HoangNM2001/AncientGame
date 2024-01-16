@@ -69,7 +69,7 @@ public class HPopupFruitAction : UIPopup
         if (!SimpleMath.InRange(characterController.transform.position, currentTree.StandPosition.position, 0.2f))
         {
             characterController.MoveToPosition(currentTree.StandPosition.position,
-                characterController.CharacterStat.workingMoveSpeed, Time.deltaTime);
+                characterController.PlayerStat.WorkMoveSpeed, Time.deltaTime);
         }
         else
         {

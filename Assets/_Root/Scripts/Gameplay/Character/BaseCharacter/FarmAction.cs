@@ -41,7 +41,7 @@ public class FarmAction : GameComponent, ICharacterAction
 
         if (characterAnimController)
         {
-            characterAnimController.Speed = characterStat.workingSpeed;
+            characterAnimController.Speed = characterStat.WorkSpeed;
         }
 
         farmTool.Activate(1);
