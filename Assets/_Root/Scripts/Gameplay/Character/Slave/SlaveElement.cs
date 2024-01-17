@@ -14,8 +14,8 @@ public class SlaveElement : SaveDataElement
     public int Price => price;
     private bool IsUnlock
     {
-        get => Data.Load(uniqueId + "_Unlock", false);
-        set => Data.Save(uniqueId + "_Unlock", value);
+        get => Data.Load(Id + "_Unlock", false);
+        set => Data.Save(Id + "_Unlock", value);
     }
 
     private void Awake()

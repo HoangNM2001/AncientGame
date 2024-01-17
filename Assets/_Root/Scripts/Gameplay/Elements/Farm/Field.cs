@@ -34,8 +34,8 @@ public class Field : SaveDataElement
 
     public EnumPack.FieldState FieldState
     {
-        get => Data.Load($"{uniqueId}_fieldState", EnumPack.FieldState.Seedale);
-        private set => Data.Save($"{uniqueId}_fieldState", value);
+        get => Data.Load($"{Id}_fieldState", EnumPack.FieldState.Seedale);
+        private set => Data.Save($"{Id}_fieldState", value);
     }
 
     private void Awake()

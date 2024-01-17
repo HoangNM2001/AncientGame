@@ -30,9 +30,9 @@ public class ExtendField : SaveDataElement
 
     private EnumPack.ResourceType ResourceType
     {
-        get => Data.Load($"{uniqueId}_resourceType", EnumPack.ResourceType.None);
+        get => Data.Load($"{Id}_resourceType", EnumPack.ResourceType.None);
 
-        set => Data.Save($"{uniqueId}_resourceType", value);
+        set => Data.Save($"{Id}_resourceType", value);
     }
 
     public EnumPack.FieldState TransferFarmState

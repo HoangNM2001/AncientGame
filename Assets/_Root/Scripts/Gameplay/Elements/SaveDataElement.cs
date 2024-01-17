@@ -8,7 +8,8 @@ using UnityEngine;
 
 public class SaveDataElement : GameComponent
 {
-    [SerializeField, UniqueID] protected string uniqueId;
+    [SerializeField, ID] protected string Id;
+    // [SerializeField, UniqueID] protected string uniqueId;
     [SerializeField] private GameObjectPool flyTextPool;
 
     protected Vector3 DefaultScale;
@@ -18,8 +19,8 @@ public class SaveDataElement : GameComponent
 
     protected virtual bool IsUnlocked
     {
-        get => Data.Load($"{uniqueId}_isUnlocked", false);
-        set => Data.Save($"{uniqueId}_isUnlocked", value);
+        get => Data.Load($"{Id}_isUnlocked", false);
+        set => Data.Save($"{Id}_isUnlocked", value);
     }
 
     protected virtual void Initialize()
@@ -61,7 +62,15 @@ public class SaveDataElement : GameComponent
     public void ResetUniqueID()
     {
         Guid guid = Guid.NewGuid();
-        uniqueId = guid.ToString();
+        Id = guid.ToString();
+        EditorUtility.SetDirty(this);
+    }
+
+
+    [ContextMenu("Reset Id")]
+    public void ResetId()
+    {
+        Id = IDAttributeDrawer.ToSnakeCase(name);
         EditorUtility.SetDirty(this);
     }
 #endif

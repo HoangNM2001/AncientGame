@@ -40,10 +40,10 @@ public class Tile : SaveDataElement
 
     protected override bool IsUnlocked
     {
-        get => Data.Load($"{uniqueId}_isUnlocked", isUnlocked);
+        get => Data.Load($"{Id}_isUnlocked", isUnlocked);
         set
         {
-            Data.Save($"{uniqueId}_isUnlocked", value);
+            Data.Save($"{Id}_isUnlocked", value);
             Data.SaveAll();
             // Debug.LogError($"{uniqueId}_isUnlocked");
             // Debug.LogError(Data.Load($"{uniqueId}_isUnlocked", isUnlocked));

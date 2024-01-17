@@ -32,8 +32,8 @@ public class ResourcesCave : SaveDataElement
 
     private string ResourceCapacityJson
     {
-        get => Data.Load($"{uniqueId}_dict", "");
-        set => Data.Save($"{uniqueId}_dict", value);
+        get => Data.Load($"{Id}_dict", "");
+        set => Data.Save($"{Id}_dict", value);
     }
 
     public bool IsCaveAvailable => resourceCapacityDict.Count < MaxNumberOfResources ||

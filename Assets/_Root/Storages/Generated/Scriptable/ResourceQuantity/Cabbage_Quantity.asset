@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cabbage_Quantity
   m_EditorClassIdentifier: 
   guid: fec4d354875f157449d1a9ad93b3cc95
-  value: 0
+  value: 26
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

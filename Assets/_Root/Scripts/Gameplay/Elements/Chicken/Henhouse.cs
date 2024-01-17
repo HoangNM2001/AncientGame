@@ -29,22 +29,22 @@ public class Henhouse : SaveDataElement
 
     private int EggCount
     {
-        get => Data.Load(uniqueId + "EggCount", 0);
+        get => Data.Load(Id + "EggCount", 0);
         set
         {
             if (value < 0) value = 0;
             eggCountText.SetText($"{value} / {MAX_EGGS}");
-            Data.Save(uniqueId + "EggCount", value);
+            Data.Save(Id + "EggCount", value);
         }
     }
 
     private int ChickenCount
     {
-        get => Data.Load(uniqueId + "ChickenCount", 3);
+        get => Data.Load(Id + "ChickenCount", 3);
         set
         {
             chickenCountText.SetText($"{value} / {MAX_CHICKENS}");
-            Data.Save(uniqueId + "ChickenCount", value);
+            Data.Save(Id + "ChickenCount", value);
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using DG.Tweening;
 using Pancake;
 using UnityEditor;
@@ -75,6 +76,19 @@ public class MapController : GameComponent
             var coords = new Vector2Int(Mathf.RoundToInt(tile.transform.position.x / tileSize),
                                         Mathf.RoundToInt(tile.transform.position.z / tileSize));
             tile.gameObject.name = $"Tile {coords}";
+        }
+
+        Elements = GetComponentsInChildren<SaveDataElement>().ToList();
+
+        foreach (var element in Elements)
+        {
+            if (element as Tile) continue;
+
+            var coords = new Vector2Int(Mathf.RoundToInt(element.transform.position.x / tileSize),
+                                        Mathf.RoundToInt(element.transform.position.z / tileSize));
+
+            var oldName = element.gameObject.name;
+            element.gameObject.name = $"{oldName}{coords}";
         }
     }
 #endif

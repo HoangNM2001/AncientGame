@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rice_Quantity
   m_EditorClassIdentifier: 
   guid: 81e66491873f45d42a0a87c3162726f9
-  value: 35
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0
