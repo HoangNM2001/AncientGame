@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using Pancake;
+using Pancake.Apex;
 using Pancake.SceneFlow;
 using Pancake.Scriptable;
 using UnityEngine;
@@ -12,46 +15,63 @@ public class FarmAction : GameComponent, ICharacterAction
     [SerializeField] private EnumPack.CharacterActionType characterActionType;
     [SerializeField] private FarmTool farmTool;
     [SerializeField] private CharacterAnimController characterAnimController;
-    [SerializeField] private CharacterStat characterStat;
+    [SerializeField] private bool isPlayer;
+    [ShowIf(nameof(isPlayer)), SerializeField] private PlayerStat playerStat;
+    [HideIf(nameof(isPlayer)), SerializeField] private CharacterStat characterStat;
 
-    private bool activated;
-    private string actionAnimName;
-
+    private bool _activated;
+    private string _actionAnimName;
 
     public FarmTool FarmTool => farmTool;
     public EnumPack.CharacterActionType CharacterActionType => characterActionType;
-    public bool Activated => activated;
+    public bool Activated => _activated;
 
     private void Awake()
     {
-        activated = false;
+        _activated = false;
     }
 
     private void Start()
     {
-        actionAnimName = characterActionType.ToString();
+        _actionAnimName = characterActionType.ToString();
 
-        farmTool.Initialize(characterActionType);
+        farmTool.Initialize(characterActionType, isPlayer);
     }
 
     public void Activate()
     {
-        if (activated) return;
-        activated = true;
+        if (_activated) return;
+        _activated = true;
+
+        int toolIndex;
+        float workSpeed;
+
+        if (isPlayer)
+        {
+            toolIndex = playerStat.ToolIndex;
+            workSpeed = playerStat.WorkSpeed;
+        }
+        else
+        {
+            toolIndex = 1;
+            workSpeed = characterStat.WorkSpeed;
+        }
 
         if (characterAnimController)
         {
-            characterAnimController.Speed = characterStat.WorkSpeed;
+            characterAnimController.Speed = workSpeed;
         }
+        
+        Debug.LogError(toolIndex + "?" + workSpeed);
 
-        farmTool.Activate(1);
+        farmTool.Activate(toolIndex);
         PlayAnimation();
     }
 
     public void Deactivate()
     {
-        if (!activated) return;
-        activated = false;
+        if (!_activated) return;
+        _activated = false;
 
         if (characterAnimController)
         {
@@ -64,7 +84,7 @@ public class FarmAction : GameComponent, ICharacterAction
 
     private void PlayAnimation()
     {
-        characterAnimController.Play(actionAnimName, 1);
+        characterAnimController.Play(_actionAnimName, 1);
     }
 
     private void StopAnimation()

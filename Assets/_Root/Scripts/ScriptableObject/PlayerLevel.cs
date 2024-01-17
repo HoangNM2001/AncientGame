@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pancake;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class PlayerLevel : ScriptableObject
 
     public bool IsMaxLevel => Level >= maxLevel;
     public float RequiredExp => IsMaxLevel ? 0 : expFactor0 * Mathf.Pow(expFactor1, Level + 1);
-    public bool CanLevelUp => !IsMaxLevel && Exp >= RequiredExp;
+    private bool CanLevelUp => !IsMaxLevel && Exp >= RequiredExp;
     public float ExpUp { get; private set; }
 
     public Action<float> OnExpChangedEvent;
@@ -45,10 +46,10 @@ public class PlayerLevel : ScriptableObject
 
     public int SkillPoint
     {
-        get => Data.Load("player_skillpoint", 0);
+        get => Data.Load("player_skill_point", 0);
         private set
         {
-            Data.Save("player_skillpoint", value);
+            Data.Save("player_skill_point", value);
             OnSkillPointChangedEvent?.Invoke(value);
         }
     }
@@ -66,16 +67,49 @@ public class PlayerLevel : ScriptableObject
         }
     }
 
-    public void LevelUp()
+    private void LevelUp()
     {
-        if (!CanLevelUp) return;
         while (CanLevelUp)
         {
             // Debug.LogError("?" + RequiredExp);
             Exp -= RequiredExp;
-            Level++;
             SkillPoint++;
+            Level++;
+        }
+    }
+
+    public void SpendSkillPoint()
+    {
+        if (SkillPoint <= 0) return;
+        SkillPoint--;
+    }
+
+#if  UNITY_EDITOR
+    public void Add100Exp()
+    {
+        AddExp(100);
+    }
+#endif
+}
+
+#if  UNITY_EDITOR
+[CustomEditor(typeof(PlayerLevel))]
+public class PlayerLevelEditor : Editor
+{
+    private PlayerLevel _playerLevel;
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        _playerLevel = (PlayerLevel)target;
+
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Add 100 Exp"))
+        {
+            _playerLevel.Add100Exp();
         }
     }
 }
+#endif
 

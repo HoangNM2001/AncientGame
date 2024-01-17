@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49597b5568839984e876c8a3d482c8dd, type: 3}
   m_Name: PlayerStatistics
   m_EditorClassIdentifier: 
-  rotateSpeed: 20
+  rotateSpeed: 360
   baseMoveSpeed: 5
   baseWorkMoveSpeed: 3
   baseWorkSpeed: 0.8
   moveUpgradable: {fileID: 11400000, guid: 6eb7f3607552dc5448c59d79a28626d1, type: 2}
   workUpgradable: {fileID: 11400000, guid: 8201db48d2d8b0049a53b4b49ffb1f76, type: 2}
-  MoveSpeed: 0

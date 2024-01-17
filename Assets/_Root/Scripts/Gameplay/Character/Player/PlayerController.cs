@@ -7,6 +7,7 @@ using Pancake.SceneFlow;
 using Pancake.Scriptable;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class PlayerController : GameComponent
 {
@@ -22,15 +23,18 @@ public class PlayerController : GameComponent
     [SerializeField] private Vector3Variable playerRotation;
     [SerializeField] private GameObject buildHammer;
     [SerializeField] private GameObject buildFx;
+    [SerializeField] private GameObject levelUpFx;
     [SerializeField] private GameObjectPool flyTextPool;
+    [SerializeField] private Upgradable moveUpgradable;
+    [SerializeField] private Upgradable workUpgradable;
 
-    private NavmeshController navmeshController;
-    private PlayerHandleInput playerHandleInput;
-    private EnumPack.ControlType controlType;
-    private float currentMoveSpeed;
-    private bool isBuilding;
-    private bool moveByBike;
-    private Tile currentTile;
+    private NavmeshController _navmeshController;
+    private PlayerHandleInput _playerHandleInput;
+    private EnumPack.ControlType _controlType;
+    private float _currentMoveSpeed;
+    private bool _isBuilding;
+    private bool _moveByBike;
+    private Tile _currentTile;
 
     public PlayerStat PlayerStat => playerStat;
     public CharacterAnimController CharacterAnimController => characterAnimController;
@@ -38,8 +42,8 @@ public class PlayerController : GameComponent
 
     private void Awake()
     {
-        navmeshController = GetComponent<NavmeshController>();
-        playerHandleInput = GetComponent<PlayerHandleInput>();
+        _navmeshController = GetComponent<NavmeshController>();
+        _playerHandleInput = GetComponent<PlayerHandleInput>();
 
         // transform.position = playerPosition.Value;
         // transform.rotation = Quaternion.Euler(playerRotation.Value);
@@ -49,7 +53,25 @@ public class PlayerController : GameComponent
     {
         getCharacterEvent.OnRaised += getCharacterEvent_OnRaised;
         changeInputEvent.OnRaised += changeInputEvent_OnRaised;
+        moveUpgradable.OnUpgraded += moveUpgradable_OnUpgraded;
+        workUpgradable.OnUpgraded += workUpgradable_OnUpgraded;
+        playerLevel.OnLevelChangedEvent += playerLevel_OnLevelChangedEvent;
         // playerLevel.OnExpChangedEvent += playerLevel_OnExpChangedEvent;
+    }
+
+    private void moveUpgradable_OnUpgraded()
+    {
+        levelUpFx.SetActive(true);
+        DOTween.Sequence().AppendInterval(2.0f).AppendCallback(() => levelUpFx.SetActive(false));
+        UpdateMoveSpeed();
+        ShowFlyText($"{moveUpgradable.desc} UP");
+    }
+
+    private void workUpgradable_OnUpgraded()
+    {
+        levelUpFx.SetActive(true);
+        DOTween.Sequence().AppendInterval(2.0f).AppendCallback(() => levelUpFx.SetActive(false));
+        ShowFlyText($"{workUpgradable.desc} UP");
     }
 
     private GameObject getCharacterEvent_OnRaised()
@@ -59,8 +81,8 @@ public class PlayerController : GameComponent
 
     private void changeInputEvent_OnRaised(int newControlType)
     {
-        controlType = (EnumPack.ControlType)newControlType;
-        navmeshController.ResetPath();
+        _controlType = (EnumPack.ControlType)newControlType;
+        _navmeshController.ResetPath();
     }
 
     private void playerLevel_OnExpChangedEvent(float value)
@@ -68,26 +90,35 @@ public class PlayerController : GameComponent
         ShowFlyText($"+ {playerLevel.ExpUp} Exp");
     }
 
+    private void playerLevel_OnLevelChangedEvent(int level)
+    {
+        characterHandleTrigger.ShowPopupUpgrade();
+        ShowFlyText("Level up");
+    }
+
     protected override void OnDisabled()
     {
         getCharacterEvent.OnRaised -= getCharacterEvent_OnRaised;
         changeInputEvent.OnRaised -= changeInputEvent_OnRaised;
+        moveUpgradable.OnUpgraded -= moveUpgradable_OnUpgraded;
+        workUpgradable.OnUpgraded -= workUpgradable_OnUpgraded;
+        playerLevel.OnLevelChangedEvent += playerLevel_OnLevelChangedEvent;
         // playerLevel.OnExpChangedEvent -= playerLevel_OnExpChangedEvent;
     }
 
     private void Start()
     {
-        currentMoveSpeed = playerStat.MoveSpeed;
-        controlType = EnumPack.ControlType.Move;
+        UpdateMoveSpeed();
+        _controlType = EnumPack.ControlType.Move;
     }
 
     protected override void Tick()
     {
-        if (isBuilding) return;
-        if (controlType != EnumPack.ControlType.Move) return;
-        
-        playerHandleInput.GetInput();
-        MoveByDirection(playerHandleInput.MoveDir.normalized, currentMoveSpeed, Time.deltaTime);
+        if (_isBuilding) return;
+        if (_controlType != EnumPack.ControlType.Move) return;
+
+        _playerHandleInput.GetInput();
+        MoveByDirection(_playerHandleInput.MoveDir.normalized, _currentMoveSpeed, Time.deltaTime);
 
         // playerPosition.Value = transform.position;
         // playerRotation.Value = transform.rotation.eulerAngles;
@@ -103,32 +134,28 @@ public class PlayerController : GameComponent
 
     public void CheckToBuild()
     {
-        if (CanBuild && characterHandleTrigger.CurrentInteract.TryGetComponent<Tile>(out var tile))
-        {
-            if (goldVariable.Value > tile.UnlockCost)
-            {
-                currentTile = tile;
-                Build();
-            }
-        }
+        if (!CanBuild || !characterHandleTrigger.CurrentInteract.TryGetComponent<Tile>(out var tile)) return;
+        if (goldVariable.Value <= tile.UnlockCost) return;
+        _currentTile = tile;
+        Build();
     }
 
-    public void Build()
+    private void Build()
     {
-        isBuilding = true;
-        goldVariable.Value -= currentTile.UnlockCost;
+        _isBuilding = true;
+        goldVariable.Value -= _currentTile.UnlockCost;
         buildHammer.SetActive(true);
-        buildFx.transform.position = currentTile.transform.position;
+        buildFx.transform.position = _currentTile.transform.position;
         buildFx.SetActive(true);
         characterAnimController.Play(Constant.BUIDLING, 0);
 
         DOTween.Sequence().AppendInterval(2.0f).AppendCallback(StopBuild);
     }
 
-    public void StopBuild()
+    private void StopBuild()
     {
-        isBuilding = false;
-        currentTile.Unlock();
+        _isBuilding = false;
+        _currentTile.Unlock();
         buildHammer.SetActive(false);
         buildFx.SetActive(false);
         BackToMove();
@@ -136,36 +163,36 @@ public class PlayerController : GameComponent
 
     private void BackToMove()
     {
-        characterAnimController.Play(moveByBike ? Constant.IDLE_2_BIKE : Constant.IDLE_2_RUN, 0);
+        characterAnimController.Play(_moveByBike ? Constant.IDLE_2_BIKE : Constant.IDLE_2_RUN, 0);
     }
 
     private void MoveByDirection(Vector3 direction, float moveSpeed, float deltaTime)
     {
-        navmeshController.MoveByDirection(direction, moveSpeed, playerStat.RotateSpeed, deltaTime);
-        characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
+        _navmeshController.MoveByDirection(direction, moveSpeed, playerStat.RotateSpeed, deltaTime);
+        characterAnimController.UpdateIdle2Run(_navmeshController.VelocityRatio, deltaTime);
     }
 
     public void MoveToPosition(Vector3 position, float moveSpeed, float deltaTime)
     {
-        navmeshController.MoveByPosition(position, 0.0f, moveSpeed, playerStat.RotateSpeed, 0.1f, deltaTime);
-        characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
+        _navmeshController.MoveByPosition(position, 0.0f, moveSpeed, playerStat.RotateSpeed, 0.1f, deltaTime);
+        characterAnimController.UpdateIdle2Run(_navmeshController.VelocityRatio, deltaTime);
     }
 
     public void RotateToTarget(Vector3 pos, float deltaTime)
     {
         var dir = pos - transform.position;
         dir.y = 0.0f;
-        navmeshController.MoveByDirection(dir, 0, playerStat.RotateSpeed, deltaTime);
-        characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, deltaTime);
+        _navmeshController.MoveByDirection(dir, 0, playerStat.RotateSpeed, deltaTime);
+        characterAnimController.UpdateIdle2Run(_navmeshController.VelocityRatio, deltaTime);
     }
 
-    public void ChangeToWorkingMoveSpeed()
+    public void UpdateWorkingMoveSpeed()
     {
-        currentMoveSpeed = playerStat.WorkMoveSpeed;
+        _currentMoveSpeed = playerStat.WorkMoveSpeed;
     }
 
-    public void ResetBackToMoveSpeed()
+    public void UpdateMoveSpeed()
     {
-        currentMoveSpeed = playerStat.MoveSpeed;
+        _currentMoveSpeed = playerStat.MoveSpeed;
     }
 }

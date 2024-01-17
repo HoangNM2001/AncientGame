@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cdb8ad39a5bdd4f8ed3d18fae14a63, type: 3}
   m_Name: Potato_Quantity
   m_EditorClassIdentifier: 
-  guid: 09027b58f158dcd47aa6cdb9da703a89
+  guid: 423b215af39ef4a47815daa72f1e23c8
   value: 0
   debugLogEnabled: 0
   saved: 1

@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c71c58a36a9384b9f9b9e27694f57e, type: 3}
   m_Name: PlayerMoveUpgradable
   m_EditorClassIdentifier: 
-  uniqueId: 
-  coinQuantity: {fileID: 0}
-  playerLevel: {fileID: 0}
-  desc: 
+  uniqueId: player_move_upgradable
+  coinQuantity: {fileID: 11400000, guid: 1d4b77d15290c5840933bfb3884dc4b9, type: 2}
+  playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
+  desc: MOVE SPEED
   descMultiline: 0
-  maxLevel: 0
-  costType: 0
-  valFactor0: 0.9
-  valFactor1: 0.1
+  maxLevel: 50
+  costType: 1
+  valFactor0: 0.98
+  valFactor1: 0.02
   costFactor0: 1000
   costFactor1: 1.1
+  background: {fileID: 21300000, guid: b200ac96caaa24e48ab27693b13b19da, type: 3}
+  icon: {fileID: 21300000, guid: 8a883457461b1ef4eb644779bd8c003f, type: 3}

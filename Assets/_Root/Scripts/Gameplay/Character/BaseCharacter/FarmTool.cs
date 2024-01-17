@@ -9,65 +9,78 @@ using UnityEngine;
 
 public class FarmTool : GameComponent
 {
-    [SerializeField] private bool isPlayer = false;
     [SerializeField] private List<GameObject> farmToolList;
     [SerializeField] private List<ParticleSystem> particleList;
     [SerializeField] private List<Collider> colliderList;
 
-    private List<Field> fieldList;
-    private ParticleSystem currentParticle;
-    private Collider currentCollider;
-    private EnumPack.CharacterActionType actionType;
-
+    private List<Field> _fieldList;
+    private EnumPack.CharacterActionType _actionType;
+    private bool _isPlayer;
+    private int _currentIndex;
 
     private void Awake()
     {
-        fieldList = new List<Field>();
+        _fieldList = new List<Field>();
+        _currentIndex = -1;
     }
 
-    public void Initialize(EnumPack.CharacterActionType actionType)
+    public void Initialize(EnumPack.CharacterActionType actionType, bool isPlayer)
     {
-        this.actionType = actionType;
+        _actionType = actionType;
+        _isPlayer = isPlayer;
         Deactivate();
     }
 
-    public void Activate(int currentLevel)
+    public void Activate(int index)
     {
+        if (_currentIndex == index) return;
+        _currentIndex = index;
+
+        var toolIndex = Mathf.Clamp(_currentIndex, 0, farmToolList.Count - 1);
+        for (var i = 0; i < farmToolList.Count; i++)
+        {
+            farmToolList[i].SetActive(i == toolIndex);
+        }
+        
+        var colliderIndex = Mathf.Clamp(_currentIndex, 0, colliderList.Count - 1);
+        for (var i = 0; i < colliderList.Count; i++)
+        {
+            colliderList[i].gameObject.SetActive(i == colliderIndex);
+        }
+
+        var particleCount = particleList.Count;
+        if (particleCount > 0)
+        {
+            var particleIndex = Mathf.Clamp(_currentIndex, 0, particleCount - 1);
+            for (var i = 0; i < particleCount; i++)
+            {
+                particleList[i].gameObject.SetActive(i == particleIndex);       
+            }
+        }
+        
         gameObject.SetActive(true);
-        farmToolModel.gameObject.SetActive(true);
-        UpdateTool(currentLevel);
     }
 
     public void Deactivate()
     {
-        fieldList.Clear();
+        _currentIndex = -1;
+        _fieldList.Clear();
         gameObject.SetActive(false);
-        farmToolModel.gameObject.SetActive(false);
-    }
 
-    private void UpdateTool(int currentLevel)
-    {
-        if (currentParticle) currentParticle.gameObject.SetActive(false);
-        if (currentCollider) currentCollider.gameObject.SetActive(false);
-
-        if (particleList.Count > 0)
+        foreach (var tool in farmToolList)
         {
-            currentParticle = particleList[currentLevel - 1];
-            currentParticle.gameObject.SetActive(true);
+            tool.gameObject.SetActive(false);
         }
 
-        if (colliderList.Count > 0)
+        foreach (var toolCollider in colliderList)
         {
-            currentCollider = colliderList[currentLevel - 1];
-            currentCollider.gameObject.SetActive(true);
+            toolCollider.gameObject.SetActive(false);
         }
-
-        if (currentParticle) currentParticle.Play();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var field = CacheCollider.GetField(other);
-        if (field) field.DoFarming(actionType, isPlayer);
+        if (field) field.DoFarming(_actionType, _isPlayer);
     }
 }

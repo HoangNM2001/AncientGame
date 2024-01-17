@@ -47,7 +47,7 @@ public class MapController : GameComponent
         Activate();
     }
 
-    public void Activate()
+    private void Activate()
     {
         foreach (var tile in Tiles)
         {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Banana_Quantity
   m_EditorClassIdentifier: 
   guid: 342fe60eb0214cf4cb1a4c5168b31032
-  value: 10
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

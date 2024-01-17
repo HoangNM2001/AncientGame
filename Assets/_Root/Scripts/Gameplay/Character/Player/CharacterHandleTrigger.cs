@@ -14,6 +14,7 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     [SerializeField] private ScriptableEventNoParam popupCloseEvent;
     [SerializeField] private ScriptableEventGetGameObject getPopupParentEvent;
     [SerializeField] private ScriptableEventGetGameObject getCurrentInteractEvent;
+    [SerializeField] private ScriptableEventInt changeInputEvent;
 
     [Header("Interact Popup")]
     [SerializeField] private ScriptableEventNoParam stopActionEvent;
@@ -26,6 +27,7 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     [SerializeField, PopupPickup] private string caveActionPopup;
     [SerializeField, PopupPickup] private string henHouseActionPopup;
     [SerializeField, PopupPickup] private string buildingActionPopup;
+    [SerializeField, PopupPickup] private string upgradePlayerPopup;
 
     private Transform popupParentTrans;
     private GameObject currentInteract;
@@ -50,6 +52,12 @@ public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher,
     private void Start()
     {
         popupParentTrans = getPopupParentEvent.Raise().transform;
+    }
+
+    public void ShowPopupUpgrade()
+    {
+        changeInputEvent.Raise((int)EnumPack.ControlType.None);
+        popupShowEvent.Raise(upgradePlayerPopup, popupParentTrans);
     }
 
     public void TriggerActionFarm(GameObject triggerField)

@@ -49,7 +49,8 @@ public class EnumPack
         Move,
         Horizontal,
         Vertical,
-        MiniGame
+        MiniGame,
+        None,
     }
 
     public enum FieldState

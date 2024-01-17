@@ -8,20 +8,20 @@ public class HPopupBuilding : UIPopup
 {
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
 
-    private PlayerController characterController;
+    private PlayerController _characterController;
 
     private void Start()
     {
-        characterController = getCharacterEvent.Raise().GetComponent<PlayerController>();
+        _characterController = getCharacterEvent.Raise().GetComponent<PlayerController>();
     }
 
     public void StartBuildAction()
     {
-        characterController.CheckToBuild();
+        _characterController.CheckToBuild();
         ClosePopup();
     }
 
-    public void ClosePopup()
+    private void ClosePopup()
     {
         closePopupEvent.Raise();
     }
