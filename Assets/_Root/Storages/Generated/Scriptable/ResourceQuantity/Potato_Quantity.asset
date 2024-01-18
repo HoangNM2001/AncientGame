@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Potato_Quantity
   m_EditorClassIdentifier: 
   guid: 423b215af39ef4a47815daa72f1e23c8
-  value: 31
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

@@ -351,13 +351,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c443f65af55a61439aeead0e0649dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: deaf347f-bc9a-451e-a32f-03010b67961d
+  Id: cave
+  flyTextPool: {fileID: 0}
   showableUI: {fileID: 2698507475490229689}
   caveResourcesUIPrefab: {fileID: 8145465820888922608, guid: 19af8658176c69e4cae653605924546c, type: 3}
   caveResourceList:
-  - {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
-  - {fileID: 11400000, guid: 570244483dd2a7d4cb1dc97b13926ab1, type: 2}
+  - {fileID: 11400000, guid: 9618384257d2ede4fb741a8c99c80762, type: 2}
   - {fileID: 11400000, guid: 1fd41024a2972f74f9be3bdb18f45493, type: 2}
+  - {fileID: 11400000, guid: 0a9a6f1a39916504f90ed377c46962a5, type: 2}
+  - {fileID: 11400000, guid: 570244483dd2a7d4cb1dc97b13926ab1, type: 2}
+  - {fileID: 11400000, guid: d4cf974ee92a91e4680ff09f25cadbc3, type: 2}
+  - {fileID: 11400000, guid: aeb183dd65e867843a129f8190ff5018, type: 2}
+  - {fileID: 11400000, guid: 59dd57e3d7b74e249a2e620c6ec2d771, type: 2}
+  - {fileID: 11400000, guid: c5877ab83cd23f64ca4665cbae567842, type: 2}
+  - {fileID: 11400000, guid: e2a32559289bf0b45947a21fe36f16af, type: 2}
+  - {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
+  - {fileID: 11400000, guid: 61b3684a0c11ab047ad23f8d47da6513, type: 2}
   - {fileID: 11400000, guid: 62e48a472f4b2094883ca660b7d01649, type: 2}
   resourceUIParent: {fileID: 6596163381955881967}
   goToPos: {fileID: 5137897322223463894}

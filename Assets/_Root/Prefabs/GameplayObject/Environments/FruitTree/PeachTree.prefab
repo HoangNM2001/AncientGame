@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb1cd60abe2b1f46826430b1df24253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 
+  Id: peach_tree
   flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
   playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
   fruitResource: {fileID: 11400000, guid: a4899162a57824f4f8af54f8b397f876, type: 2}

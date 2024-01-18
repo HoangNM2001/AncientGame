@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sugarcane_Quantity
   m_EditorClassIdentifier: 
   guid: 45b1afd9c5073814aa9006206e9fa5f4
-  value: 29
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

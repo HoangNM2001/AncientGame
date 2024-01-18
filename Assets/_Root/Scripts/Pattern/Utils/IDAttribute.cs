@@ -73,9 +73,13 @@ public class IDAttributeDrawer : PropertyDrawer
                 sb.Append('_');
                 sb.Append(char.ToLowerInvariant(c));
             }
-            else if (c == ' ' || c == '-')
+            else if (c == ' ')
             {
                 continue;
+            }
+            else if (c == '-')
+            {
+                sb.Append('_');
             }
             else
             {

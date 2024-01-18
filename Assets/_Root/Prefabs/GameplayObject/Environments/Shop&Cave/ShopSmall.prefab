@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eed813052d396d43b193135751cee61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 0b47be7c-a2e6-4e35-980f-46e898072afe
+  Id: shop_small
+  flyTextPool: {fileID: 0}
   buyAbleResourceList:
   - {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
   shopKeeperAnimator: {fileID: 7326987712218906058}
@@ -187,6 +188,7 @@ GameObject:
   - component: {fileID: 6122051317505135442}
   - component: {fileID: 6831608091336381429}
   - component: {fileID: 190172840943786340}
+  - component: {fileID: 1215411154566820050}
   m_Layer: 0
   m_Name: SellableUI
   m_TagString: Untagged
@@ -287,6 +289,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afde27759c1148e458deaedf687389e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1215411154566820050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6350066401620281839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082b7ded8c387a540ac8e7257319f22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7164604498999527273

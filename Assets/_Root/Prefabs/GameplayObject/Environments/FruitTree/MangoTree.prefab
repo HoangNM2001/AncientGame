@@ -881,7 +881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb1cd60abe2b1f46826430b1df24253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: e5d1d403-8414-49ff-aff6-d5326afb2b93
+  Id: mango_tree
   flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
   playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
   fruitResource: {fileID: 11400000, guid: 76a4ff3daf927384eb6e2fe6566daa17, type: 2}
