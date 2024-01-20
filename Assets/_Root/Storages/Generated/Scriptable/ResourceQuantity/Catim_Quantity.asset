@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Catim_Quantity
   m_EditorClassIdentifier: 
   guid: 2a1daa86abaa72c46b55dcb5ab47f032
-  value: 0
+  value: 130
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

@@ -17,6 +17,8 @@ public class HMenuController : GameComponent
 
     [Header("POPUP")][SerializeField] private UIButton settingBtn;
     [SerializeField, PopupPickup] private string settingsPopup;
+    [SerializeField] private UIButton mapBtn;
+    [SerializeField, PopupPickup] private string mapPopup;
 
     [Header("EVENT")][SerializeField] private PopupShowEvent popupShowEvent;
     [SerializeField] private ScriptableEventGetGameObject getPopupParentEvent;
@@ -40,7 +42,6 @@ public class HMenuController : GameComponent
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
         foreach (var resourceConfig in resourceConfigList)
         {
             var tempQuantity = Instantiate(resourceQuantityPrefab, resourceQuantityParent);
@@ -155,11 +156,17 @@ public class HMenuController : GameComponent
     private void Start()
     {
         settingBtn.onClick.AddListener(ShowSettingsPopup);
+        mapBtn.onClick.AddListener(ShowMapPopup);
     }
 
     private void ShowSettingsPopup()
     {
         popupShowEvent.Raise(settingsPopup, transform);
+    }
+
+    private void ShowMapPopup()
+    {
+        popupShowEvent.Raise(mapPopup, transform);
     }
 
 #if UNITY_EDITOR

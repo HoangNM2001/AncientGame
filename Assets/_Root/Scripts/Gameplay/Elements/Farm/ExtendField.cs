@@ -24,9 +24,11 @@ public class ExtendField : SaveDataElement
 
     public Action OnStateChange;
     public Action<bool> OnHarvest;
+    public Action OnMainFieldActivated;
+    public Action OnActivate;
 
     public List<Field> FieldList => fieldList;
-    public ResourceConfig ResourceConfig => _resourceConfig;
+    public ResourceConfig ResourceConfig => _resourceConfig != null ? _resourceConfig : (mainField != null ? mainField.ResourceConfig : null);
 
     private EnumPack.ResourceType ResourceType
     {
@@ -51,6 +53,16 @@ public class ExtendField : SaveDataElement
         _collider = GetComponent<BoxCollider>();
         InitCount();
     }
+
+    // protected override void OnEnabled()
+    // {
+    //     if (mainField) mainField.OnMainFieldActivated += OnActivated;
+    // }
+
+    // protected override void OnDisabled()
+    // {
+    //     if (mainField) mainField.OnMainFieldActivated -= OnActivated;
+    // }
 
     private void Start()
     {
@@ -95,10 +107,19 @@ public class ExtendField : SaveDataElement
 
     private void OnActivated()
     {
-        if (mainField == null) return;
-        if (!mainField.IsUnlocked) return;
+        if (mainField == null)
+        {
+            OnMainFieldActivated?.Invoke();
+            return;
+        }
+        if (!mainField.IsUnlocked)
+        {
+            mainField.OnMainFieldActivated += OnActivated;
+            return;
+        }
         mainField.AppendExtendField(this);
         _collider.enabled = false;
+        OnActivate?.Invoke();
     }
 
     private void AppendExtendField(ExtendField sideExtendField)

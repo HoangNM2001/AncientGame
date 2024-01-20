@@ -15,9 +15,7 @@ public class SaveDataElement : GameComponent
     protected Vector3 DefaultScale;
     protected const float AnimDuration = 0.7f;
 
-    public Tile Tile { get; set; }
-
-    protected virtual bool IsUnlocked
+    public virtual bool IsUnlocked
     {
         get => Data.Load($"{Id}_isUnlocked", false);
         set => Data.Save($"{Id}_isUnlocked", value);

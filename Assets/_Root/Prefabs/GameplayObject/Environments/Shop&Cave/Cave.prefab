@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: cave
-  flyTextPool: {fileID: 0}
+  flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
   showableUI: {fileID: 2698507475490229689}
   caveResourcesUIPrefab: {fileID: 8145465820888922608, guid: 19af8658176c69e4cae653605924546c, type: 3}
   caveResourceList:
@@ -371,6 +371,7 @@ MonoBehaviour:
   resourceUIParent: {fileID: 6596163381955881967}
   goToPos: {fileID: 5137897322223463894}
   addStorageEvent: {fileID: 11400000, guid: 375561c53e722a64a8cc7ca88784c533, type: 2}
+  playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
 --- !u!1001 &4936910212035757618
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,11 +3,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using DG.Tweening;
 using Pancake;
+using Pancake.Scriptable;
 using UnityEditor;
 using UnityEngine;
 
 public class MapController : GameComponent
 {
+    [SerializeField] private ScriptableListTile tileList;
+
     private const float tileSize = 6;
 
     public Dictionary<Vector2Int, Tile> TileDict { get; private set; }
@@ -40,6 +43,7 @@ public class MapController : GameComponent
         foreach (var tile in Tiles)
         {
             tile.InitTiles();
+            tileList.Add(tile);
         }
     }
 
@@ -88,7 +92,12 @@ public class MapController : GameComponent
                                         Mathf.RoundToInt(element.transform.position.z / tileSize));
 
             var oldName = element.gameObject.name;
-            element.gameObject.name = $"{oldName}{coords}";
+            var index = oldName.IndexOf('(');
+            if (index != -1) 
+            {
+                element.gameObject.name = oldName.Substring(0, index);
+            }
+            element.gameObject.name = $"{element.gameObject.name}{coords}";
         }
     }
 #endif

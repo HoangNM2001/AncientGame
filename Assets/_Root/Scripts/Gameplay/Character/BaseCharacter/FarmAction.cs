@@ -61,8 +61,6 @@ public class FarmAction : GameComponent, ICharacterAction
         {
             characterAnimController.Speed = workSpeed;
         }
-        
-        Debug.LogError(toolIndex + "?" + workSpeed);
 
         farmTool.Activate(toolIndex);
         PlayAnimation();

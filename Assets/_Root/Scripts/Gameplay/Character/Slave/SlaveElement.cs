@@ -10,6 +10,7 @@ public class SlaveElement : SaveDataElement
     [SerializeField] private SlaveController unlockedSlave;
     [SerializeField] private int price;
     [SerializeField] private Trigger triggerHelp;
+    [SerializeField] private List<ExtendField> extendFieldList;
 
     public int Price => price;
     private bool IsUnlock
@@ -27,12 +28,20 @@ public class SlaveElement : SaveDataElement
     {
         triggerHelp.EnterTriggerEvent += TriggerHelp;
         triggerHelp.ExitTriggerEvent += ExitTriggerHelp;
+        foreach (var extendField in extendFieldList)
+        {
+            extendField.OnActivate += SetSlaveElementState;
+        }
     }
 
     protected override void OnDisabled()
     {
         triggerHelp.EnterTriggerEvent -= TriggerHelp;
         triggerHelp.ExitTriggerEvent -= ExitTriggerHelp;
+        foreach (var extendField in extendFieldList)
+        {
+            extendField.OnActivate -= SetSlaveElementState;
+        }
     }
 
     private void Start()
@@ -46,14 +55,36 @@ public class SlaveElement : SaveDataElement
         SetSlaveElementState();
     }
 
+    private bool CheckUnlockable()
+    {
+        foreach (var extendField in extendFieldList)
+        {
+            if (!extendField.IsUnlocked) return false;
+        }
+        return true;
+    }
+
     private void SetSlaveElementState()
     {
-        drownSlave.SetActive(!IsUnlock);
-        unlockedSlave.gameObject.SetActive(IsUnlock);
+        if (CheckUnlockable())
+        {
+            drownSlave.SetActive(!IsUnlock);
+            unlockedSlave.gameObject.SetActive(IsUnlock);
+            foreach (var extendField in extendFieldList)
+            {
+                extendField.OnActivate -= SetSlaveElementState;
+            }
+        }
+        else
+        {
+            drownSlave.SetActive(false);
+            unlockedSlave.gameObject.SetActive(false);
+        }
     }
 
     private void TriggerHelp(Collider collider)
     {
+        if (!CheckUnlockable()) return;
         if (collider.TryGetComponent<CharacterHandleTrigger>(out var player))
         {
             player.TriggerSaveSlave(gameObject);
@@ -62,6 +93,7 @@ public class SlaveElement : SaveDataElement
 
     private void ExitTriggerHelp(Collider collider)
     {
+        if (!CheckUnlockable()) return;
         if (collider.TryGetComponent<CharacterHandleTrigger>(out var player))
         {
             player.ExitTriggerAction();

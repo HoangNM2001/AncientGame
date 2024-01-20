@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Pancake;
 using Pancake.Scriptable;
-using Pancake.Threading.Tasks.Triggers;
 using UnityEngine;
 
 public class HuntingField : SaveDataElement
 {
+    [SerializeField] private PlayerControllerVariable player;
+    [SerializeField] private PlayerLevel playerLevel;
+    [SerializeField] private ResourceConfig meatResource;
     [SerializeField] private MapPredator predator;
     [SerializeField] private float respawnInterval;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
 
     public MapPredator Predator => predator;
+
+    private void Awake()
+    {
+        Initialize();
+    }
 
     private void Start()
     {
@@ -30,6 +33,18 @@ public class HuntingField : SaveDataElement
         predator.gameObject.SetActive(false);
     }
 
+    public void OnEndMinigame(bool isWin)
+    {
+        if (isWin)
+        {
+            HarvestOnWin();
+        }
+        else
+        {
+            player.Value.PunishOnLose();
+        }
+    }
+
     public void HarvestOnWin()
     {
         for (var i = 0; i < predator.NumberOfMeat; i++)
@@ -39,6 +54,8 @@ public class HuntingField : SaveDataElement
             tempFly.transform.localPosition = predator.transform.localPosition;
             tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() =>
             {
+                playerLevel.AddExp(meatResource.exp);
+                ShowFlyText(transform.position, $"+ {playerLevel.ExpUp} Exp");
                 predator.MeatResource.flyModelPool.Return(tempFly);
                 flyUIEvent.Raise(new FlyEventData
                 {
@@ -47,10 +64,15 @@ public class HuntingField : SaveDataElement
                 });
             });
         }
-        
+
         predator.DropMeat();
-        Deactivate();
-    } 
+        // Deactivate();
+    }
+
+    public void PunishOnLose()
+    {
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {

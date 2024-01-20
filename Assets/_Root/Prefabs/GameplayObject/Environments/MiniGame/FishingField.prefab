@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3535158650892245585
 Transform:
   m_ObjectHideFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa8aa4741b116b42ade0c79ad12544e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &5820502260003012436
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,7 +230,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 2
-  m_Center: {x: 4.6, y: 0, z: 0}
+  m_Center: {x: 6, y: 0, z: 0}
 --- !u!114 &4675146435194550432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,9 +274,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5ba332670b0014fa2cb4536f1866da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: fishing_field
+  flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
+  tile: {fileID: 0}
   fishingData: {fileID: 11400000, guid: 3fefd2096e46c3445bc39fcbb8abdd28, type: 2}
   triggerAround: {fileID: 1705376255797942522}
   flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}
+  playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
 --- !u!1 &6162700911894004286
 GameObject:
   m_ObjectHideFlags: 0

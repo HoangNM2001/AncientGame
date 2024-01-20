@@ -4,6 +4,7 @@ using System.Threading;
 using Pancake.Apex;
 using Pancake.Linq;
 using Pancake.Scriptable;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Pancake.UI
@@ -30,6 +31,11 @@ namespace Pancake.UI
             if (_stacks.Count == 0)
             {
                 Debug.LogWarning("[Popup] stack holder popup is empty, you can not close");
+                return;
+            }
+            
+            if (_stacks.Peek().UnKillable)
+            {
                 return;
             }
 
@@ -70,6 +76,13 @@ namespace Pancake.UI
             if (_stacks.Count > 0)
             {
                 var top = _stacks.Peek();
+
+                if (top.UnKillable)
+                {
+                    Debug.LogError("[Popup] unkillable");
+                    return instance;
+                }
+
                 if (top.Equals(instance))
                 {
                     Debug.LogWarning("[Popup] you trying show popup is already displayed!");

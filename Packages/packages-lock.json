@@ -30,6 +30,31 @@
       },
       "hash": "b83ee23be8c0de65c66c3c1ff2ea50b6d0efbee2"
     },
+    "com.google.external-dependency-manager": {
+      "version": "https://github.com/google-unity/external-dependency-manager.git#1.2.176",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9653785bd7f9edae4689c3e3d99a9186ddbf6cb2"
+    },
+    "com.google.firebase.analytics": {
+      "version": "https://github.com/firebase-unity/firebase-analytics.git#11.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.app": "11.2.0"
+      },
+      "hash": "109d849c5217b1506d796a278b5113e3b5188996"
+    },
+    "com.google.firebase.app": {
+      "version": "https://github.com/firebase-unity/firebase-app.git#11.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.176"
+      },
+      "hash": "eee167e2e7d5ee57ee60f2e7448824db56e8db54"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

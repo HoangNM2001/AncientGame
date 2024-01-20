@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class EnumPack
 {
+    public enum TileType
+    {
+        Ground,
+        Tree,
+        Farm,
+        Fish,
+        Henhouse,
+        Bridge
+    }
+
     public enum CostType
     {
-        Coin, 
+        Coin,
         SkillPoint
     }
 

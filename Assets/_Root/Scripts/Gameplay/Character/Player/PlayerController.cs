@@ -1,16 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Pancake;
 using Pancake.SceneFlow;
 using Pancake.Scriptable;
+using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class PlayerController : GameComponent
 {
+    [SerializeField] private PlayerControllerVariable playerVariable;
     [SerializeField] private IntVariable goldVariable;
     [SerializeField] private ScriptableEventGetGameObject getCharacterEvent;
     [SerializeField] private ScriptableEventInt changeInputEvent;
@@ -27,6 +30,7 @@ public class PlayerController : GameComponent
     [SerializeField] private GameObjectPool flyTextPool;
     [SerializeField] private Upgradable moveUpgradable;
     [SerializeField] private Upgradable workUpgradable;
+    [SerializeField] private List<ResourceConfig> resourceConfigList;
 
     private NavmeshController _navmeshController;
     private PlayerHandleInput _playerHandleInput;
@@ -110,6 +114,7 @@ public class PlayerController : GameComponent
     {
         UpdateMoveSpeed();
         _controlType = EnumPack.ControlType.Move;
+        playerVariable.Value = this;
     }
 
     protected override void Tick()
@@ -130,6 +135,37 @@ public class PlayerController : GameComponent
         flyText.transform.position = transform.localPosition + Vector3.up * 3.0f;
         flyText.Initialize(text);
         flyText.Show(false, completeAction);
+    }
+
+    public void PunishOnLose()
+    {
+        foreach (var resource in resourceConfigList)
+        {
+            if (resource.resourceQuantity.Value > 0)
+            {
+                var isPunish = UnityEngine.Random.Range(0, 2);
+                Debug.LogError(isPunish);
+                if (isPunish == 0) continue;
+
+                var punishCount = UnityEngine.Random.Range(0, resource.resourceQuantity.Value);
+                punishCount = Mathf.Clamp(punishCount, 0, 10);
+                Debug.LogError(punishCount);
+                var randomFlyModel = UnityEngine.Random.Range(2, 5);
+
+                for (var i = 1; i <= randomFlyModel; i++)
+                {
+                    var tempFly = resource.flyModelPool.Request();
+                    tempFly.transform.SetParent(transform);
+                    tempFly.transform.localPosition = Vector3.zero;
+                    tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() =>
+                    {
+                        resource.flyModelPool.Return(tempFly);
+                    });
+                }
+
+                resource.resourceQuantity.Value -= punishCount;
+            }
+        }
     }
 
     public void CheckToBuild()
@@ -195,4 +231,25 @@ public class PlayerController : GameComponent
     {
         _currentMoveSpeed = playerStat.MoveSpeed;
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Get Farm Resources")]
+    public void GetFarmResources()
+    {
+        const string resourcesFolderPath = "Assets/_Root/ScriptableData/ResourceConfigs/FarmResources";
+
+        var resourcePaths = AssetDatabase.FindAssets("t:ResourceConfig", new string[] { resourcesFolderPath });
+
+        var resourceConfigs = new ResourceConfig[resourcePaths.Length];
+
+        for (var i = 0; i < resourcePaths.Length; i++)
+        {
+            var assetPath = AssetDatabase.GUIDToAssetPath(resourcePaths[i]);
+            resourceConfigs[i] = AssetDatabase.LoadAssetAtPath<ResourceConfig>(assetPath);
+        }
+
+        resourceConfigList = resourceConfigs.ToList();
+        EditorUtility.SetDirty(this);
+    }
+#endif
 }

@@ -18,6 +18,7 @@ public class HPopupCave : UIPopup
     public void CollectResource()
     {
         currentCave.CollectStorage();
+        closePopupEvent.Raise();
     }
 
     protected override bool EnableTrackBackButton()

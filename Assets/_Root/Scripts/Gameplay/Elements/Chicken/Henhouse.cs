@@ -10,12 +10,14 @@ using UnityEngine;
 public class Henhouse : SaveDataElement
 {
     [SerializeField] private GameObjectPool eggPool;
+    [SerializeField] private PlayerLevel playerLevel;
     [SerializeField] private ResourceConfig eggsResourceConfig;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
     [SerializeField] private ShowableUI showableUI;
     [SerializeField] private TextMeshProUGUI chickenCountText;
     [SerializeField] private TextMeshProUGUI eggCountText;
     [SerializeField] private Trigger triggerEggsCount;
+    [SerializeField] private Trigger triggerPopup;
     [SerializeField] private Chicken chickenPrefab;
     [SerializeField] private Transform chickenParent;
 
@@ -51,7 +53,7 @@ public class Henhouse : SaveDataElement
     private void Awake()
     {
         Initialize();
-        
+
         chickenList = new List<Chicken>();
         eggList = new List<Egg>();
 
@@ -77,14 +79,14 @@ public class Henhouse : SaveDataElement
     public void SpawnChicken()
     {
         if (!CanSpawnChickens) return;
-        
+
         var chicken = Instantiate(chickenPrefab, chickenParent);
         chicken.Setup(this);
         chickenList.Add(chicken);
 
         ChickenCount++;
     }
-    
+
     public void SpawnEgg(Vector3 spawnPos)
     {
         var egg = eggPool.Request().GetComponent<Egg>();
@@ -99,15 +101,15 @@ public class Henhouse : SaveDataElement
     public void HarvestAllEggs()
     {
         if (eggList.IsNullOrEmpty()) return;
-        
+
         foreach (var egg in eggList)
         {
             EggFly(egg);
         }
-        
+
         eggList.Clear();
     }
-    
+
     public void HarvestEgg(Egg egg)
     {
         EggFly(egg);
@@ -123,34 +125,49 @@ public class Henhouse : SaveDataElement
             worldPos = egg.transform.position
         });
         eggsResourceConfig.resourceQuantity.Value++;
-        
+
         EggCount--;
+
+        playerLevel.AddExp(eggsResourceConfig.exp);
+        ShowFlyText(egg.transform.position, $"+ {playerLevel.ExpUp} Exp");
     }
 
     protected override void OnEnabled()
     {
         triggerEggsCount.EnterTriggerEvent += TriggerEggsCount;
         triggerEggsCount.ExitTriggerEvent += ExitTriggerEggsCount;
+        triggerPopup.EnterTriggerEvent += TriggerPopup;
+        triggerPopup.ExitTriggerEvent += ExitTriggerPopup;
     }
 
     protected override void OnDisabled()
     {
         triggerEggsCount.EnterTriggerEvent -= TriggerEggsCount;
         triggerEggsCount.ExitTriggerEvent -= ExitTriggerEggsCount;
+        triggerPopup.EnterTriggerEvent -= TriggerPopup;
+        triggerPopup.ExitTriggerEvent -= ExitTriggerPopup;
+    }
+
+    private void TriggerPopup(Collider collider)
+    {
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(collider);
+        if (characterHandleTrigger) characterHandleTrigger.TriggerHenHouse(gameObject);
+    }
+
+    private void ExitTriggerPopup(Collider collider)
+    {
+        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(collider);
+        if (characterHandleTrigger) characterHandleTrigger.ExitTriggerAction();
     }
 
     private void TriggerEggsCount(Collider other)
     {
         showableUI.Show(true);
-        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
-        if (characterHandleTrigger) characterHandleTrigger.TriggerHenHouse(gameObject);
     }
 
     private void ExitTriggerEggsCount(Collider other)
     {
         showableUI.Show(false);
-        var characterHandleTrigger = CacheCollider.GetCharacterHandleTrigger(other);
-        if (characterHandleTrigger) characterHandleTrigger.ExitTriggerAction();
     }
 
     private Vector3 GetRandomPosition(float radius)

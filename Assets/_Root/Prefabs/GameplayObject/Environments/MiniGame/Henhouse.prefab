@@ -703,6 +703,73 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &6534282182820589887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2590512354888079329}
+  - component: {fileID: 5918505973786272801}
+  - component: {fileID: 7029731146011061940}
+  m_Layer: 8
+  m_Name: TriggerPopup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2590512354888079329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534282182820589887}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1910688989912268826}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5918505973786272801
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534282182820589887}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.8
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7029731146011061940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534282182820589887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa8aa4741b116b42ade0c79ad12544e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &8228190440409238622
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa8aa4741b116b42ade0c79ad12544e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &8787180143954623274
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,6 +1004,7 @@ Transform:
   - {fileID: 6941550547004417982}
   - {fileID: 6469419172706529766}
   - {fileID: 5641646808567357619}
+  - {fileID: 2590512354888079329}
   - {fileID: 5080455057704706706}
   - {fileID: 2146166656350441578}
   - {fileID: 9144803994910598628}
@@ -953,14 +1022,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bee42d55d92ff444930d1bf2c20fee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 98800cf0-71be-4092-9850-7202e7e8f213
+  Id: henhouse
+  flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
   eggPool: {fileID: 11400000, guid: 36d7583665d0d234d97b039f503f7fbc, type: 2}
+  playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
   eggsResourceConfig: {fileID: 11400000, guid: a026cf211d7dd5b44976acd90ab5cd33, type: 2}
   flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}
   showableUI: {fileID: 8537196417095951341}
   chickenCountText: {fileID: 6210302027965409607}
   eggCountText: {fileID: 2573444357661731051}
   triggerEggsCount: {fileID: 6232053177595677468}
+  triggerPopup: {fileID: 7029731146011061940}
   chickenPrefab: {fileID: 8398537981384144890, guid: d1c458bdac1e68a42a7720bfbe49c67c, type: 3}
   chickenParent: {fileID: 5080455057704706706}
 --- !u!1001 &1393882270532634780

@@ -1178,7 +1178,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3540289974838290460}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 9999
   avoidancePriority: 50
@@ -1203,6 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3dd177c628b62b4b820e84e84274ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerVariable: {fileID: 11400000, guid: 85e2e2df92d5acf42869953c57b4369b, type: 2}
   goldVariable: {fileID: 11400000, guid: 1d4b77d15290c5840933bfb3884dc4b9, type: 2}
   getCharacterEvent: {fileID: 11400000, guid: 5f37ed4166e3d694c9b2d35cbc53d7fa, type: 2}
   changeInputEvent: {fileID: 11400000, guid: 3d68a3cc988281a4aa9c0ba528ec04c4, type: 2}
@@ -1219,6 +1220,19 @@ MonoBehaviour:
   flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
   moveUpgradable: {fileID: 11400000, guid: 6eb7f3607552dc5448c59d79a28626d1, type: 2}
   workUpgradable: {fileID: 11400000, guid: 8201db48d2d8b0049a53b4b49ffb1f76, type: 2}
+  resourceConfigList:
+  - {fileID: 11400000, guid: 9618384257d2ede4fb741a8c99c80762, type: 2}
+  - {fileID: 11400000, guid: 1fd41024a2972f74f9be3bdb18f45493, type: 2}
+  - {fileID: 11400000, guid: 0a9a6f1a39916504f90ed377c46962a5, type: 2}
+  - {fileID: 11400000, guid: 570244483dd2a7d4cb1dc97b13926ab1, type: 2}
+  - {fileID: 11400000, guid: d4cf974ee92a91e4680ff09f25cadbc3, type: 2}
+  - {fileID: 11400000, guid: aeb183dd65e867843a129f8190ff5018, type: 2}
+  - {fileID: 11400000, guid: 59dd57e3d7b74e249a2e620c6ec2d771, type: 2}
+  - {fileID: 11400000, guid: c5877ab83cd23f64ca4665cbae567842, type: 2}
+  - {fileID: 11400000, guid: e2a32559289bf0b45947a21fe36f16af, type: 2}
+  - {fileID: 11400000, guid: 394a348f5345a1f4290f01c07aa9aef9, type: 2}
+  - {fileID: 11400000, guid: 61b3684a0c11ab047ad23f8d47da6513, type: 2}
+  - {fileID: 11400000, guid: 62e48a472f4b2094883ca660b7d01649, type: 2}
 --- !u!114 &4584379780708832796
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,12 +9,16 @@ using UnityEngine;
 
 public class FishingField : SaveDataElement
 {
+    [SerializeField] private Tile tile;
     [SerializeField] private FishingData fishingData;
     [SerializeField] private Trigger triggerAround;
     [SerializeField] private ScriptableEventFlyEventData flyUIEvent;
+    [SerializeField] private PlayerLevel playerLevel;
 
     private List<Fish> _fishList = new();
     private List<Fish> _fishInstanceList = new();
+
+    public Tile Tile => tile;
 
     private void Awake()
     {
@@ -74,6 +78,8 @@ public class FishingField : SaveDataElement
             tempFly.transform.localPosition = Vector3.zero;
             tempFly.GetComponent<ResourceFlyModel>().DoBouncing(() =>
             {
+                playerLevel.AddExp(fish.exp);
+                ShowFlyText(transform.position, $"+ {playerLevel.ExpUp} Exp");
                 fish.flyModelPool.Return(tempFly);
                 flyUIEvent.Raise(new FlyEventData
                 {

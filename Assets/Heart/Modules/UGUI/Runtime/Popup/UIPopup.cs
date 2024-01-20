@@ -36,6 +36,9 @@ namespace Pancake.UI
         [SerializeField] protected CanvasGroup canvasGroup;
         [SerializeField] protected RectTransform background;
         [SerializeField] protected RectTransform container;
+        [SerializeField] protected bool unKillable;
+
+        public bool UnKillable => unKillable;
 
 #if UNITY_EDITOR
         [SerializeField, Foldout("Close Button", Style = "Group"), OnValueChanged("OnCloseByClickContainerChanged")]

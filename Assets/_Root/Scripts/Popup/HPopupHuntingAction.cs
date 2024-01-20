@@ -42,6 +42,15 @@ public class HPopupHuntingAction : UIPopup
         OnActiveMiniGame();
     }
 
+    private void OnForceStopMiniGame(bool isWin)
+    {
+        if (getHuntingFieldEvent.Raise().TryGetComponent<HuntingField>(out var huntingField))
+        {
+            huntingField.OnEndMinigame(isWin);
+        }
+        StopHuntingAction();
+    }
+
     public void StopHuntingAction()
     {
         toggleMiniGame.Raise(false);
@@ -51,12 +60,6 @@ public class HPopupHuntingAction : UIPopup
         toggleMenuUIEvent.Raise(true);
 
         HuntingStateEnable(false);
-
-        if (getHuntingFieldEvent.Raise().TryGetComponent<HuntingField>(out var huntingField))
-        {
-            Debug.LogError("?");
-            huntingField.HarvestOnWin();
-        }
 
         OnDeActiveMiniGame();
         ClosePopup();
@@ -98,11 +101,6 @@ public class HPopupHuntingAction : UIPopup
 
         hitNotification.transform.position = position;
         hitNotification.SetActive(true);
-    }
-
-    private void OnForceStopMiniGame(bool isWin)
-    {
-        StopHuntingAction();
     }
 
     private void ClosePopup()

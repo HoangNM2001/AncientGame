@@ -52,6 +52,9 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "com.google.firebase.analytics": "https://github.com/firebase-unity/firebase-analytics.git#11.2.0",
+    "com.google.firebase.app": "https://github.com/firebase-unity/firebase-app.git#11.2.0",
+    "com.google.external-dependency-manager": "https://github.com/google-unity/external-dependency-manager.git#1.2.176"
   }
 }

@@ -2,16 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using Mono.Cecil;
 using Newtonsoft.Json;
 using Pancake;
-using Pancake.SceneFlow;
 using Pancake.Scriptable;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
-using UnityEngine.Purchasing.MiniJSON;
 using Random = UnityEngine.Random;
 
 public class ResourcesCave : SaveDataElement
@@ -22,6 +17,7 @@ public class ResourcesCave : SaveDataElement
     [SerializeField] private Transform resourceUIParent;
     [SerializeField] private Transform goToPos;
     [SerializeField] private ScriptableEventStorageAddData addStorageEvent;
+    [SerializeField] private PlayerLevel playerLevel;
 
     private const int MaxNumberOfResources = 3;
     private const int CaveMaxCapacity = 50;
@@ -96,7 +92,13 @@ public class ResourcesCave : SaveDataElement
                 worldPos = transform.position
             });
 
-            caveResourceUIDict[pair.Key].UpdateCapacity(0, () => { Destroy(caveResourceUIDict[pair.Key].gameObject); });
+            caveResourceUIDict[pair.Key].UpdateCapacity(0, () =>
+            {
+                Destroy(caveResourceUIDict[pair.Key].gameObject);
+
+                playerLevel.AddExp(pair.Value * resourceDict[pair.Key].exp);
+                ShowFlyText(transform.position, $"+ {playerLevel.ExpUp} Exp");
+            });
             yield return new WaitForSeconds(0.75f);
         }
 
@@ -191,6 +193,5 @@ public class ResourcesCave : SaveDataElement
     {
         resourceCapacityDict[resourceType] = value;
         ResourceCapacityJson = JsonConvert.SerializeObject(resourceCapacityDict);
-        Debug.LogError(ResourceCapacityJson);
     }
 }

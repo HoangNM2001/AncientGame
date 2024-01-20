@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Transactions;
 using DG.Tweening;
 using JetBrains.Annotations;
@@ -99,27 +100,6 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
                 GoToField();
             }
         }
-        // if (!cave.IsCaveAvailable || !cave.IsAddable(CurrentResourceType))
-        // {
-        //     navmeshController.Stop();
-        //     characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
-
-        //     if (characterAnimController.AnimationName != Constant.SLAVE_RELAX)
-        //     {
-        //         characterAnimController.Play(Constant.SLAVE_RELAX, 1);
-        //     }
-        // }
-        // else
-        // {
-        //     if (currentCapacity > 0)
-        //     {
-        //         GoToCave();
-        //     }
-        //     else
-        //     {
-        //         GoToField();
-        //     }
-        // }
     }
 
     public void MoveToTargetPos()
@@ -131,10 +111,10 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     public void Farming()
     {
-        if (navmeshController.IsReachDestination())
-        {
+        // if (navmeshController.IsReachDestination())
+        // {
             GoToNearestField();
-        }
+        // }
     }
 
     public void GoToNearestField()
@@ -143,7 +123,7 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
             extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
         if (nearestField)
         {
-            navmeshController.MoveByPosition(nearestField.transform.position, 1.0f, characterStat.MoveSpeed,
+            navmeshController.MoveByPosition(nearestField.transform.position, 1.0f, characterStat.WorkMoveSpeed,
                 characterStat.RotateSpeed, 0.1f, Time.deltaTime);
         }
     }
@@ -165,6 +145,8 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
 
     public void TriggerActionFarm(GameObject gameObject = null)
     {
+        if (gameObject.GetComponent<ExtendField>() != extendField) return;
+
         extendField.OnStateChange += OnFieldStateChange;
         extendField.OnHarvest += OnHarvest;
         stateMachine.ChangeState<FarmingState>();
@@ -190,7 +172,6 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
             {
                 currentCapacity = cave.AddStorage(CurrentResourceType, currentCapacity, GoToField);
                 if (currentCapacity == 0) CurrentResourceType = EnumPack.ResourceType.None;
-                Debug.LogError("Done Storage");
             });
         }
     }
@@ -255,11 +236,6 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         var nearestField =
             extendField.GetNearestFieldWithState(transform.position + transform.forward * 20.0f, currentFarmState);
         targetPosition = nearestField ? nearestField.transform.position : extendField.transform.position;
-        // Debug.LogError(targetPosition);
-        // Debug.LogError("GoToField");
-        // targetPosition = extendField.transform.position;
-        // Debug.LogError("GoToField1");
-        // Debug.LogError((targetPosition));
         stateMachine.ChangeState<MovingState>();
     }
 

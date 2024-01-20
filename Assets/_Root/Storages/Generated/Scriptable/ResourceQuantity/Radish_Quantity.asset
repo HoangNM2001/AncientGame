@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Radish_Quantity
   m_EditorClassIdentifier: 
   guid: 1dccb1824ab9f2f4f970c4c333822e87
-  value: 79
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

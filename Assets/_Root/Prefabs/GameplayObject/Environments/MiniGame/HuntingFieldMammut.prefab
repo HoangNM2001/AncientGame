@@ -53,7 +53,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 6.2
+  m_Radius: 5.9
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &667822987995007608
 MonoBehaviour:
@@ -68,7 +68,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: hunting_field_mammut
-  flyTextPool: {fileID: 0}
+  flyTextPool: {fileID: 11400000, guid: f5e0fb52953e3544bb532d445739eb2c, type: 2}
+  player: {fileID: 11400000, guid: 85e2e2df92d5acf42869953c57b4369b, type: 2}
+  playerLevel: {fileID: 11400000, guid: 31586f5ce8f218e448dbd0a8b0e18e40, type: 2}
+  meatResource: {fileID: 11400000, guid: e24972614c8e73c47a1b06be2f3c53b9, type: 2}
   predator: {fileID: 1789145295461440595}
   respawnInterval: 60
   flyUIEvent: {fileID: 11400000, guid: f760f85fcba71bf49a19895f7a896c99, type: 2}

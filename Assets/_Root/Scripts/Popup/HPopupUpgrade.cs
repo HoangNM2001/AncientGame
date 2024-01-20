@@ -11,6 +11,7 @@ public class HPopupUpgrade : UIPopup
     protected override void OnEnabled()
     {
         playerLevel.OnSkillPointChangedEvent += playerLevel_OnSkillPointChangedEvent;
+        unKillable = true;
     }
 
     protected override void OnDisabled()
@@ -22,6 +23,7 @@ public class HPopupUpgrade : UIPopup
     {
         if (skillPoint <= 0 && gameObject.activeSelf)
         {
+            unKillable = false;
             closePopupEvent.Raise();
             changeInputEvent.Raise((int)EnumPack.ControlType.Move);
         }

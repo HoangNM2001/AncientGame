@@ -7,6 +7,7 @@ using UnityEngine;
 public class HPopupHenhouse : UIPopup
 {
     [SerializeField] private ScriptableEventGetGameObject getCurrentCaveEvent;
+    [SerializeField] private IntVariable coinQuantity;
 
     private Henhouse currentHenHouse;
 
@@ -18,6 +19,7 @@ public class HPopupHenhouse : UIPopup
     public void ByMoreChicken()
     {
         currentHenHouse.SpawnChicken();
+        coinQuantity.Value -= 500;
     }
 
     public void HarvestAll()

@@ -15,6 +15,7 @@ public class HPopupFishingAction : UIPopup
     [SerializeField] private GameObject fishingButtonUI;
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private FishingData fishingData;
+    [SerializeField] private IntVariable coinVariable;
 
     protected override void OnBeforeShow()
     {
@@ -24,6 +25,10 @@ public class HPopupFishingAction : UIPopup
 
     public void StartFishingAction()
     {
+        if (coinVariable.Value < 300) return;
+        
+        coinVariable.Value -= 300;
+
         currentMiniGameType.Value = (int)EnumPack.MiniGameType.Fishing;
         toggleMiniGame.Raise(true);
 

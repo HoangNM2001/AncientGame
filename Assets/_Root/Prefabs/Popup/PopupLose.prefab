@@ -695,6 +695,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 6150849691503954172}
   background: {fileID: 3594426119830224304}
   container: {fileID: 4115189586805347051}
+  unKillable: 0
   closeByClickContainer: 0
   closeByClickBackground: 0
   closeByBackButton: 0

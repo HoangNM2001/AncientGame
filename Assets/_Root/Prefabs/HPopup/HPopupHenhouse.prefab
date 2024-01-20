@@ -855,7 +855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: One more
+  m_text: One more <br> 500 <sprite=0>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c2f49fe8c22d94f9a9e6cd06ad490155, type: 2}
   m_sharedMaterial: {fileID: 3074828514974314926, guid: c2f49fe8c22d94f9a9e6cd06ad490155, type: 2}
@@ -874,7 +874,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 74fbba88397489b4586b845cf4eaf90e, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -882,10 +882,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.7
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1124,21 +1124,22 @@ MonoBehaviour:
   canvasGroup: {fileID: 8685023417814370869}
   background: {fileID: 0}
   container: {fileID: 7475473232510589245}
+  unKillable: 0
   closeByClickContainer: 0
   closeByClickBackground: 0
   closeByBackButton: 0
   closeButtons: []
   motionShowData:
     motion: 0
-    duration: 0.3
+    duration: 0
     scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
-    ease: 27
+    ease: 0
   motionCloseData:
     motion: 0
-    duration: 0.3
-    scale: {x: 0, y: 0}
+    duration: 0
+    scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
     ease: 0
@@ -1155,3 +1156,4 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   getCurrentCaveEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
+  coinQuantity: {fileID: 11400000, guid: 1d4b77d15290c5840933bfb3884dc4b9, type: 2}

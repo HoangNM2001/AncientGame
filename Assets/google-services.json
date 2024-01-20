@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "211707201184",
+    "project_id": "ancientlife-37468",
+    "storage_bucket": "ancientlife-37468.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211707201184:android:f34136a6d88cd3063cebc5",
+        "android_client_info": {
+          "package_name": "com.pancake.foudation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg5tG6I5EzFDgIGogJopCmbhQF8-QW8MA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211707201184:android:15ac9a44844200973cebc5",
+        "android_client_info": {
+          "package_name": "com.pancake.foundation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg5tG6I5EzFDgIGogJopCmbhQF8-QW8MA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

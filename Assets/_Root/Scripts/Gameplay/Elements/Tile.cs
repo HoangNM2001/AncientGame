@@ -36,9 +36,10 @@ public class Tile : SaveDataElement
 
     public Vector2Int Coord { get; private set; }
     public int UnlockCost => unlockCost;
+    public bool Unlockable => _isUnlockAble;
     public List<SaveDataElement> Elements { get; set; }
 
-    protected override bool IsUnlocked
+    public override bool IsUnlocked
     {
         get => Data.Load($"{Id}_isUnlocked", isUnlocked);
         set
@@ -233,7 +234,7 @@ public class Tile : SaveDataElement
         return !IsUnlocked && IsAnyTileAroundUnlocked && (requiredTile == null || requiredTile.IsUnlocked);
     }
 
-    private bool IsUnlockable()
+    public bool IsUnlockable()
     {
         return IsUnlocked || (IsAnyTileAroundUnlocked && IsMeetRequiredLevel &&
                               (requiredTile == null || requiredTile.IsUnlocked));

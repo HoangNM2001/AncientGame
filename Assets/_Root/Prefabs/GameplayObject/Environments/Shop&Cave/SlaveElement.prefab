@@ -201,6 +201,8 @@ MonoBehaviour:
   characterActionType: 1
   farmTool: {fileID: 5671966623258064443}
   characterAnimController: {fileID: 6305552870449920384}
+  isPlayer: 0
+  playerStat: {fileID: 0}
   characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
 --- !u!1 &1258781042769922049
 GameObject:
@@ -328,8 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aeaef7d6523d99448743b13f9b90eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
-  farmToolModel: {fileID: 1262068586978788106}
+  farmToolList:
+  - {fileID: 1262068586978788106}
   particleList:
   - {fileID: 5077412794615925354}
   colliderList:
@@ -567,8 +569,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aeaef7d6523d99448743b13f9b90eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
-  farmToolModel: {fileID: 3118946770027900602}
+  farmToolList:
+  - {fileID: 7794208986560708106}
   particleList: []
   colliderList:
   - {fileID: 7972673808179962179}
@@ -927,8 +929,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aeaef7d6523d99448743b13f9b90eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
-  farmToolModel: {fileID: 6636866593417395282}
+  farmToolList:
+  - {fileID: 6636866593417395282}
   particleList:
   - {fileID: 7250104479464661882}
   colliderList:
@@ -953,7 +955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7210605524398117635
 Transform:
   m_ObjectHideFlags: 0
@@ -982,7 +984,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4771372823729672617}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 9999
   avoidancePriority: 50
@@ -1069,6 +1071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   extendField: {fileID: 0}
   cave: {fileID: 0}
+  relaxPosition: {fileID: 0}
   characterAnimController: {fileID: 6305552870449920384}
   characterActionList: {fileID: 3074383775210608876}
   characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
@@ -1122,6 +1125,8 @@ MonoBehaviour:
   characterActionType: 0
   farmTool: {fileID: 3906029952979375132}
   characterAnimController: {fileID: 6305552870449920384}
+  isPlayer: 0
+  playerStat: {fileID: 0}
   characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
 --- !u!1 &6914339568094835362
 GameObject:
@@ -1297,7 +1302,7 @@ Transform:
   m_GameObject: {fileID: 8125581819965306543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.96514654, z: -0, w: 0.26171014}
-  m_LocalPosition: {x: 0, y: -1.03, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1386,6 +1391,8 @@ MonoBehaviour:
   characterActionType: 2
   farmTool: {fileID: 5681883995544294588}
   characterAnimController: {fileID: 6305552870449920384}
+  isPlayer: 0
+  playerStat: {fileID: 0}
   characterStat: {fileID: 11400000, guid: 8e454d99b473d6c4bb4f53d29806534d, type: 2}
 --- !u!1 &8584057570801502900
 GameObject:
@@ -1433,11 +1440,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981407fb837a1624081d03067d1d462f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 41ddb552-51a6-4e66-9896-ab67782a96ac
+  Id: slave_element
+  flyTextPool: {fileID: 0}
   drownSlave: {fileID: 8125581819965306543}
   unlockedSlave: {fileID: 7426655379954236806}
   price: 5000
   triggerHelp: {fileID: 4308418571151376117}
+  extendFieldList: []
 --- !u!1001 &564086157325097736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2442,6 +2451,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4e048acd59647e845949a91fa09db569, type: 3}
       propertyPath: m_Name
       value: Seed_packet
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4e048acd59647e845949a91fa09db569, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8557719618773144347, guid: 4e048acd59647e845949a91fa09db569, type: 3}
       propertyPath: m_Materials.Array.data[0]
