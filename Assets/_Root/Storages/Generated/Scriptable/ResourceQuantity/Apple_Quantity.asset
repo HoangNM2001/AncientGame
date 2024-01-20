@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apple_Quantity
   m_EditorClassIdentifier: 
   guid: a93b4a40bd8edf440b48e1ff330bd507
-  value: 91
+  value: 0
   debugLogEnabled: 0
   saved: 1
   defaultValue: 0

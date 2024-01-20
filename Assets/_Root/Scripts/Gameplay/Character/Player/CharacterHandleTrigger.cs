@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Pancake;
-using Pancake.SceneFlow;
 using Pancake.Scriptable;
 using Pancake.UI;
-using RedBlueGames.MulliganRenamer;
 using UnityEngine;
 
 public class CharacterHandleTrigger : GameComponent, IFarmer, ICaveMan, IFisher, IHunter

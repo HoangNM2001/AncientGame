@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Pancake;
-using Pancake.ExLibEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class TileView : GameComponent
 {

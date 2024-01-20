@@ -1,7 +1,9 @@
 using System;
 using Pancake;
 using Pancake.Scriptable;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/Upgradable")]

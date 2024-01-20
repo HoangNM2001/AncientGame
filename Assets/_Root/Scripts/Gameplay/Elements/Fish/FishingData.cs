@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/FishingData")]
 public class FishingData : ScriptableObject
 {
-    [SerializeField, UniqueID] private string uniqueId;
-
     public int FishCount;
     public int MaxCount;
     public List<Fish> FishList;
@@ -28,13 +25,4 @@ public class FishingData : ScriptableObject
             OnFishCountCaught?.Invoke(this);
         }
     }
-
-#if UNITY_EDITOR
-    [ContextMenu("Reset Unique Id")]
-    public void ResetUniqueID()
-    {
-        Guid guid = Guid.NewGuid();
-        uniqueId = guid.ToString();
-    }
-#endif
 }

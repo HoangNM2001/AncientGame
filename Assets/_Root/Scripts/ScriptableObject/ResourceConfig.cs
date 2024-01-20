@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using Pancake;
-using Pancake.Apex;
 using Pancake.Scriptable;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/Resources")]
 public class ResourceConfig : ScriptableObject

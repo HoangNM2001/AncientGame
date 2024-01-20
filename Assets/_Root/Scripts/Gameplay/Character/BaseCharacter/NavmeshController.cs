@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Sockets;
 using Pancake;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -71,6 +66,34 @@ public class NavmeshController : GameComponent
             navMeshAgent.updateRotation = true;
             navMeshAgent.isStopped = false;
             navMeshAgent.destination = navMeshAgent.transform.position + direction.normalized * distance;
+        }
+    }
+
+    public void MoveByPos(Vector3 targetPosition, float targetRadius, float moveSpeed, float rotateSpeed,
+        float stoppingDistance, float deltaTime)
+    {
+        navMeshAgent.speed = moveSpeed;
+        navMeshAgent.stoppingDistance = stoppingDistance;
+        
+        var direction = targetPosition - navMeshAgent.transform.position;
+        var distance = direction.magnitude - targetRadius - stoppingDistance;
+        
+        if (distance <= 0.0f)
+        {
+            navMeshAgent.updatePosition = false;
+            navMeshAgent.updateRotation = false;
+            navMeshAgent.isStopped = true;
+            if (direction != Vector3.zero)
+            {
+                targetRotation = Quaternion.LookRotation(direction);
+            }
+
+            navMeshAgent.transform.rotation = Quaternion.Slerp(navMeshAgent.transform.rotation, targetRotation,
+                deltaTime * rotateSpeed);
+        }
+        else
+        {
+            navMeshAgent.SetDestination(targetPosition);
         }
     }
 

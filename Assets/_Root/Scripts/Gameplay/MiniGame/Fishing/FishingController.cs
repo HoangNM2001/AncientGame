@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using Pancake;
-using Pancake.Scriptable;
-using UnityEditor.AssetImporters;
 using UnityEngine;
 
 public class FishingController : GameComponent

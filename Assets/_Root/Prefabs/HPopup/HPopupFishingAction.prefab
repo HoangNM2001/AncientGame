@@ -839,15 +839,15 @@ MonoBehaviour:
   closeButtons: []
   motionShowData:
     motion: 0
-    duration: 0.3
+    duration: 0
     scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
     ease: 27
   motionCloseData:
     motion: 0
-    duration: 0.3
-    scale: {x: 0, y: 0}
+    duration: 0
+    scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
     ease: 0

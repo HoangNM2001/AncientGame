@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
@@ -21,3 +22,4 @@ public class UniqueIdentifierDrawer : PropertyDrawer
         EditorGUI.LabelField(position, label, new GUIContent(prop.stringValue));
     }
 }
+#endif

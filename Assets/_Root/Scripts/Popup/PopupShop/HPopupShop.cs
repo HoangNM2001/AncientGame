@@ -33,8 +33,6 @@ public class HPopupShop : UIPopup
             Debug.LogError(resource.resourceQuantity.Value);
             resource.resourceQuantity.Value = 0;
         }
-
-        Debug.LogError(total);
         
         if (total > 0)
         {

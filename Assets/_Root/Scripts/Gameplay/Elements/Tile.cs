@@ -1,16 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pancake;
 using UnityEngine.AI;
 using TMPro;
-using UnityEngine.Tilemaps;
 using System.Linq;
-using UnityEngine.UI;
 using System;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using Pancake.SceneFlow;
 
 public class Tile : SaveDataElement
 {

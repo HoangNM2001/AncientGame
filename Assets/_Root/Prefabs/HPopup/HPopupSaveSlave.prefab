@@ -275,21 +275,22 @@ MonoBehaviour:
   canvasGroup: {fileID: 7417716510482260748}
   background: {fileID: 0}
   container: {fileID: 6824330204262534512}
+  unKillable: 0
   closeByClickContainer: 0
   closeByClickBackground: 0
   closeByBackButton: 0
   closeButtons: []
   motionShowData:
     motion: 0
-    duration: 0.3
+    duration: 0
     scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
     ease: 27
   motionCloseData:
     motion: 0
-    duration: 0.3
-    scale: {x: 0, y: 0}
+    duration: 0
+    scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
     ease: 0
@@ -305,6 +306,7 @@ MonoBehaviour:
   onAfterClose:
     m_PersistentCalls:
       m_Calls: []
+  coinResource: {fileID: 0}
   getCurrentSaveSlaveEvent: {fileID: 11400000, guid: 3efd1f16ba0edbc4ebb9d422b6087f4c, type: 2}
   priceText: {fileID: 8481287290232062151}
 --- !u!1 &4136281251548856988

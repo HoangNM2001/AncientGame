@@ -1,6 +1,7 @@
-#if UNITY_EDITOR
 using System.Text;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class IDAttribute : PropertyAttribute
@@ -11,6 +12,7 @@ public class IDAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(IDAttribute))]
 public class IDAttributeDrawer : PropertyDrawer
 { 

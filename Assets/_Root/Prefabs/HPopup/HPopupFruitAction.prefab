@@ -184,21 +184,22 @@ MonoBehaviour:
   canvasGroup: {fileID: 6438014654085646270}
   background: {fileID: 0}
   container: {fileID: 3613992017237084624}
+  unKillable: 0
   closeByClickContainer: 0
   closeByClickBackground: 0
   closeByBackButton: 0
   closeButtons: []
   motionShowData:
     motion: 0
-    duration: 0.3
+    duration: 0
     scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
     ease: 27
   motionCloseData:
     motion: 0
-    duration: 0.3
-    scale: {x: 0, y: 0}
+    duration: 0
+    scale: {x: 1, y: 1}
     fromPosition: {x: 0, y: 0}
     toPosition: {x: 0, y: 0}
     ease: 0

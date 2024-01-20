@@ -1,8 +1,6 @@
-using System;
 using Pancake;
 using Pancake.UI;
 using TMPro;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.UI;
 

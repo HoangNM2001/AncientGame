@@ -107,6 +107,8 @@ public class SlaveController : GameComponent, IFarmer, ICaveMan
         // characterAnimController.UpdateIdle2Run(navmeshController.VelocityRatio, Time.deltaTime);
         navmeshController.MoveByPosition(targetPosition, 0.0f, characterStat.MoveSpeed, characterStat.RotateSpeed, 0.1f,
             Time.deltaTime);
+        // navmeshController.MoveByPos(targetPosition, 0.0f, characterStat.MoveSpeed, characterStat.RotateSpeed, 0.1f,
+        //     Time.deltaTime);
     }
 
     public void Farming()
